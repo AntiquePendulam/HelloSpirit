@@ -1,0 +1,125 @@
+﻿<Window x:Class="HelloTask.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
+        xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+        xmlns:ct="clr-namespace:Microsoft.Toolkit.Wpf.UI.Controls;assembly=Microsoft.Toolkit.Wpf.UI.Controls.WebView"
+        xmlns:local="clr-namespace:HelloTask"
+        mc:Ignorable="d"
+        Title="HelloTask" Height="450" Width="800" ResizeMode="CanResizeWithGrip" WindowState="Normal" WindowStyle="None" AllowsTransparency="True" Background="Black">
+    <Window.Resources>
+        <Style TargetType="Border">
+            <Setter Property="BorderBrush" Value="Gray"/>
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="FontFamily" Value="/HelloTask;component/Fonts/#M+ 2c"/>
+        </Style>
+    </Window.Resources>
+    
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/><!--Title Bar-->
+            <RowDefinition/><!--Content-->
+            <RowDefinition/><!--Grass View-->
+            <RowDefinition Height="15"/><!--Footer-->
+        </Grid.RowDefinitions>
+        <!--Row0 : TitleBar Grid-->
+        <Border BorderThickness="0,0,0,1" VerticalAlignment="Top" Margin="0,1">
+            <Grid x:Name="TitleBar" Background="Black">
+                <Grid.Resources>
+                    <Style TargetType="{x:Type Label}">
+                        <Setter Property="Foreground" Value="LightGray"/>
+                    </Style>
+                </Grid.Resources>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="80"/>
+                </Grid.ColumnDefinitions>
+
+                <!--Column 0 Title Text-->
+                <Label Content="HelloSpirit - Say Hello to your Spirits." FontSize="15" FontStyle="Italic"/>
+
+                <!--Column 2 Minimum & Close button-->
+                <UniformGrid Grid.Column="3" Rows="1">
+                    <Button Content="-" Style="{StaticResource ButtonDefaultStyle}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <ei:ChangePropertyAction TargetName="Window" PropertyName="WindowState" Value="Minimized"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                    <Button x:Name="CloseButton" Content="X">
+                        <Button.Style>
+                            <Style TargetType="Button" BasedOn="{StaticResource ButtonDefaultStyle}">
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="true">
+                                        <Setter Property="Background" Value="Red"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                </UniformGrid>
+            </Grid>
+        </Border>
+        
+        <!--Row 1 Task View-->
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Label Content="{Binding}"/>
+            <UniformGrid Rows="1">
+                <UniformGrid.Resources>
+                    <Style TargetType="ListBox">
+                        <Setter Property="Background" Value="Black"/>
+                        <Setter Property="Margin" Value="4,8"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListBox">
+                                    <Border CornerRadius="10" BorderThickness="2" BorderBrush="{TemplateBinding BorderBrush}">
+                                        <ContentPresenter/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <!--ListBoxItem Template-->
+                                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                    <Border CornerRadius="20" BorderThickness="1"/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </UniformGrid.Resources>
+                <ListBox/>
+                <ListBox/>
+                <ListBox/>
+            </UniformGrid>
+        </Grid>
+
+        <!--Row 2 GrassView-->
+        <Border Grid.Row="2" Height="160" BorderThickness="0,1" VerticalAlignment="Bottom">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Label Content="Your contributions" FontSize="20" Foreground="Gainsboro"/>
+                <ct:WebView Grid.Row="1" x:Name="GrassView"/>
+            </Grid>
+        </Border>
+        
+        <!--Footer-->
+        <Grid Grid.Row="3" Background="DarkGray"/>
+    </Grid>
+</Window>
