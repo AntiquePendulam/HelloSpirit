@@ -85,23 +85,19 @@
                         <Setter Property="Background" Value="DimGray"/>
                         <Setter Property="Margin" Value="2,2,2,4"/>
                         <Setter Property="MinHeight" Value="100"/>
-                        
-                        <!--ListBox Template-->
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="ListBox">
                                     <Border CornerRadius="8" BorderThickness="2" BorderBrush="{TemplateBinding BorderBrush}">
                                         <UniformGrid Columns="1">
-                                            <TextBox Name="ListTitle" PreviewMouseUp="ListTitle_PreviewMouseUp" Text="ListName"
-                                                    FontFamily="{TemplateBinding FontFamily}" Background="{x:Null}" Margin="5,2" FontSize="20"
-                                                    FontWeight="Bold" VerticalAlignment="Top" Foreground="White">
-                                                <TextBox.Style>
-                                                    <Style TargetType="TextBox" BasedOn="{StaticResource TextBoxDefaultStyle}">
-                                                        
-                                                    </Style>
-                                                </TextBox.Style>
-                                            </TextBox>
-                                            <ItemsPresenter/>
+                                            <Button x:Name="ListTitle" Content="ListName" Foreground="White">
+                                                <Button.Template>
+                                                    <ControlTemplate TargetType="Button">
+                                                        <TextBox Text="{TemplateBinding Content}" Style="{StaticResource TextBoxDefaultStyle}" FontFamily="{TemplateBinding FontFamily}" Background="{x:Null}" Margin="5,2" FontSize="20" FontWeight="Bold" VerticalAlignment="Top" Foreground="{TemplateBinding Foreground}"/>
+                                                    </ControlTemplate>
+                                                </Button.Template>
+                                            </Button>
+                                            <ContentPresenter/>
                                         </UniformGrid>
                                     </Border>
                                 </ControlTemplate>
@@ -112,7 +108,7 @@
                         <Setter Property="ItemTemplate">
                             <Setter.Value>
                                 <DataTemplate>
-                                    <Border BorderThickness="2" CornerRadius="5" Background="LightGray">
+                                    <Border DataContext="{Binding Path=XXX}" BorderThickness="2" CornerRadius="5" Background="LightGray">
                                         <Grid>
                                             
                                         </Grid>
@@ -123,9 +119,20 @@
                         </Setter>
                     </Style>
 
+                    <!--ListBoxItem Template-->
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <!--ListBoxItem Template-->
+                                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                    <Border CornerRadius="5" BorderThickness="1"/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
                 </UniformGrid.Resources>
                 <!--Contents-->
-                <ListBox ItemsSource="{Binding}"/>
+                <ListBox/>
                 <ListBox/>
                 <ListBox/>
             </UniformGrid>
