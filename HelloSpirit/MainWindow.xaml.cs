@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace HelloTask
+namespace HelloSpirit
 {
     /// <summary>
     /// MainWindow.xaml の相互作用ロジック
@@ -26,6 +26,17 @@ namespace HelloTask
             TitleBar.MouseLeftButtonDown += (a, e) => DragMove();
             CloseButton.Click += (a, e) => this.Close();
             Grass.GetGrass(GrassView);
+            Label.DataContext = TimeText();
+        }
+
+        public static string TimeText()
+        {
+            var time = DateTime.Now.Hour;
+            return $"Hello! {App.UserName}.";
+        }
+
+        private void ListTitle_Click(object sender, RoutedEventArgs e)
+        {
         }
     }
 }

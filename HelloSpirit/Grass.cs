@@ -10,7 +10,7 @@ using AngleSharp.Html;
 using System.Diagnostics;
 using Microsoft.Toolkit.Wpf.UI.Controls;
 
-namespace HelloTask
+namespace HelloSpirit
 {
     internal static class Grass
     {
