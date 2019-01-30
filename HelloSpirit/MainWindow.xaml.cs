@@ -35,8 +35,10 @@ namespace HelloSpirit
             return $"Hello! {App.UserName}.";
         }
 
-        private void ListTitle_Click(object sender, RoutedEventArgs e)
+        private void ListTitle_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
+            var textbox = sender as TextBox;
+            textbox.Text = "Nande?";
         }
     }
 }
