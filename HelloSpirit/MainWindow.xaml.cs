@@ -34,11 +34,5 @@ namespace HelloSpirit
             var time = DateTime.Now.Hour;
             return $"Hello! {App.UserName}.";
         }
-
-        private void ListTitle_PreviewMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            var textbox = sender as TextBox;
-            textbox.Text = "Nande?";
-        }
     }
 }
