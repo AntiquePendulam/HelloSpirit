@@ -93,16 +93,12 @@
                                 <ControlTemplate TargetType="ListBox">
                                     <Border CornerRadius="8" BorderThickness="2" BorderBrush="{TemplateBinding BorderBrush}">
                                         <UniformGrid Columns="1">
-                                                <TextBox Name="ListTitle" Text="{Binding Text,Source={StaticResource TVM}}"
-                                                    FontFamily="{TemplateBinding FontFamily}" Background="{x:Null}" Margin="5,2" FontSize="20"
-                                                    FontWeight="Bold" VerticalAlignment="Top" Foreground="White" Focusable="True">
-                                                    <TextBox.Style>
-                                                        <Style TargetType="TextBox" BasedOn="{StaticResource TextBoxDefaultStyle}">
-                                                        <Setter Property="IsReadOnly" Value="True"/>
-                                                    </Style>
-                                                    </TextBox.Style>
-                                                </TextBox>
+                                            <TextBox Name="ListTitle" Text="{Binding Text,Source={StaticResource TVM}}"
+                                                    FontFamily="{TemplateBinding FontFamily}" Margin="5,2" FontSize="20" Style="{StaticResource TextBoxDefaultStyle}"
+                                                    FontWeight="Bold" VerticalAlignment="Top" Foreground="White" SelectionBrush="Gray">
+                                            </TextBox>
                                             <ItemsPresenter/>
+                                            <Button x:Name="AddButton" Height="25" Content="Add" Foreground="WhiteSmoke" FontSize="18" VerticalAlignment="Bottom" HorizontalContentAlignment="Left" Padding="10,0" Style="{StaticResource ButtonDefaultStyle}"/>
                                         </UniformGrid>
                                     </Border>
                                 </ControlTemplate>
@@ -117,7 +113,6 @@
                                         <Grid>
                                             
                                         </Grid>
-
                                     </Border>
                                 </DataTemplate>
                             </Setter.Value>
