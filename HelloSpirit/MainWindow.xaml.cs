@@ -27,6 +27,66 @@ namespace HelloSpirit
             CloseButton.Click += (a, e) => this.Close();
             Grass.GetGrass(GrassView);
             Label.DataContext = TimeText();
+
+            var checklist1 = new CheckList
+            {
+                Title = "Huzakeruna",
+                IsFinished = true
+            };
+            var checklist2 = new CheckList
+            {
+                Title = "たこやきくいてえ",
+                IsFinished = false
+            };
+            var checklist3 = new CheckList
+            {
+                Title = "風の中の俺",
+                IsFinished = true
+            };
+            var checklist4 = new CheckList
+            {
+                Title = "September",
+                IsFinished = false
+            };
+
+            List<CheckList> lister = new List<CheckList>
+            {
+                checklist1,
+                checklist2,
+                checklist3,
+                checklist4
+            };
+
+            var spirit = new Spirit
+            {
+                Title = "ワロタ",
+                Description = "はいわろたあ",
+                LimitDate = null,
+                CheckLists = lister
+            };
+            var spirit2 = new Spirit
+            {
+                Title = "たこやきたすく",
+                Description = "はいたこやき",
+                LimitDate = null,
+                CheckLists = lister
+            };
+            var spirit3 = new Spirit
+            {
+                Title = "たこたこたここ",
+                Description = "TAKOOOOOOOOOOOO!",
+                LimitDate = null,
+                CheckLists = lister
+            };
+
+            List<Spirit> list = new List<Spirit>
+            {
+                spirit,
+                spirit2,
+                spirit3
+            };
+
+            TestList.ItemsSource = list;
         }
 
         public static string TimeText()

@@ -8,6 +8,7 @@
         xmlns:ct="clr-namespace:Microsoft.Toolkit.Wpf.UI.Controls;assembly=Microsoft.Toolkit.Wpf.UI.Controls.WebView"
         xmlns:local="clr-namespace:HelloSpirit"
         mc:Ignorable="d"
+        x:Name="MainWin"
         Title="HelloSpirit" MinHeight="350" Height="900" MaxWidth="1000" MinWidth="1000" SizeToContent="Height" ResizeMode="CanResizeWithGrip" WindowState="Normal" WindowStyle="None" AllowsTransparency="True" Background="Black" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch">
     <Window.Resources>
         <local:TextBoxViewModel x:Key="TVM" Text="ListTitle"/>
@@ -86,20 +87,21 @@
                         <Setter Property="Background" Value="DimGray"/>
                         <Setter Property="Margin" Value="2,2,2,4"/>
                         <Setter Property="MinHeight" Value="100"/>
-                        
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="VerticalContentAlignment" Value="Top"/>
                         <!--ListBox Template-->
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="ListBox">
-                                    <Border CornerRadius="8" BorderThickness="2" BorderBrush="{TemplateBinding BorderBrush}">
-                                        <UniformGrid Columns="1">
+                                    <Border CornerRadius="8" BorderThickness="2" BorderBrush="{TemplateBinding BorderBrush}" VerticalAlignment="Top">
+                                        <StackPanel>
                                             <TextBox Name="ListTitle" Text="{Binding Text,Source={StaticResource TVM}}"
                                                     FontFamily="{TemplateBinding FontFamily}" Margin="5,2" FontSize="20" Style="{StaticResource TextBoxDefaultStyle}"
-                                                    FontWeight="Bold" VerticalAlignment="Top" Foreground="White" SelectionBrush="Gray">
+                                                    FontWeight="Bold" VerticalAlignment="Top" Background="{Binding Background, ElementName=MainWin}" Foreground="White" SelectionBrush="Gray">
                                             </TextBox>
-                                            <ItemsPresenter/>
+                                            <ItemsPresenter VerticalAlignment="Top"/>
                                             <Button x:Name="AddButton" Height="25" Content="Add" Foreground="WhiteSmoke" FontSize="18" VerticalAlignment="Bottom" HorizontalContentAlignment="Left" Padding="10,0" Style="{StaticResource ButtonDefaultStyle}"/>
-                                        </UniformGrid>
+                                        </StackPanel>
                                     </Border>
                                 </ControlTemplate>
                             </Setter.Value>
@@ -108,20 +110,39 @@
                         <!--ListBox ItemTemplate-->
                         <Setter Property="ItemTemplate">
                             <Setter.Value>
-                                <DataTemplate>
-                                    <Border BorderThickness="2" CornerRadius="5" Background="LightGray">
-                                        <Grid>
-                                            
-                                        </Grid>
-                                    </Border>
+                                <DataTemplate DataType="{x:Type local:Spirit}">
+                                    <StackPanel VerticalAlignment="Top">
+                                        <TextBox Text="{Binding Title}" Foreground="White" Style="{StaticResource TextBoxDefaultStyle}" Background="{x:Null}"/>
+                                        <Label Content="{Binding NumStr}" Foreground="White" Background="{x:Null}"/>
+                                    </StackPanel>
                                 </DataTemplate>
                             </Setter.Value>
                         </Setter>
                     </Style>
-
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="Background" Value="Black"/>
+                        <Setter Property="Margin" Value="5,2"/>
+                        <Setter Property="VerticalAlignment" Value="Top"/>
+                        <Setter Property="VerticalContentAlignment" Value="Top"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListBoxItem">
+                                    <Border x:Name="ListItem" CornerRadius="2" Background="{TemplateBinding Background}">
+                                        <ContentPresenter />
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="Gray"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
                 </UniformGrid.Resources>
                 <!--Contents-->
-                <ListBox ItemsSource="{Binding}"/>
+                <ListBox x:Name="TestList"/>
                 <ListBox/>
                 <ListBox/>
             </UniformGrid>
