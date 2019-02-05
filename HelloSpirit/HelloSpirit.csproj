@@ -131,6 +131,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BindableBase.cs" />
     <Compile Include="CheckList.cs" />
     <Compile Include="Spirit.cs" />
     <Compile Include="TextBoxViewModel.cs" />

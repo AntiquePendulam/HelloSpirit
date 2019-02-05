@@ -112,8 +112,8 @@
                             <Setter.Value>
                                 <DataTemplate DataType="{x:Type local:Spirit}">
                                     <StackPanel VerticalAlignment="Top">
-                                        <TextBox Text="{Binding Title}" Foreground="White" Style="{StaticResource TextBoxDefaultStyle}" Background="{x:Null}"/>
-                                        <Label Content="{Binding NumStr}" Foreground="White" Background="{x:Null}"/>
+                                        <TextBox Text="{Binding Title}" Foreground="White" Width="Auto" MinWidth="20" Style="{StaticResource TextBoxDefaultStyle}" Background="{x:Null}" HorizontalAlignment="Left"/>
+                                        <Label Content="{Binding Description}" Foreground="White" Background="{x:Null}" HorizontalAlignment="Left"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </Setter.Value>
