@@ -112,7 +112,7 @@
                             <Setter.Value>
                                 <DataTemplate DataType="{x:Type local:Spirit}">
                                     <StackPanel VerticalAlignment="Top">
-                                        <TextBox Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" FontSize="18" FontWeight="Bold" Foreground="Black" Width="Auto" MinWidth="20" Style="{StaticResource TextBoxDefaultStyle}" Background="{x:Null}" HorizontalAlignment="Left"/>
+                                        <TextBox Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" SelectionBrush="LightGray" FontSize="18" FontWeight="Bold" Foreground="Black" Width="Auto" MinWidth="20" Style="{StaticResource TextBoxDefaultStyle}" Background="{x:Null}" HorizontalAlignment="Left"/>
                                         <Label Content="{Binding Title, UpdateSourceTrigger=PropertyChanged}" FontSize="15" Foreground="Black" Background="{x:Null}" HorizontalAlignment="Left"/>
                                     </StackPanel>
                                 </DataTemplate>
