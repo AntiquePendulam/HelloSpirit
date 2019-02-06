@@ -33,7 +33,7 @@
                                     <Setter Property="BorderBrush" Value="{x:Null}"/>
                                 </Style>
                             </Border.Style>
-                            <TextBox Text="{TemplateBinding Text}" SelectionBrush="{TemplateBinding SelectionBrush}" BorderThickness="0" Foreground="{TemplateBinding Foreground}" Background="{TemplateBinding Background}"/>
+                            <TextBox Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}" SelectionBrush="{TemplateBinding SelectionBrush}" BorderThickness="0" Foreground="{TemplateBinding Foreground}" Background="{TemplateBinding Background}"/>
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
