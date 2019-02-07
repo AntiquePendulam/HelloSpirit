@@ -35,6 +35,7 @@ namespace HelloSpirit
             Grass.GetGrass(GrassView);
             Label.DataContext = TimeText();
             MinimumButton.Click += (a, e) => this.WindowState = WindowState.Minimized;
+            this.Closing += (a, e) => AddWindow.Close();
 
             var checklist1 = new CheckList
             {
@@ -101,12 +102,6 @@ namespace HelloSpirit
         {
             var time = DateTime.Now.Hour;
             return $"Hello! {App.UserName}.";
-        }
-
-        private void Fie_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            var t = sender as TextBox;
-            Dispatcher.BeginInvoke(new Action(() => MessageBox.Show(t.Text)) );
         }
 
         //ListBoxitemClick
