@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Collections.ObjectModel;
 
 namespace HelloSpirit
 {
@@ -79,20 +80,26 @@ namespace HelloSpirit
                 CheckLists = lister
             };
 
-            List<Spirit> list = new List<Spirit>
+            ObservableCollection<Spirit> list = new ObservableCollection<Spirit>
             {
                 spirit,
                 spirit2,
                 spirit3
             };
 
-            TestList.ItemsSource = list;
+            TestList.DataContext = list;
         }
 
         public static string TimeText()
         {
             var time = DateTime.Now.Hour;
             return $"Hello! {App.UserName}.";
+        }
+
+        private void Fie_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var t = sender as TextBox;
+            Dispatcher.BeginInvoke(new Action(() => MessageBox.Show(t.Text)) );
         }
     }
 }

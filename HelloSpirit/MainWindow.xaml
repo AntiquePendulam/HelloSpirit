@@ -112,8 +112,8 @@
                             <Setter.Value>
                                 <DataTemplate DataType="{x:Type local:Spirit}">
                                     <StackPanel VerticalAlignment="Top">
-                                        <TextBox Text="{Binding Title}" Foreground="White" Width="Auto" MinWidth="20" Style="{StaticResource TextBoxDefaultStyle}" Background="{x:Null}" HorizontalAlignment="Left"/>
-                                        <Label Content="{Binding Description}" Foreground="White" Background="{x:Null}" HorizontalAlignment="Left"/>
+                                        <TextBox Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" SelectionBrush="LightGray" FontSize="18" FontWeight="Bold" Foreground="Black" Width="Auto" MinWidth="20" Style="{StaticResource TextBoxDefaultStyle}" Background="{x:Null}" HorizontalAlignment="Left"/>
+                                        <Label Content="{Binding Title, UpdateSourceTrigger=PropertyChanged}" FontSize="15" Foreground="Black" Background="{x:Null}" HorizontalAlignment="Left"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </Setter.Value>
@@ -125,6 +125,7 @@
                         <Setter Property="Margin" Value="5,2"/>
                         <Setter Property="VerticalAlignment" Value="Top"/>
                         <Setter Property="VerticalContentAlignment" Value="Top"/>
+                        <Setter Property="Background" Value="WhiteSmoke"/>
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="ListBoxItem">
@@ -142,7 +143,7 @@
                     </Style>
                 </UniformGrid.Resources>
                 <!--Contents-->
-                <ListBox x:Name="TestList"/>
+                <ListBox x:Name="TestList" ItemsSource="{Binding}"/>
                 <ListBox/>
                 <ListBox/>
             </UniformGrid>
