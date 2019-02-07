@@ -21,13 +21,20 @@ namespace HelloSpirit
     /// </summary>
     public partial class MainWindow : Window
     {
+        public static AddSpirit AddWindow { get; } = new AddSpirit();
+
         public MainWindow()
         {
             InitializeComponent();
-            TitleBar.MouseLeftButtonDown += (a, e) => DragMove();
+            TitleBar.MouseLeftButtonDown += (a, e) =>
+            {
+                DragMove();
+                this.WindowState = WindowState.Normal;
+            };
             CloseButton.Click += (a, e) => this.Close();
             Grass.GetGrass(GrassView);
             Label.DataContext = TimeText();
+            MinimumButton.Click += (a, e) => this.WindowState = WindowState.Minimized;
 
             var checklist1 = new CheckList
             {
@@ -100,6 +107,12 @@ namespace HelloSpirit
         {
             var t = sender as TextBox;
             Dispatcher.BeginInvoke(new Action(() => MessageBox.Show(t.Text)) );
+        }
+
+        //ListBoxitemClick
+        private void Spirit_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            AddWindow.Show();
         }
     }
 }

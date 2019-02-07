@@ -52,7 +52,7 @@
 
                 <!--Column 2 Minimum & Close button-->
                 <UniformGrid Grid.Column="3" Rows="1">
-                    <Button Content="-" Style="{StaticResource ButtonDefaultStyle}">
+                    <Button x:Name="MinimumButton" Content="-" Style="{StaticResource ButtonDefaultStyle}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Click">
                                 <ei:ChangePropertyAction TargetName="Window" PropertyName="WindowState" Value="Minimized"/>
@@ -125,16 +125,16 @@
                         <Setter Property="Margin" Value="5,2"/>
                         <Setter Property="VerticalAlignment" Value="Top"/>
                         <Setter Property="VerticalContentAlignment" Value="Top"/>
-                        <Setter Property="Background" Value="WhiteSmoke"/>
+                        <Setter Property="Background" Value="LightGray"/>
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="ListBoxItem">
-                                    <Border x:Name="ListItem" CornerRadius="2" Background="{TemplateBinding Background}">
+                                    <Border x:Name="ListItem" CornerRadius="2" Background="{TemplateBinding Background}" MouseLeftButtonUp="Spirit_MouseLeftButtonUp">
                                         <ContentPresenter />
                                     </Border>
                                     <ControlTemplate.Triggers>
                                         <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Background" Value="Gray"/>
+                                            <Setter Property="Background" Value="WhiteSmoke"/>
                                         </Trigger>
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>

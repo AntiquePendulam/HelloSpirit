@@ -131,10 +131,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AddSpirit.xaml.cs">
+      <DependentUpon>AddSpirit.xaml</DependentUpon>
+    </Compile>
     <Compile Include="BindableBase.cs" />
     <Compile Include="CheckList.cs" />
     <Compile Include="Spirit.cs" />
     <Compile Include="TextBoxViewModel.cs" />
+    <Page Include="AddSpirit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
