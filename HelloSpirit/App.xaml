@@ -79,7 +79,7 @@
                                     </Grid.ColumnDefinitions>
 
                                     <!--Column 0 Title Text-->
-                                    <Label Content="HelloSpirit - Say Hello to your Spirits." FontSize="15" FontStyle="Italic"/>
+                                    <Label Content="{TemplateBinding Title}" FontSize="15" FontStyle="Italic"/>
 
                                     <!--Column 2 Minimum & Close button-->
                                     <UniformGrid Grid.Column="3" Rows="1">

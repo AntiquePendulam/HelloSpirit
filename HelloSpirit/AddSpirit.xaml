@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:HelloSpirit"
         mc:Ignorable="d"
         Name="AddSpi"
-        Title="AddSpirit" Height="450" Width="800" Style="{StaticResource WindowDefaultStyle}">
-    <Grid>
+        Title="AddSpirit - Add your Tasks." Height="450" Width="800" Style="{StaticResource WindowDefaultStyle}">
+    <Grid Height="500">
         
     </Grid>
 </Window>

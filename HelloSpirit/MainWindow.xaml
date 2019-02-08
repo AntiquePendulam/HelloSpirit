@@ -9,7 +9,7 @@
         xmlns:local="clr-namespace:HelloSpirit"
         mc:Ignorable="d"
         Name="MainWIn"
-        Title="HelloSpirit" MinHeight="350" Height="900" MaxWidth="1000" MinWidth="1000" VerticalContentAlignment="Stretch" Style="{StaticResource WindowDefaultStyle}">
+        Title="HelloSpirit - Say Hello to your Spirits." MinHeight="350" Height="900" MaxWidth="1000" MinWidth="1000" VerticalContentAlignment="Stretch" Style="{StaticResource WindowDefaultStyle}">
     <Window.Resources>
         <local:TextBoxViewModel x:Key="TVM" Text="ListTitle"/>
         <Style TargetType="Border">
