@@ -23,5 +23,9 @@ namespace HelloSpirit
         {
             InitializeComponent();
         }
+        public void CloseButton_Clicked()
+        {
+            this.Visibility = Visibility.Collapsed;
+        }
     }
 }
