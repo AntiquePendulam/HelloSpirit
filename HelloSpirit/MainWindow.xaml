@@ -8,8 +8,8 @@
         xmlns:ct="clr-namespace:Microsoft.Toolkit.Wpf.UI.Controls;assembly=Microsoft.Toolkit.Wpf.UI.Controls.WebView"
         xmlns:local="clr-namespace:HelloSpirit"
         mc:Ignorable="d"
-        x:Name="MainWin"
-        Title="HelloSpirit" MinHeight="350" Height="900" MaxWidth="1000" MinWidth="1000" SizeToContent="Height" ResizeMode="CanResizeWithGrip" WindowState="Normal" WindowStyle="None" AllowsTransparency="True" Background="Black" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch">
+        Name="MainWIn"
+        Title="HelloSpirit" MinHeight="350" Height="900" MaxWidth="1000" MinWidth="1000" VerticalContentAlignment="Stretch" Style="{StaticResource WindowDefaultStyle}">
     <Window.Resources>
         <local:TextBoxViewModel x:Key="TVM" Text="ListTitle"/>
         <Style TargetType="Border">
@@ -19,12 +19,8 @@
             <Setter Property="FontFamily" Value="/HelloTask;component/Fonts/#M+ 2c"/>
         </Style>
     </Window.Resources>
-
-
     <Grid>
         <Grid.RowDefinitions>
-            <!--Title Bar-->
-            <RowDefinition Height="30"/>
             <!--Content-->
             <RowDefinition Height="Auto"/>
             <!--Grass View-->
@@ -32,47 +28,6 @@
             <!--Footer-->
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <!--Row0 : TitleBar Grid-->
-        <Border BorderThickness="0,0,0,1" VerticalAlignment="Top" Margin="0,1,0,0" Height="30">
-            <Grid x:Name="TitleBar" Background="Black">
-                <Grid.Resources>
-                    <Style TargetType="{x:Type Label}">
-                        <Setter Property="Foreground" Value="LightGray"/>
-                    </Style>
-                </Grid.Resources>
-
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="80"/>
-                </Grid.ColumnDefinitions>
-
-                <!--Column 0 Title Text-->
-                <Label Content="HelloSpirit - Say Hello to your Spirits." FontSize="15" FontStyle="Italic"/>
-
-                <!--Column 2 Minimum & Close button-->
-                <UniformGrid Grid.Column="3" Rows="1">
-                    <Button x:Name="MinimumButton" Content="-" Style="{StaticResource ButtonDefaultStyle}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Click">
-                                <ei:ChangePropertyAction TargetName="Window" PropertyName="WindowState" Value="Minimized"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </Button>
-                    <Button x:Name="CloseButton" Content="X">
-                        <Button.Style>
-                            <Style TargetType="Button" BasedOn="{StaticResource ButtonDefaultStyle}">
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="true">
-                                        <Setter Property="Background" Value="Red"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-                    </Button>
-                </UniformGrid>
-            </Grid>
-        </Border>
 
         <!--Row 1 Task View-->
         <Grid Grid.Row="1" VerticalAlignment="Top">
@@ -113,12 +68,14 @@
                                 <DataTemplate DataType="{x:Type local:Spirit}">
                                     <StackPanel VerticalAlignment="Top">
                                         <TextBox Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" SelectionBrush="LightGray" FontSize="18" FontWeight="Bold" Foreground="Black" Width="Auto" MinWidth="20" Style="{StaticResource TextBoxDefaultStyle}" Background="{x:Null}" HorizontalAlignment="Left"/>
-                                        <Label Content="{Binding Title, UpdateSourceTrigger=PropertyChanged}" FontSize="15" Foreground="Black" Background="{x:Null}" HorizontalAlignment="Left"/>
+                                        <Label Content="{Binding NumStr, UpdateSourceTrigger=PropertyChanged}" FontSize="15" Foreground="Black" Background="{x:Null}" HorizontalAlignment="Left"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </Setter.Value>
                         </Setter>
                     </Style>
+
+                    <!--ListBoxItem-->
                     <Style TargetType="ListBoxItem">
                         <Setter Property="BorderThickness" Value="0"/>
                         <Setter Property="Background" Value="Black"/>
@@ -126,6 +83,7 @@
                         <Setter Property="VerticalAlignment" Value="Top"/>
                         <Setter Property="VerticalContentAlignment" Value="Top"/>
                         <Setter Property="Background" Value="LightGray"/>
+                        <!--ListBoxItem Template-->
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="ListBoxItem">
@@ -164,4 +122,5 @@
         <!--Row 3 Footer-->
         <Grid Grid.Row="3" Height="15" Background="DarkGray" VerticalAlignment="Bottom"/>
     </Grid>
+
 </Window>

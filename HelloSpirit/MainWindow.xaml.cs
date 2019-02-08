@@ -26,15 +26,8 @@ namespace HelloSpirit
         public MainWindow()
         {
             InitializeComponent();
-            TitleBar.MouseLeftButtonDown += (a, e) =>
-            {
-                DragMove();
-                this.WindowState = WindowState.Normal;
-            };
-            CloseButton.Click += (a, e) => this.Close();
             Grass.GetGrass(GrassView);
             Label.DataContext = TimeText();
-            MinimumButton.Click += (a, e) => this.WindowState = WindowState.Minimized;
             this.Closing += (a, e) => AddWindow.Close();
 
             var checklist1 = new CheckList
@@ -108,6 +101,11 @@ namespace HelloSpirit
         private void Spirit_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             AddWindow.Show();
+        }
+
+        public void CloseButton_Clicked()
+        {
+            this.Close();
         }
     }
 }

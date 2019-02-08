@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HelloSpirit"
         mc:Ignorable="d"
-        Title="AddSpirit" Height="450" Width="800" SizeToContent="Height" ResizeMode="CanResizeWithGrip" WindowState="Normal" WindowStyle="None" AllowsTransparency="True" Background="Black">
+        Name="AddSpi"
+        Title="AddSpirit" Height="450" Width="800" Style="{StaticResource WindowDefaultStyle}">
     <Grid>
         
     </Grid>
