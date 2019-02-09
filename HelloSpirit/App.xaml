@@ -54,10 +54,10 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Window">
-                        <Grid Background="{TemplateBinding Background}">
+                        <Grid Background="{TemplateBinding Background}" VerticalAlignment="Top">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="30"/>
-                                <RowDefinition/>
+                                <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
                             <Border BorderThickness="0,0,0,1" VerticalAlignment="Top" Margin="0,1,0,0" Height="30">
                                 <Grid x:Name="TitleBar" Background="Black">
