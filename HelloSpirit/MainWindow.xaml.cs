@@ -51,7 +51,7 @@ namespace HelloSpirit
                 IsFinished = false
             };
 
-            List<CheckList> lister = new List<CheckList>
+            ObservableCollection<CheckList> lister = new ObservableCollection<CheckList>
             {
                 checklist1,
                 checklist2,
