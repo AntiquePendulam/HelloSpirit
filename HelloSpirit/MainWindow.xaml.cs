@@ -27,7 +27,6 @@ namespace HelloSpirit
         {
             InitializeComponent();
             Grass.GetGrass(GrassView);
-            Label.DataContext = TimeText();
             CloseButton.Click += (a, e) => Close();
             TitleBar.MouseDown += (a, e) => DragMove();
             this.Closing += (a, e) => AddWindow.Close();
@@ -121,17 +120,29 @@ namespace HelloSpirit
                 spirit3
             };
 
-            var liss = new SpiritListVM()
+            var Offi = new SpiritListViewModel()
             {
-                Items = list,
-                Items2 = list2
+                ListTitle = "Go Lang",
+                List = list
             };
-            this.DataContext = liss;
+            var Offi2 = new SpiritListViewModel()
+            {
+                ListTitle = "C#",
+                List = list2
+            };
+            var ff = new MainWindowViewModel()
+            {
+                Lists = new ObservableCollection<SpiritListViewModel>()
+                {
+                    Offi,Offi2
+                }
+            };
+
+            this.DataContext = ff;
         }
 
         public static string TimeText()
         {
-            var time = DateTime.Now.Hour;
             return $"Hello! {App.UserName}.";
         }
 

@@ -12,13 +12,106 @@
         Name="MainWIn"
         Title="HelloSpirit - Say Hello to your Spirits." MinHeight="350" Height="900" MaxWidth="1000" MinWidth="1000" VerticalContentAlignment="Stretch" Style="{StaticResource WindowNonTemplateStyle}">
     <Window.Resources>
+        <DataTemplate x:Key="DragAdorner">
+            <Border Background="Silver" BorderBrush="Gray" BorderThickness="1" CornerRadius="2" SnapsToDevicePixels="True">
+                <StackPanel Orientation="Horizontal" Margin="4">
+                    <TextBlock Text="{Binding Title}" Margin="6,0,0,0" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Border>
+        </DataTemplate>
         <Style TargetType="Border">
             <Setter Property="BorderBrush" Value="Gray"/>
         </Style>
         <Style TargetType="Label">
             <Setter Property="FontFamily" Value="/HelloTask;component/Fonts/#M+ 2c"/>
         </Style>
+        <Style x:Key="ListBoxDefaultStyle" TargetType="ListBox">
+            <Setter Property="Background" Value="DimGray"/>
+            <Setter Property="Margin" Value="2,2,2,4"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="dd:DragDrop.IsDragSource" Value="True"/>
+            <Setter Property="dd:DragDrop.IsDropTarget" Value="True"/>
+            <Setter Property="dd:DragDrop.DragAdornerTemplate" Value="{StaticResource DragAdorner}"/>
+            <Setter Property="dd:DragDrop.DropTargetAdornerBrush" Value="IndianRed"/>
+            <Setter Property="SelectionMode" Value="Extended"/>
+            <Setter Property="ItemsSource" Value="{Binding List}"/>
+            <!--ListBox Template-->
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBox">
+                        <Border CornerRadius="8" BorderThickness="2" BorderBrush="{TemplateBinding BorderBrush}" >
+                            <StackPanel>
+                                <TextBox Name="ListTitle" Text="{Binding ListTitle}"
+                                         FontFamily="{TemplateBinding FontFamily}" Margin="5,2" FontSize="20" Style="{StaticResource TextBoxDefaultStyle}"
+                                         FontWeight="Bold" VerticalAlignment="Top" Background="{Binding RelativeSource={RelativeSource AncestorType=Window}}" Foreground="White" SelectionBrush="Gray">
+                                </TextBox>
+                                <ItemsPresenter VerticalAlignment="Top"/>
+                                <Button x:Name="AddButton" Height="25" Content="Add" Foreground="WhiteSmoke" FontSize="18" VerticalAlignment="Bottom" HorizontalContentAlignment="Left" Padding="10,0" Style="{StaticResource ButtonDefaultStyle}"/>
+                            </StackPanel>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <!--ListBox ItemTemplate-->
+            <Setter Property="ItemTemplate">
+                <Setter.Value>
+                    <DataTemplate DataType="{x:Type local:Spirit}">
+                        <StackPanel VerticalAlignment="Top">
+                            <TextBox Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" SelectionBrush="LightGray" FontSize="18" FontWeight="Bold" Foreground="Black" Width="Auto" MinWidth="20" Style="{StaticResource TextBoxDefaultStyle}" Background="{x:Null}" HorizontalAlignment="Left"/>
+                            <Label Content="{Binding NumStr, UpdateSourceTrigger=PropertyChanged}" FontSize="15" Foreground="Black" Background="{x:Null}" HorizontalAlignment="Left"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="ListBoxItemDefaultStyle" TargetType="ListBoxItem">
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Background" Value="Black"/>
+            <Setter Property="Margin" Value="5,2"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="VerticalContentAlignment" Value="Top"/>
+            <Setter Property="Background" Value="LightGray"/>
+            <!--ListBoxItem Template-->
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <Border x:Name="SpiritItem" CornerRadius="2" Background="{TemplateBinding Background}">
+                            <ContentPresenter />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="WhiteSmoke"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
+        <Style x:Key="ListBoxListStyle" TargetType="ListBox">
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="ItemTemplate">
+                <Setter.Value>
+                    <DataTemplate DataType="{x:Type local:SpiritListViewModel}">
+                        <ListBox ItemsSource="{Binding List}" DataContext="{Binding}" Style="{StaticResource ListBoxDefaultStyle}" ItemContainerStyle="{StaticResource ListBoxItemDefaultStyle}"/>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="ListBoxListItemStyle" TargetType="ListBoxItem">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="VerticalContentAlignment" Value="Top"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <ContentPresenter/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
     
     <Grid Background="{Binding Background, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}" VerticalAlignment="Top">
@@ -31,6 +124,8 @@
             <!--Footer-->
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
+        
+        <!--Title Bar-->
         <Border BorderThickness="0,0,0,1" VerticalAlignment="Top" Margin="0,1,0,0" Height="30">
             <Grid x:Name="TitleBar" Background="Black">
                 <Grid.Resources>
@@ -72,19 +167,22 @@
                 </UniformGrid>
             </Grid>
         </Border>
+        
         <!--Row 1 Task View-->
         <Grid Grid.Row="1" VerticalAlignment="Top">
             <Grid.RowDefinitions>
-                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Label x:Name="Label" Content="{Binding}" Foreground="WhiteSmoke" FontSize="20" FontWeight="Bold" VerticalAlignment="Top"/>
-            <UniformGrid Grid.Row="1" Rows="1">
-                <!--Contents-->
-                <ListBox ItemsSource="{Binding Items}" Style="{StaticResource ListBoxDefaultStyle}" ItemContainerStyle="{StaticResource ListBoxItemDefaultStyle}"/>
-                <ListBox ItemsSource="{Binding Items2}" Style="{StaticResource ListBoxDefaultStyle}" ItemContainerStyle="{StaticResource ListBoxItemDefaultStyle}"/>
-                <ListBox ItemsSource="{Binding Items3}" Style="{StaticResource ListBoxDefaultStyle}" ItemContainerStyle="{StaticResource ListBoxItemDefaultStyle}"/>
-            </UniformGrid>
+            <Label x:Name="Label" Content="{Binding UserName}" Foreground="WhiteSmoke" FontSize="20" FontWeight="Bold" VerticalAlignment="Top"/>
+            <!--Contents-->
+            <ListBox Grid.Row="1" ItemsSource="{Binding Lists}" Style="{StaticResource ListBoxListStyle}" ItemContainerStyle="{StaticResource ListBoxListItemStyle}" Background="{x:Null}" BorderThickness="0" VerticalAlignment="Top" HorizontalContentAlignment="Stretch">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Rows="1" VerticalAlignment="Top"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+            </ListBox>
         </Grid>
 
         <!--Row 2 GrassView-->

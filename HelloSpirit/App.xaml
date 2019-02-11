@@ -8,16 +8,7 @@
              Startup="Application_Startup"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <!--Test ViewModel-->
-        <local:TextBoxViewModel x:Key="TVM" Text="ListTitle"/>
-        
-        <DataTemplate x:Key="DragAdorner">
-            <Border Background="Silver" BorderBrush="Gray" BorderThickness="1" CornerRadius="2" SnapsToDevicePixels="True">
-                <StackPanel Orientation="Horizontal" Margin="4">
-                    <TextBlock Text="{Binding Title}" Margin="6,0,0,0" VerticalAlignment="Center"/>
-                </StackPanel>
-            </Border>
-        </DataTemplate>
+
         
         <Style x:Key="ButtonDefaultStyle" TargetType="Button">
             <Setter Property="Background" Value="Black"/>
@@ -103,7 +94,7 @@
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
                                         </Button>
-                                        
+
                                         <Button x:Name="CloseButton" Content="X">
                                             <Button.Style>
                                                 <Style TargetType="Button" BasedOn="{StaticResource ButtonDefaultStyle}">
@@ -125,69 +116,6 @@
                             </Border>
                             <ContentPresenter Grid.Row="1"/>
                         </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="ListBoxDefaultStyle" TargetType="ListBox">
-            <Setter Property="Background" Value="DimGray"/>
-            <Setter Property="Margin" Value="2,2,2,4"/>
-            <Setter Property="MinHeight" Value="100"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="VerticalContentAlignment" Value="Top"/>
-            <Setter Property="dd:DragDrop.IsDragSource" Value="True"/>
-            <Setter Property="dd:DragDrop.IsDropTarget" Value="True"/>
-            <Setter Property="dd:DragDrop.DragAdornerTemplate" Value="{StaticResource DragAdorner}"/>
-            <Setter Property="dd:DragDrop.DropTargetAdornerBrush" Value="IndianRed"/>
-            <Setter Property="SelectionMode" Value="Extended"/>
-            <!--ListBox Template-->
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ListBox">
-                        <Border CornerRadius="8" BorderThickness="2" BorderBrush="{TemplateBinding BorderBrush}" VerticalAlignment="Top" >
-                            <StackPanel>
-                                <TextBox Name="ListTitle" Text="{Binding Text,Source={StaticResource TVM}}"
-                                                    FontFamily="{TemplateBinding FontFamily}" Margin="5,2" FontSize="20" Style="{StaticResource TextBoxDefaultStyle}"
-                                                    FontWeight="Bold" VerticalAlignment="Top" Background="{Binding Background, ElementName=MainWin}" Foreground="White" SelectionBrush="Gray">
-                                </TextBox>
-                                <ItemsPresenter VerticalAlignment="Top"/>
-                                <Button x:Name="AddButton" Height="25" Content="Add" Foreground="WhiteSmoke" FontSize="18" VerticalAlignment="Bottom" HorizontalContentAlignment="Left" Padding="10,0" Style="{StaticResource ButtonDefaultStyle}"/>
-                            </StackPanel>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <!--ListBox ItemTemplate-->
-            <Setter Property="ItemTemplate">
-                <Setter.Value>
-                    <DataTemplate DataType="{x:Type local:Spirit}">
-                        <StackPanel VerticalAlignment="Top">
-                            <TextBox Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" SelectionBrush="LightGray" FontSize="18" FontWeight="Bold" Foreground="Black" Width="Auto" MinWidth="20" Style="{StaticResource TextBoxDefaultStyle}" Background="{x:Null}" HorizontalAlignment="Left"/>
-                            <Label Content="{Binding NumStr, UpdateSourceTrigger=PropertyChanged}" FontSize="15" Foreground="Black" Background="{x:Null}" HorizontalAlignment="Left"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="ListBoxItemDefaultStyle" TargetType="ListBoxItem">
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Background" Value="Black"/>
-            <Setter Property="Margin" Value="5,2"/>
-            <Setter Property="VerticalAlignment" Value="Top"/>
-            <Setter Property="VerticalContentAlignment" Value="Top"/>
-            <Setter Property="Background" Value="LightGray"/>
-            <!--ListBoxItem Template-->
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ListBoxItem">
-                        <Border x:Name="SpiritItem" CornerRadius="2" Background="{TemplateBinding Background}">
-                            <ContentPresenter />
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="WhiteSmoke"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>

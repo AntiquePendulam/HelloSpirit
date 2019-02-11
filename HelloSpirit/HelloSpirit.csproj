@@ -139,9 +139,10 @@
     </Compile>
     <Compile Include="BindableBase.cs" />
     <Compile Include="CheckList.cs" />
+    <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="Spirit.cs" />
+    <Compile Include="SpiritListViewModel.cs" />
     <Compile Include="SpiritListVM.cs" />
-    <Compile Include="TextBoxViewModel.cs" />
     <Page Include="AddSpirit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
