@@ -43,7 +43,7 @@
                             <StackPanel>
                                 <TextBox Name="ListTitle" Text="{Binding ListTitle}"
                                          FontFamily="{TemplateBinding FontFamily}" Margin="5,2" FontSize="20" Style="{StaticResource TextBoxDefaultStyle}"
-                                         FontWeight="Bold" VerticalAlignment="Top" Background="{Binding RelativeSource={RelativeSource AncestorType=Window}}" Foreground="White" SelectionBrush="Gray">
+                                         FontWeight="Bold" VerticalAlignment="Top" Background="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}" Foreground="White" SelectionBrush="Gray">
                                 </TextBox>
                                 <ItemsPresenter VerticalAlignment="Top"/>
                                 <Button x:Name="AddButton" Height="25" Content="Add" Foreground="WhiteSmoke" FontSize="18" VerticalAlignment="Bottom" HorizontalContentAlignment="Left" Padding="10,0" Style="{StaticResource ButtonDefaultStyle}"/>
@@ -64,13 +64,22 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        
         <Style x:Key="ListBoxItemDefaultStyle" TargetType="ListBoxItem">
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Background" Value="Black"/>
             <Setter Property="Margin" Value="5,2"/>
             <Setter Property="VerticalAlignment" Value="Top"/>
             <Setter Property="VerticalContentAlignment" Value="Top"/>
-            <Setter Property="Background" Value="LightGray"/>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                        <GradientStop Color="Yellow" Offset="0"/>
+                        <GradientStop Color="Orange" Offset="0.5"/>
+                        <GradientStop Color="Red" Offset="1"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
             <!--ListBoxItem Template-->
             <Setter Property="Template">
                 <Setter.Value>

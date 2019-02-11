@@ -82,28 +82,28 @@ namespace HelloSpirit
 
             var spirit = new Spirit
             {
-                Title = "ひとつめ",
+                Title = "ListBoxの中身クリック表示",
                 Description = "はいわろたあ",
                 LimitDate = null,
                 CheckLists = lister
             };
             var spirit2 = new Spirit
             {
-                Title = "ふたつめ",
+                Title = "Add機能追加",
                 Description = "はいたこやき",
                 LimitDate = null,
                 CheckLists = lister
             };
             var spirit3 = new Spirit
             {
-                Title = "みっつめ",
+                Title = "Jsonファイル化",
                 Description = "TAKOOOOOOOOOOOO!",
                 LimitDate = null,
                 CheckLists = lister
             };
             var spirit4 = new Spirit
             {
-                Title = "よっつめ",
+                Title = "期限機能追加",
                 Description = "YRAHH!",
                 LimitDate = null,
                 CheckLists = lister2
@@ -122,12 +122,12 @@ namespace HelloSpirit
 
             var Offi = new SpiritListViewModel()
             {
-                ListTitle = "Go Lang",
+                ListTitle = "C#",
                 List = list
             };
             var Offi2 = new SpiritListViewModel()
             {
-                ListTitle = "C#",
+                ListTitle = "Go langもしなきゃ",
                 List = list2
             };
             var ff = new MainWindowViewModel()
