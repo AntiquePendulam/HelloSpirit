@@ -21,13 +21,15 @@ namespace HelloSpirit
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static AddSpirit AddWindow { get; } = new AddSpirit();
+        private static AddSpirit AddWindow { get; } = new AddSpirit();
 
         public MainWindow()
         {
             InitializeComponent();
             Grass.GetGrass(GrassView);
             Label.DataContext = TimeText();
+            CloseButton.Click += (a, e) => Close();
+            TitleBar.MouseDown += (a, e) => DragMove();
             this.Closing += (a, e) => AddWindow.Close();
 
             var checklist1 = new CheckList
@@ -50,6 +52,16 @@ namespace HelloSpirit
                 Title = "September",
                 IsFinished = false
             };
+            var checklist5 = new CheckList
+            {
+                Title = "魂の平穏",
+                IsFinished = true
+            };
+            var checklist6 = new CheckList
+            {
+                Title = "アドレナリン",
+                IsFinished = true
+            };
 
             ObservableCollection<CheckList> lister = new ObservableCollection<CheckList>
             {
@@ -59,36 +71,62 @@ namespace HelloSpirit
                 checklist4
             };
 
+            ObservableCollection<CheckList> lister2 = new ObservableCollection<CheckList>
+            {
+                checklist1,
+                checklist2,
+                checklist3,
+                checklist4,
+                checklist5,
+                checklist6
+            };
+
             var spirit = new Spirit
             {
-                Title = "ワロタ",
+                Title = "ひとつめ",
                 Description = "はいわろたあ",
                 LimitDate = null,
                 CheckLists = lister
             };
             var spirit2 = new Spirit
             {
-                Title = "たこやきたすく",
+                Title = "ふたつめ",
                 Description = "はいたこやき",
                 LimitDate = null,
                 CheckLists = lister
             };
             var spirit3 = new Spirit
             {
-                Title = "たこたこたここ",
+                Title = "みっつめ",
                 Description = "TAKOOOOOOOOOOOO!",
                 LimitDate = null,
                 CheckLists = lister
             };
+            var spirit4 = new Spirit
+            {
+                Title = "よっつめ",
+                Description = "YRAHH!",
+                LimitDate = null,
+                CheckLists = lister2
+            };
 
-            ObservableCollection<Spirit> list = new ObservableCollection<Spirit>
+            var list = new ObservableCollection<Spirit>
             {
                 spirit,
                 spirit2,
+                spirit4
+            };
+            var list2 = new ObservableCollection<Spirit>
+            {
                 spirit3
             };
 
-            TestList.DataContext = list;
+            var liss = new SpiritListVM()
+            {
+                Items = list,
+                Items2 = list2
+            };
+            this.DataContext = liss;
         }
 
         public static string TimeText()
@@ -97,15 +135,14 @@ namespace HelloSpirit
             return $"Hello! {App.UserName}.";
         }
 
-        //ListBoxitemClick
-        private void Spirit_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            AddWindow.Show();
-        }
-
         public void CloseButton_Clicked()
         {
             this.Close();
+        }
+
+        private void ListBoxItem_Selected(object sender, RoutedEventArgs e)
+        {
+            AddWindow.Show();
         }
     }
 }

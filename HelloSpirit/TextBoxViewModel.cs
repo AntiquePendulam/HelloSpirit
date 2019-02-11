@@ -8,7 +8,7 @@ using System.ComponentModel;
 
 namespace HelloSpirit
 {
-    public class TextBoxViewModel : INotifyPropertyChanged
+    public class TextBoxViewModel :  INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
