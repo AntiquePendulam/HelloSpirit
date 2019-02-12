@@ -7,22 +7,136 @@
         xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
         xmlns:ct="clr-namespace:Microsoft.Toolkit.Wpf.UI.Controls;assembly=Microsoft.Toolkit.Wpf.UI.Controls.WebView"
         xmlns:local="clr-namespace:HelloSpirit"
+        xmlns:dd="urn:gong-wpf-dragdrop"
         mc:Ignorable="d"
-        Title="HelloSpirit" MinHeight="350" Height="900" MaxWidth="1000" MinWidth="1000" SizeToContent="Height" ResizeMode="CanResizeWithGrip" WindowState="Normal" WindowStyle="None" AllowsTransparency="True" Background="Black" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch">
+        Name="MainWIn"
+        Title="HelloSpirit - Say Hello to your Spirits." MinHeight="350" Height="900" MaxWidth="1000" MinWidth="1000" VerticalContentAlignment="Stretch" Style="{StaticResource WindowNonTemplateStyle}">
     <Window.Resources>
-        <local:TextBoxViewModel x:Key="TVM" Text="ListTitle"/>
+        <DataTemplate x:Key="DragAdorner">
+            <Border Background="Silver" BorderBrush="Gray" BorderThickness="1" CornerRadius="2" SnapsToDevicePixels="True">
+                <StackPanel Orientation="Horizontal" Margin="4">
+                    <TextBlock Text="{Binding Title}" Margin="6,0,0,0" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Border>
+        </DataTemplate>
         <Style TargetType="Border">
             <Setter Property="BorderBrush" Value="Gray"/>
         </Style>
         <Style TargetType="Label">
             <Setter Property="FontFamily" Value="/HelloTask;component/Fonts/#M+ 2c"/>
         </Style>
+        <Style x:Key="ListBoxDefaultStyle" TargetType="ListBox">
+            <Setter Property="Margin" Value="2,2,2,4"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
+            <Setter Property="dd:DragDrop.IsDragSource" Value="True"/>
+            <Setter Property="dd:DragDrop.IsDropTarget" Value="True"/>
+            <Setter Property="dd:DragDrop.DragAdornerTemplate" Value="{StaticResource DragAdorner}"/>
+            <Setter Property="dd:DragDrop.DropTargetAdornerBrush" Value="IndianRed"/>
+            <Setter Property="SelectionMode" Value="Extended"/>
+            <Setter Property="ItemsSource" Value="{Binding List}"/>
+            <!--ListBox Template-->
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBox">
+                        <Border CornerRadius="8" BorderThickness="2" BorderBrush="{TemplateBinding BorderBrush}" >
+                            <StackPanel>
+                                <TextBox Name="ListTitle" Text="{Binding ListTitle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                         FontFamily="{TemplateBinding FontFamily}" Margin="5,2" FontSize="20" Style="{StaticResource TextBoxDefaultStyle}"
+                                         FontWeight="Bold" VerticalAlignment="Top" Background="{TemplateBinding Background}" Foreground="White" SelectionBrush="Gray"/>
+                                <ItemsPresenter VerticalAlignment="Top"/>
+                                <Rectangle Height="30" Fill="{Binding Background,RelativeSource={RelativeSource AncestorType=Window}}" >
+                                    <Rectangle.Style>
+                                        <Style TargetType="Rectangle">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding HasItems, RelativeSource={RelativeSource AncestorType=ListBox}}" Value="False">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Rectangle.Style>
+                                </Rectangle>
+                                <Button x:Name="AddButton" Height="25" Content="Add" Foreground="WhiteSmoke" FontSize="18" VerticalAlignment="Bottom" HorizontalContentAlignment="Left" Padding="10,0" Style="{StaticResource ButtonDefaultStyle}"/>
+                            </StackPanel>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <!--ListBox ItemTemplate-->
+            <Setter Property="ItemTemplate">
+                <Setter.Value>
+                    <DataTemplate DataType="{x:Type local:Spirit}">
+                        <StackPanel VerticalAlignment="Top">
+                            <TextBox Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" SelectionBrush="LightGray" FontSize="18" FontWeight="Bold" Foreground="Black" Width="Auto" MinWidth="20" Style="{StaticResource TextBoxDefaultStyle}" Background="{x:Null}" HorizontalAlignment="Left"/>
+                            <Label Content="{Binding NumStr, UpdateSourceTrigger=PropertyChanged}" FontSize="15" Foreground="Black" Background="{x:Null}" HorizontalAlignment="Left"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <Style x:Name="aa" x:Key="ListBoxItemDefaultStyle" TargetType="ListBoxItem">
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Background" Value="Black"/>
+            <Setter Property="Margin" Value="5,2"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="VerticalContentAlignment" Value="Top"/>
+            <EventSetter Event="PreviewMouseUp" Handler="ListBoxItem_PreviewMouseUp"/>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                        <GradientStop Color="Yellow" Offset="0"/>
+                        <GradientStop Color="Orange" Offset="0.5"/>
+                        <GradientStop Color="Red" Offset="1"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <!--ListBoxItem Template-->
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <Border x:Name="SpiritItem" CornerRadius="2" Background="{TemplateBinding Background}">
+                            <ContentPresenter />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="WhiteSmoke"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ListBoxListStyle" TargetType="ListBox">
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="ItemTemplate">
+                <Setter.Value>
+                    <DataTemplate DataType="{x:Type local:SpiritListViewModel}">
+                        <ListBox ItemsSource="{Binding List}" DataContext="{Binding}" Style="{StaticResource ListBoxDefaultStyle}" ItemContainerStyle="{StaticResource ListBoxItemDefaultStyle}"/>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="ListBoxListItemStyle" TargetType="ListBoxItem">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="VerticalContentAlignment" Value="Top"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <ContentPresenter/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
-
-
-    <Grid>
+    
+    <Grid Background="{Binding Background, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}" VerticalAlignment="Top">
         <Grid.RowDefinitions>
-            <!--Title Bar-->
             <RowDefinition Height="30"/>
             <!--Content-->
             <RowDefinition Height="Auto"/>
@@ -31,7 +145,8 @@
             <!--Footer-->
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <!--Row0 : TitleBar Grid-->
+        
+        <!--Title Bar-->
         <Border BorderThickness="0,0,0,1" VerticalAlignment="Top" Margin="0,1,0,0" Height="30">
             <Grid x:Name="TitleBar" Background="Black">
                 <Grid.Resources>
@@ -47,17 +162,18 @@
                 </Grid.ColumnDefinitions>
 
                 <!--Column 0 Title Text-->
-                <Label Content="HelloSpirit - Say Hello to your Spirits." FontSize="15" FontStyle="Italic"/>
+                <Label Content="{Binding Title, RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}" FontSize="15" FontStyle="Italic"/>
 
                 <!--Column 2 Minimum & Close button-->
                 <UniformGrid Grid.Column="3" Rows="1">
-                    <Button Content="-" Style="{StaticResource ButtonDefaultStyle}">
+                    <Button x:Name="MinimumButton" Content="-" Style="{StaticResource ButtonDefaultStyle}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Click">
-                                <ei:ChangePropertyAction TargetName="Window" PropertyName="WindowState" Value="Minimized"/>
+                                <ei:ChangePropertyAction TargetName="MainWIn" PropertyName="WindowState" Value="Minimized"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </Button>
+
                     <Button x:Name="CloseButton" Content="X">
                         <Button.Style>
                             <Style TargetType="Button" BasedOn="{StaticResource ButtonDefaultStyle}">
@@ -72,59 +188,22 @@
                 </UniformGrid>
             </Grid>
         </Border>
-
+        
         <!--Row 1 Task View-->
         <Grid Grid.Row="1" VerticalAlignment="Top">
             <Grid.RowDefinitions>
-                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Label x:Name="Label" Content="{Binding}" Foreground="WhiteSmoke" FontSize="20" FontWeight="Bold" VerticalAlignment="Top"/>
-            <UniformGrid Grid.Row="1" Rows="1">
-                <UniformGrid.Resources>
-                    <Style TargetType="ListBox">
-                        <Setter Property="Background" Value="DimGray"/>
-                        <Setter Property="Margin" Value="2,2,2,4"/>
-                        <Setter Property="MinHeight" Value="100"/>
-                        
-                        <!--ListBox Template-->
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="ListBox">
-                                    <Border CornerRadius="8" BorderThickness="2" BorderBrush="{TemplateBinding BorderBrush}">
-                                        <UniformGrid Columns="1">
-                                            <TextBox Name="ListTitle" Text="{Binding Text,Source={StaticResource TVM}}"
-                                                    FontFamily="{TemplateBinding FontFamily}" Margin="5,2" FontSize="20" Style="{StaticResource TextBoxDefaultStyle}"
-                                                    FontWeight="Bold" VerticalAlignment="Top" Foreground="White" SelectionBrush="Gray">
-                                            </TextBox>
-                                            <ItemsPresenter/>
-                                            <Button x:Name="AddButton" Height="25" Content="Add" Foreground="WhiteSmoke" FontSize="18" VerticalAlignment="Bottom" HorizontalContentAlignment="Left" Padding="10,0" Style="{StaticResource ButtonDefaultStyle}"/>
-                                        </UniformGrid>
-                                    </Border>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-
-                        <!--ListBox ItemTemplate-->
-                        <Setter Property="ItemTemplate">
-                            <Setter.Value>
-                                <DataTemplate>
-                                    <Border BorderThickness="2" CornerRadius="5" Background="LightGray">
-                                        <Grid>
-                                            
-                                        </Grid>
-                                    </Border>
-                                </DataTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-
-                </UniformGrid.Resources>
-                <!--Contents-->
-                <ListBox ItemsSource="{Binding}"/>
-                <ListBox/>
-                <ListBox/>
-            </UniformGrid>
+            <Label x:Name="Label" Content="{Binding UserName}" Foreground="WhiteSmoke" FontSize="20" FontWeight="Bold" VerticalAlignment="Top"/>
+            <!--Contents-->
+            <ListBox Grid.Row="1" ItemsSource="{Binding Lists}" Style="{StaticResource ListBoxListStyle}" ItemContainerStyle="{StaticResource ListBoxListItemStyle}" Background="{x:Null}" BorderThickness="0" VerticalAlignment="Top" HorizontalContentAlignment="Stretch">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Rows="1" VerticalAlignment="Top"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+            </ListBox>
         </Grid>
 
         <!--Row 2 GrassView-->
@@ -142,4 +221,6 @@
         <!--Row 3 Footer-->
         <Grid Grid.Row="3" Height="15" Background="DarkGray" VerticalAlignment="Bottom"/>
     </Grid>
+
+
 </Window>

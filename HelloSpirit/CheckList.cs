@@ -6,9 +6,19 @@ using System.Threading.Tasks;
 
 namespace HelloSpirit
 {
-    public class CheckList
+    public class CheckList : BindableBase
     {
-        public string Title { get; set; }
-        public bool IsFinished { get; set; }
+        private string _title;
+        public string Title
+        {
+            get { return this._title; }
+            set { this.SetProperty(ref this._title, value); }
+        }
+        private bool _isfinished;
+        public bool IsFinished
+        {
+            get { return this._isfinished; }
+            set { this.SetProperty(ref this._isfinished, value); }
+        }
     }
 }
