@@ -26,9 +26,9 @@
             <Setter Property="FontFamily" Value="/HelloTask;component/Fonts/#M+ 2c"/>
         </Style>
         <Style x:Key="ListBoxDefaultStyle" TargetType="ListBox">
-            <Setter Property="Background" Value="DimGray"/>
             <Setter Property="Margin" Value="2,2,2,4"/>
             <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
             <Setter Property="dd:DragDrop.IsDragSource" Value="True"/>
             <Setter Property="dd:DragDrop.IsDropTarget" Value="True"/>
             <Setter Property="dd:DragDrop.DragAdornerTemplate" Value="{StaticResource DragAdorner}"/>
@@ -41,11 +41,22 @@
                     <ControlTemplate TargetType="ListBox">
                         <Border CornerRadius="8" BorderThickness="2" BorderBrush="{TemplateBinding BorderBrush}" >
                             <StackPanel>
-                                <TextBox Name="ListTitle" Text="{Binding ListTitle}"
+                                <TextBox Name="ListTitle" Text="{Binding ListTitle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                          FontFamily="{TemplateBinding FontFamily}" Margin="5,2" FontSize="20" Style="{StaticResource TextBoxDefaultStyle}"
-                                         FontWeight="Bold" VerticalAlignment="Top" Background="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}" Foreground="White" SelectionBrush="Gray">
-                                </TextBox>
+                                         FontWeight="Bold" VerticalAlignment="Top" Background="{TemplateBinding Background}" Foreground="White" SelectionBrush="Gray"/>
                                 <ItemsPresenter VerticalAlignment="Top"/>
+                                <Rectangle Height="30" Fill="{Binding Background,RelativeSource={RelativeSource AncestorType=Window}}" >
+                                    <Rectangle.Style>
+                                        <Style TargetType="Rectangle">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding HasItems, RelativeSource={RelativeSource AncestorType=ListBox}}" Value="False">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Rectangle.Style>
+                                </Rectangle>
                                 <Button x:Name="AddButton" Height="25" Content="Add" Foreground="WhiteSmoke" FontSize="18" VerticalAlignment="Bottom" HorizontalContentAlignment="Left" Padding="10,0" Style="{StaticResource ButtonDefaultStyle}"/>
                             </StackPanel>
                         </Border>
@@ -65,12 +76,13 @@
             </Setter>
         </Style>
         
-        <Style x:Key="ListBoxItemDefaultStyle" TargetType="ListBoxItem">
+        <Style x:Name="aa" x:Key="ListBoxItemDefaultStyle" TargetType="ListBoxItem">
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Background" Value="Black"/>
             <Setter Property="Margin" Value="5,2"/>
             <Setter Property="VerticalAlignment" Value="Top"/>
             <Setter Property="VerticalContentAlignment" Value="Top"/>
+            <EventSetter Event="PreviewMouseUp" Handler="ListBoxItem_PreviewMouseUp"/>
             <Setter Property="Background">
                 <Setter.Value>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">

@@ -155,5 +155,10 @@ namespace HelloSpirit
         {
             AddWindow.Show();
         }
+
+        private void ListBoxItem_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            AddWindow.Show();
+        }
     }
 }
