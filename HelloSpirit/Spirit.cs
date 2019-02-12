@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
+using Reactive.Bindings.Extensions;
 
 namespace HelloSpirit
 {
@@ -26,7 +28,7 @@ namespace HelloSpirit
             get { return this._limitdate; }
             set { this.SetProperty(ref this._limitdate, value); }
         }
-        public List<CheckList> CheckLists { get; set; }
+        public ObservableCollection<CheckList> CheckLists { get; set; }
 
         public int? FinishedItem
         {
@@ -43,6 +45,7 @@ namespace HelloSpirit
                 return CheckLists?.Count();
             }
         }
+
         public string NumStr
         {
             get
