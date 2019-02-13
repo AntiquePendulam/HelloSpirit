@@ -22,6 +22,7 @@ namespace HelloSpirit
         public SpiritWindow()
         {
             InitializeComponent();
+            MouseLeftButtonUp += (a, e) => Keyboard.ClearFocus();
         }
         public void Show(Spirit data)
         {

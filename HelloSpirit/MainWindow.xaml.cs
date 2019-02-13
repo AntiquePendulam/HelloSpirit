@@ -34,12 +34,12 @@ namespace HelloSpirit
 
             var checklist1 = new CheckList
             {
-                Title = "Huzakeruna",
+                Title = "ButtonTextの色をいじる",
                 IsFinished = true
             };
             var checklist2 = new CheckList
             {
-                Title = "たこやきくいてえ",
+                Title = "たこやきたべる",
                 IsFinished = false
             };
             var checklist3 = new CheckList
