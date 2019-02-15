@@ -10,46 +10,49 @@
         x:Name="SpiritWin"
         Title="SpiritWindow  " Height="450" Width="500" Background="Black" Style="{StaticResource WindowDefaultStyle}">
     <Window.Resources>
-        <Style x:Key="SpiritTextBoxDefaultStyle" TargetType="TextBox" BasedOn="{StaticResource TextBoxDefaultStyle}">
+        <Style x:Key="SpiritTextBoxDefaultStyle" TargetType="TextBox">
             <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
             <Setter Property="FontFamily" Value="/HelloSpirit;component/Fonts/#M+ 2c"/>
             <Setter Property="Foreground" Value="WhiteSmoke"/>
         </Style>
         <Style x:Key="SpiritTextBoxStyle" TargetType="TextBox">
+            <Setter Property="FontSize" Value="20"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="TextBox">
-                        <StackPanel>
-                            <Button Content="{TemplateBinding Text}" x:Name="TxtBt" Style="{StaticResource ButtonDefaultStyle}">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="Click">
-                                        <ei:ChangePropertyAction PropertyName="Visibility" Value="Collapsed"/>
-                                        <ei:ChangePropertyAction PropertyName="Visibility" Value="Visible" TargetName="BtnTxt"/>
-                                        <ei:CallMethodAction MethodName="SelectAll" TargetObject="{Binding ElementName=BtnTxt}"/>
-                                    </i:EventTrigger>
-                                    <i:EventTrigger EventName="LostKeyboardFocus" SourceName="BtnTxt">
-                                        <ei:ChangePropertyAction PropertyName="Visibility" Value="Visible"/>
-                                        <ei:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" TargetName="BtnTxt"/>
-                                    </i:EventTrigger>
-                                    <i:EventTrigger EventName="LostFocus" SourceName="BtnTxt">
-                                        <ei:ChangePropertyAction PropertyName="Visibility" Value="Visible"/>
-                                        <ei:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" TargetName="BtnTxt"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                            </Button>
-                            <TextBox x:Name="BtnTxt" Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" Focusable="True">
-                                <TextBox.Style>
-                                    <Style TargetType="TextBox">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <Trigger Property="Visibility" Value="Visible">
-                                                <Setter Property="FocusManager.FocusedElement" Value="{Binding ElementName=BtnTxt}"/>
-                                            </Trigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
-                        </StackPanel>
+                        <Border BorderThickness="2" BorderBrush="Gray" CornerRadius="4" Margin="2,0">
+                            <StackPanel>
+                                <Button HorizontalContentAlignment="Left" Content="{TemplateBinding Text}" FontSize="{TemplateBinding FontSize}" x:Name="TxtBt" Style="{StaticResource ButtonDefaultStyle}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <ei:ChangePropertyAction PropertyName="Visibility" Value="Collapsed"/>
+                                            <ei:ChangePropertyAction PropertyName="Visibility" Value="Visible" TargetName="BtnTxt"/>
+                                            <ei:CallMethodAction MethodName="SelectAll" TargetObject="{Binding ElementName=BtnTxt}"/>
+                                        </i:EventTrigger>
+                                        <i:EventTrigger EventName="LostKeyboardFocus" SourceName="BtnTxt">
+                                            <ei:ChangePropertyAction PropertyName="Visibility" Value="Visible"/>
+                                            <ei:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" TargetName="BtnTxt"/>
+                                        </i:EventTrigger>
+                                        <i:EventTrigger EventName="LostFocus" SourceName="BtnTxt">
+                                            <ei:ChangePropertyAction PropertyName="Visibility" Value="Visible"/>
+                                            <ei:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" TargetName="BtnTxt"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Button>
+                                <TextBox x:Name="BtnTxt" BorderThickness="0" FontSize="{TemplateBinding FontSize}" Text="{Binding Text,RelativeSource={RelativeSource TemplatedParent},UpdateSourceTrigger=PropertyChanged}" Focusable="True">
+                                    <TextBox.Style>
+                                        <Style TargetType="TextBox">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <Trigger Property="Visibility" Value="Visible">
+                                                    <Setter Property="FocusManager.FocusedElement" Value="{Binding ElementName=BtnTxt}"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBox.Style>
+                                </TextBox>
+                            </StackPanel>
+                        </Border>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -91,11 +94,10 @@
     <Grid>
         <StackPanel Focusable="True" Background="{Binding Background, ElementName=SpiritWin}">
             <TextBox Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" Focusable="True" Style="{StaticResource SpiritTextBoxStyle}"/>
-            <TextBox Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SpiritTextBoxStyle}"/>
+            <TextBox Margin="0,2" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SpiritTextBoxStyle}"/>
             <Label Content="{Binding LimitDate, StringFormat='{}{0:yyyy/MM/dd}'}" Foreground="WhiteSmoke"/>
             <ListBox ItemsSource="{Binding CheckLists}" Style="{StaticResource CheckListBoxStyle}" ItemContainerStyle="{StaticResource CheckListBoxItemStyle}"/>
             <Label Content="{Binding NumStr}" Foreground="White"/>
-            <Rectangle Height="300" Width="300" Fill="IndianRed"/>
         </StackPanel>
     </Grid>
 </Window>
