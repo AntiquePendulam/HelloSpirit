@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -90,7 +91,8 @@ namespace HelloSpirit
         private void ListBoxItem_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
             var data = (sender as ListBoxItem).DataContext as Spirit;
-            SpiritWindow.Show(data);
+            var listbox = FindAncestor<ListBox>( (sender as ListBoxItem) );
+            SpiritWindow.Show(data, (listbox.DataContext as SpiritListViewModel).List);
         }
 
         private void WindowClose()
@@ -110,7 +112,24 @@ namespace HelloSpirit
             var x = (sender as Button).DataContext as SpiritListViewModel;
             var spirit = new Spirit();
             x.List.Add(spirit);
-            SpiritWindow.Show(spirit);
+            SpiritWindow.Show(spirit, x.List);
+        }
+
+        public static T FindAncestor<T>(DependencyObject from)
+          where T : class
+        {
+            if (from == null)
+            {
+                return null;
+            }
+
+            T candidate = from as T;
+            if (candidate != null)
+            {
+                return candidate;
+            }
+
+            return FindAncestor<T>(VisualTreeHelper.GetParent(from));
         }
     }
 }

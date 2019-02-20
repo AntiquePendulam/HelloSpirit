@@ -8,7 +8,7 @@
         xmlns:local="clr-namespace:HelloSpirit"
         mc:Ignorable="d"
         x:Name="SpiritWin"
-        Title="SpiritWindow  " Height="450" Width="500" Background="Black" Style="{StaticResource WindowDefaultStyle}">
+        Title="SpiritWindow  " Height="450" Width="500" Background="Black" Style="{StaticResource WindowDefaultStyle}" Topmost="True">
     <Window.Resources>
         <Style x:Key="SpiritTextBoxDefaultStyle" TargetType="TextBox">
             <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
@@ -86,6 +86,19 @@
         </Style>
         <Style x:Key="CheckListBoxItemStyle" TargetType="ListBoxItem">
             <Setter Property="Background" Value="DimGray"/>
+            <Setter Property="ContextMenu">
+                <Setter.Value>
+                    <ContextMenu>
+                        <MenuItem Header="Delete">
+                            <MenuItem.Style>
+                                <Style TargetType="MenuItem">
+                                    <EventSetter Event="Click" Handler="DeleteItem"/>
+                                </Style>
+                            </MenuItem.Style>
+                        </MenuItem>
+                    </ContextMenu>
+                </Setter.Value>
+            </Setter>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ListBoxItem">
@@ -101,7 +114,6 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
         <!--CheckBox and TextBox List-->
         <Style x:Key="CheckListBoxStyle" TargetType="ListBox">
             <Setter Property="Background" Value="{x:Null}"/>
@@ -129,7 +141,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="ListBox">
                         <StackPanel Background="{TemplateBinding Background}">
-                            <Button x:Name="AddCheckList" Height="40" Width="40" HorizontalAlignment="Right"
+                            <Button x:Name="AddCheckList" Foreground="Red" Height="40" Width="40" HorizontalAlignment="Right"
                                     Content="Add" Click="AddCheckList_Click" Style="{StaticResource ButtonDefaultStyle}"/>
                             <ItemsPresenter VerticalAlignment="Top"/>
                         </StackPanel>
@@ -139,12 +151,19 @@
         </Style>
     </Window.Resources>
     <Grid>
-        <StackPanel Margin="5,0" Focusable="True" Background="{Binding Background, ElementName=SpiritWin}">
+        <StackPanel Margin="5,5" Focusable="True" Background="{Binding Background, ElementName=SpiritWin}">
             <TextBox Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SpiritTextBoxStyle}" FontSize="18" />
             <TextBox Margin="0,5" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SpiritTextBoxStyle}" FontSize="15"/>
             <Label Content="{Binding LimitDate, StringFormat='{}{0:yyyy/MM/dd}'}" Foreground="WhiteSmoke"/>
-            <ListBox x:Name="ox" ItemsSource="{Binding CheckLists}" Style="{StaticResource CheckListBoxStyle}" ItemContainerStyle="{StaticResource CheckListBoxItemStyle}"/>
+            <ListBox x:Name="ox" ItemsSource="{Binding CheckLists}" Style="{StaticResource CheckListBoxStyle}" ItemContainerStyle="{StaticResource CheckListBoxItemStyle}" />
             <Label Content="{Binding NumStr}" Foreground="White"/>
+            <Button x:Name="DeleteButton" Foreground="Black" Height="30" Width="40" Content="Delete" HorizontalAlignment="Right">
+                <Button.Style>
+                    <Style TargetType="Button" BasedOn="{StaticResource ButtonDefaultStyle}">
+                        <Setter Property="Background" Value="Red"/>
+                    </Style>
+                </Button.Style>
+            </Button>
         </StackPanel>
     </Grid>
 </Window>

@@ -12,7 +12,7 @@ namespace HelloSpirit
     {
         public CheckList()
         {
-            this.Title = "わあ";
+            this.Title = "";
             this.IsFinished = false;
         }
 
