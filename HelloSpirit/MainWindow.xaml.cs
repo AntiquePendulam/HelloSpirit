@@ -28,7 +28,6 @@ namespace HelloSpirit
     /// </summary>
     public partial class MainWindow : Window
     {
-        private static AddSpirit AddWindow { get; } = new AddSpirit();
         private static SpiritWindow SpiritWindow { get; } = new SpiritWindow();
         private static MainWindowViewModel MainViewModel { get; set; }
 
@@ -97,7 +96,6 @@ namespace HelloSpirit
 
         private void WindowClose()
         {
-            AddWindow.Close();
             SpiritWindow.Close();
         }
 
