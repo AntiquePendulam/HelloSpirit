@@ -31,6 +31,7 @@ namespace HelloSpirit
         }
         public void CloseButton_Clicked()
         {
+            MainWindow.WriteData();
             this.Hide();
         }
     }
