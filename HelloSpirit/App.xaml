@@ -8,7 +8,7 @@
              Startup="Application_Startup"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-
+        <!--#region Theme Colors-->
         
         <Style x:Key="ButtonDefaultStyle" TargetType="Button">
             <Setter Property="Background" Value="Black"/>
@@ -39,7 +39,9 @@
                                     <Setter Property="BorderBrush" Value="{x:Null}"/>
                                 </Style>
                             </Border.Style>
-                            <TextBox Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}" SelectionBrush="{TemplateBinding SelectionBrush}" BorderThickness="0" Foreground="{TemplateBinding Foreground}" Background="{TemplateBinding Background}"/>
+                            <TextBox Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}"
+                                     SelectionBrush="{TemplateBinding SelectionBrush}" BorderThickness="0" Foreground="{TemplateBinding Foreground}"
+                                     Background="{TemplateBinding Background}"/>
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
@@ -83,7 +85,7 @@
                                     </Grid.ColumnDefinitions>
 
                                     <!--Column 0 Title Text-->
-                                    <Label Content="{TemplateBinding Title}" FontSize="15" FontStyle="Italic"/>
+                                    <Label Width="Auto" Content="{TemplateBinding Title}" FontSize="15" FontStyle="Italic" HorizontalAlignment="Left"/>
 
                                     <!--Column 2 Minimum & Close button-->
                                     <UniformGrid Grid.Column="3" Rows="1">
