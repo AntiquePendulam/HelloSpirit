@@ -20,8 +20,26 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="TextBox">
-                        <StackPanel Margin="3,0">
-                            <Button Padding="2,0" Foreground="WhiteSmoke" HorizontalContentAlignment="Left" Content="{TemplateBinding Text}" FontSize="{TemplateBinding FontSize}" x:Name="TxtBt" Style="{StaticResource ButtonDefaultStyle}">
+                        <StackPanel Margin="3,0" Height="30">
+                            <Button Padding="2,0" Foreground="WhiteSmoke" HorizontalContentAlignment="Left" Content="{TemplateBinding Text}" FontSize="{TemplateBinding FontSize}" x:Name="TxtBt" >
+                                <Button.Style>
+                                    <Style TargetType="Button" BasedOn="{StaticResource ButtonDefaultStyle}">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                                                        <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                                    </Border>
+                                                    <ControlTemplate.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="true">
+                                                            <Setter Property="Background" Value="Black"/>
+                                                        </Trigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </Button.Style>
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Click">
                                         <ei:ChangePropertyAction PropertyName="Visibility" Value="Collapsed"/>
@@ -38,10 +56,21 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </Button>
-                            <TextBox Padding="2,0" x:Name="BtnTxt" SelectionBrush="DarkOrange" BorderThickness="0" FontSize="{TemplateBinding FontSize}" Text="{Binding Text,RelativeSource={RelativeSource TemplatedParent},UpdateSourceTrigger=PropertyChanged}" Focusable="True">
+                            <TextBox Padding="2,0" x:Name="BtnTxt" Background="Black" Foreground="White" SelectionBrush="LightGray"
+                                     BorderThickness="1" FontSize="{TemplateBinding FontSize}"
+                                     Text="{Binding Text,RelativeSource={RelativeSource TemplatedParent},UpdateSourceTrigger=PropertyChanged}" Focusable="True">
                                 <TextBox.Style>
                                     <Style TargetType="TextBox">
                                         <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="TextBox">
+                                                    <Border BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="5" BorderBrush="{TemplateBinding BorderBrush}">
+                                                        <ScrollViewer x:Name="PART_ContentHost"/>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
                                         <Style.Triggers>
                                             <Trigger Property="Visibility" Value="Visible">
                                                 <Setter Property="FocusManager.FocusedElement" Value="{Binding ElementName=BtnTxt}"/>
@@ -95,7 +124,7 @@
         </Style>
     </Window.Resources>
     <Grid>
-        <StackPanel Focusable="True" Background="{Binding Background, ElementName=SpiritWin}">
+        <StackPanel Margin="5,0" Focusable="True" Background="{Binding Background, ElementName=SpiritWin}">
             <TextBox Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SpiritTextBoxStyle}" FontSize="18" />
             <TextBox Margin="0,5" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SpiritTextBoxStyle}" FontSize="15"/>
             <Label Content="{Binding LimitDate, StringFormat='{}{0:yyyy/MM/dd}'}" Foreground="WhiteSmoke"/>
