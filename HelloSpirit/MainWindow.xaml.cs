@@ -22,6 +22,7 @@ namespace HelloSpirit
     public partial class MainWindow : Window
     {
         private static AddSpirit AddWindow { get; } = new AddSpirit();
+        private static SpiritWindow SpiritWindow { get; } = new SpiritWindow();
 
         public MainWindow()
         {
@@ -29,121 +30,7 @@ namespace HelloSpirit
             Grass.GetGrass(GrassView);
             CloseButton.Click += (a, e) => Close();
             TitleBar.MouseDown += (a, e) => DragMove();
-            this.Closing += (a, e) => AddWindow.Close();
-
-            var checklist1 = new CheckList
-            {
-                Title = "Huzakeruna",
-                IsFinished = true
-            };
-            var checklist2 = new CheckList
-            {
-                Title = "たこやきくいてえ",
-                IsFinished = false
-            };
-            var checklist3 = new CheckList
-            {
-                Title = "風の中の俺",
-                IsFinished = true
-            };
-            var checklist4 = new CheckList
-            {
-                Title = "September",
-                IsFinished = false
-            };
-            var checklist5 = new CheckList
-            {
-                Title = "魂の平穏",
-                IsFinished = true
-            };
-            var checklist6 = new CheckList
-            {
-                Title = "アドレナリン",
-                IsFinished = true
-            };
-
-            ObservableCollection<CheckList> lister = new ObservableCollection<CheckList>
-            {
-                checklist1,
-                checklist2,
-                checklist3,
-                checklist4
-            };
-
-            ObservableCollection<CheckList> lister2 = new ObservableCollection<CheckList>
-            {
-                checklist1,
-                checklist2,
-                checklist3,
-                checklist4,
-                checklist5,
-                checklist6
-            };
-
-            var spirit = new Spirit
-            {
-                Title = "ListBoxの中身クリック表示",
-                Description = "はいわろたあ",
-                LimitDate = null,
-                CheckLists = lister
-            };
-            var spirit2 = new Spirit
-            {
-                Title = "Add機能追加",
-                Description = "はいたこやき",
-                LimitDate = null,
-                CheckLists = lister
-            };
-            var spirit3 = new Spirit
-            {
-                Title = "Jsonファイル化",
-                Description = "TAKOOOOOOOOOOOO!",
-                LimitDate = null,
-                CheckLists = lister
-            };
-            var spirit4 = new Spirit
-            {
-                Title = "期限機能追加",
-                Description = "YRAHH!",
-                LimitDate = null,
-                CheckLists = lister2
-            };
-
-            var list = new ObservableCollection<Spirit>
-            {
-                spirit,
-                spirit2,
-                spirit4
-            };
-            var list2 = new ObservableCollection<Spirit>
-            {
-                spirit3
-            };
-
-            var Offi = new SpiritListViewModel()
-            {
-                ListTitle = "C#",
-                List = list
-            };
-            var Offi2 = new SpiritListViewModel()
-            {
-                ListTitle = "Go langもしなきゃ",
-                List = list2
-            };
-            var ff = new MainWindowViewModel()
-            {
-                Lists = new ObservableCollection<SpiritListViewModel>()
-                {
-                    Offi,Offi2
-                }
-            };
-
-            this.DataContext = ff;
-        }
-
-        public static string TimeText()
-        {
-            return $"Hello! {App.UserName}.";
+            this.Closing += (a, e) => WindowClose();
         }
 
         public void CloseButton_Clicked()
@@ -151,14 +38,16 @@ namespace HelloSpirit
             this.Close();
         }
 
-        private void ListBoxItem_Selected(object sender, RoutedEventArgs e)
-        {
-            AddWindow.Show();
-        }
-
         private void ListBoxItem_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
-            AddWindow.Show();
+            var data = (sender as ListBoxItem).DataContext as Spirit;
+            SpiritWindow.Show(data);
+        }
+
+        private void WindowClose()
+        {
+            AddWindow.Close();
+            SpiritWindow.Close();
         }
     }
 }

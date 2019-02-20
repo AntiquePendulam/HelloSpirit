@@ -75,7 +75,6 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        
         <Style x:Name="aa" x:Key="ListBoxItemDefaultStyle" TargetType="ListBoxItem">
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Background" Value="Black"/>
