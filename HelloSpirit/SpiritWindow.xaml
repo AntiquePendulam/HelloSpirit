@@ -102,6 +102,7 @@
             </Setter>
         </Style>
 
+        <!--CheckBox and TextBox List-->
         <Style x:Key="CheckListBoxStyle" TargetType="ListBox">
             <Setter Property="Background" Value="{x:Null}"/>
             <Setter Property="BorderThickness" Value="0"/>
@@ -115,10 +116,24 @@
                                         <ScaleTransform ScaleX="2" ScaleY="2"/>
                                     </CheckBox.LayoutTransform>
                                 </CheckBox>
-                                <TextBox Text="{Binding Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="18" HorizontalAlignment="Left" Width="Auto" Style="{StaticResource SpiritTextBoxDefaultStyle}" VerticalContentAlignment="Center"/>
+                                <TextBox Text="{Binding Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                         FontSize="18" HorizontalAlignment="Left" Width="Auto"
+                                         Style="{StaticResource SpiritTextBoxDefaultStyle}" VerticalContentAlignment="Center"
+                                         MinWidth="20"/>
                             </StackPanel>
                         </Border>
                     </DataTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBox">
+                        <StackPanel Background="{TemplateBinding Background}">
+                            <Button x:Name="AddCheckList" Height="40" Width="40" HorizontalAlignment="Right"
+                                    Content="Add" Click="AddCheckList_Click" Style="{StaticResource ButtonDefaultStyle}"/>
+                            <ItemsPresenter VerticalAlignment="Top"/>
+                        </StackPanel>
+                    </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
@@ -128,7 +143,7 @@
             <TextBox Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SpiritTextBoxStyle}" FontSize="18" />
             <TextBox Margin="0,5" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SpiritTextBoxStyle}" FontSize="15"/>
             <Label Content="{Binding LimitDate, StringFormat='{}{0:yyyy/MM/dd}'}" Foreground="WhiteSmoke"/>
-            <ListBox ItemsSource="{Binding CheckLists}" Style="{StaticResource CheckListBoxStyle}" ItemContainerStyle="{StaticResource CheckListBoxItemStyle}"/>
+            <ListBox x:Name="ox" ItemsSource="{Binding CheckLists}" Style="{StaticResource CheckListBoxStyle}" ItemContainerStyle="{StaticResource CheckListBoxItemStyle}"/>
             <Label Content="{Binding NumStr}" Foreground="White"/>
         </StackPanel>
     </Grid>

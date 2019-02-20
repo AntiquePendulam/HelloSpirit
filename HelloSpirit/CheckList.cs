@@ -10,6 +10,12 @@ namespace HelloSpirit
     [MessagePackObject]
     public class CheckList : BindableBase
     {
+        public CheckList()
+        {
+            this.Title = "わあ";
+            this.IsFinished = false;
+        }
+
         public CheckList(string title, bool isFinished)
         {
             this.Title = title;

@@ -104,5 +104,13 @@ namespace HelloSpirit
             var js = MessagePackSerializer.Serialize(MainViewModel);
             File.WriteAllBytes("./nine.json", js);
         }
+
+        private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            var x = (sender as Button).DataContext as SpiritListViewModel;
+            var spirit = new Spirit();
+            x.List.Add(spirit);
+            SpiritWindow.Show(spirit);
+        }
     }
 }

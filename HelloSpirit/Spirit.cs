@@ -51,7 +51,8 @@ namespace HelloSpirit
             get { return _checkList; }
             set
             {
-                _checkList = value;
+                if (value == null) return;
+                this.SetProperty(ref _checkList, value);
                 CheckLists.ObserveElementProperty(x => x.IsFinished).Subscribe(x => FinishedItem = CheckLists.Count(list => list.IsFinished == true));
                 CheckLists.CollectionChanged += (s, e) => { MaxNum = CheckLists.Count(); NumStrRefresh(); };
             }
@@ -64,7 +65,7 @@ namespace HelloSpirit
         {
             get
             {
-                if(_finishedItem == null) FinishedItem = CheckLists.Count(list => list.IsFinished == true);
+                if(_finishedItem == null) _finishedItem = CheckLists?.Count(list => list.IsFinished == true);
                 return _finishedItem;
             }
             set { this.SetProperty(ref _finishedItem, value); NumStrRefresh(); }
@@ -76,7 +77,7 @@ namespace HelloSpirit
         {
             get
             {
-                if (_maxnum == null) MaxNum = CheckLists.Count();
+                if (_maxnum == null) _maxnum = CheckLists?.Count();
                 return _maxnum;
             }
             set { this.SetProperty(ref _maxnum, value); NumStrRefresh(); }

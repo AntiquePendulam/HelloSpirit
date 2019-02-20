@@ -57,7 +57,7 @@
                                         </Style>
                                     </Rectangle.Style>
                                 </Rectangle>
-                                <Button x:Name="AddButton" Height="25" Content="Add" Foreground="WhiteSmoke" FontSize="18" VerticalAlignment="Bottom" HorizontalContentAlignment="Left" Padding="10,0" Style="{StaticResource ButtonDefaultStyle}"/>
+                                <Button x:Name="AddButton" Click="AddButton_Click" Height="25" Content="Add" Foreground="WhiteSmoke" FontSize="18" VerticalAlignment="Bottom" HorizontalContentAlignment="Left" Padding="10,0" Style="{StaticResource ButtonDefaultStyle}"/>
                             </StackPanel>
                         </Border>
                     </ControlTemplate>

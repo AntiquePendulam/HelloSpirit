@@ -10,6 +10,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Collections.ObjectModel;
 using System.Windows.Shapes;
 
 namespace HelloSpirit
@@ -33,6 +34,12 @@ namespace HelloSpirit
         {
             MainWindow.WriteData();
             this.Hide();
+        }
+
+        private void AddCheckList_Click(object sender, RoutedEventArgs e)
+        {
+            if ((this.DataContext as Spirit).CheckLists == null) (this.DataContext as Spirit).CheckLists = new ObservableCollection<CheckList>() {};
+            (this.DataContext as Spirit).CheckLists.Add(new CheckList());
         }
     }
 }
