@@ -13,6 +13,9 @@ namespace HelloSpirit
     /// </summary>
     public partial class App : Application
     {
+        public static string PATH = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\ProjectATR\HelloSpirit";
+        public static readonly string Filepath = PATH + @"\data.json";
+
         public static string UserName = "AntiqueR";
         public static string GitHubName = "AntiquePendulam";
 

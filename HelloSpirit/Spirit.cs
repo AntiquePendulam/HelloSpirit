@@ -9,67 +9,98 @@ using System.Reactive;
 using System.Reactive.Concurrency;
 using System.Windows;
 using System.Reactive.Linq;
+using MessagePack;
 
 namespace HelloSpirit
 {
+    [MessagePackObject]
     public class Spirit : BindableBase
     {
-        public Spirit(ObservableCollection<CheckList> checks)
-        {
-            CheckLists = checks;
-            Initialize();
-            CheckLists.ObserveElementProperty(x => x.IsFinished).Subscribe(x => FinishedItem = CheckLists.Count(list => list.IsFinished == true));
-            CheckLists.CollectionChanged += (s, e) => { MaxNum = CheckLists.Count(); NumStrRefresh(); };
-        }
 
         private string _title;
+
+        [Key(0)]
         public string Title
         {
             get { return this._title; }
             set { this.SetProperty(ref this._title, value); }
         }
+
         private string _description;
+
+        [Key(1)]
         public string Description
         {
             get { return this._description; }
             set { this.SetProperty(ref this._description, value); }
         }
-        private DateTime? _limitdate;
+
+        private DateTime? _limitdate = null;
+
+        [Key(2)]
         public DateTime? LimitDate
         {
             get { return this._limitdate; }
             set { this.SetProperty(ref this._limitdate, value); }
         }
-        public ObservableCollection<CheckList> CheckLists { get; set; }
 
-        public int? _finishedItem;
-        public int? FinishedItem
+        private ObservableCollection<CheckList> _checkList;
+        [Key(3)]
+        public ObservableCollection<CheckList> CheckLists
         {
-            get { return _finishedItem; }
-            set { this.SetProperty(ref _finishedItem, value); NumStrRefresh(); }
+            get { return _checkList; }
+            set
+            {
+                if (value == null) return;
+                this.SetProperty(ref _checkList, value);
+                CheckLists.ObserveElementProperty(x => x.IsFinished).Subscribe(x => FinishedItem = CheckLists.Count(list => list.IsFinished == true));
+                CheckLists.CollectionChanged += (s, e) => { MaxNum = CheckLists.Count(); NumStrRefresh(); };
+            }
         }
 
-        public int? _maxnum;
+        [IgnoreMember]
+        private int? _finishedItem = null;
+        [IgnoreMember]
+        public int? FinishedItem
+        {
+            get
+            {
+                if(_finishedItem == null) _finishedItem = CheckLists?.Count(list => list.IsFinished == true);
+                return _finishedItem;
+            }
+            set { this.SetProperty(ref _finishedItem, value); NumStrRefresh(); }
+        }
+        [IgnoreMember]
+        private int? _maxnum = null;
+        [IgnoreMember]
         public int? MaxNum
         {
-            get { return _maxnum; }
+            get
+            {
+                if (_maxnum == null) _maxnum = CheckLists?.Count();
+                return _maxnum;
+            }
             set { this.SetProperty(ref _maxnum, value); NumStrRefresh(); }
         }
 
+        [IgnoreMember]
         private string _numstr;
+        [IgnoreMember]
         public string NumStr
         {
-            get { return _numstr; }
+            get
+            {
+                if (_numstr == null) NumStrRefresh();
+                return _numstr;
+            }
             set { this.SetProperty(ref _numstr, value); }
         }
+
+        #region Methods
         private void NumStrRefresh()
         {
             NumStr = $"{FinishedItem}/{MaxNum}";
         }
-        private void Initialize()
-        {
-            FinishedItem = CheckLists.Count(list => list.IsFinished == true);
-            MaxNum = CheckLists.Count();
-        }
+        #endregion
     }
 }

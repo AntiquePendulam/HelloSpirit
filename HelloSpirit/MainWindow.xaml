@@ -57,7 +57,7 @@
                                         </Style>
                                     </Rectangle.Style>
                                 </Rectangle>
-                                <Button x:Name="AddButton" Height="25" Content="Add" Foreground="WhiteSmoke" FontSize="18" VerticalAlignment="Bottom" HorizontalContentAlignment="Left" Padding="10,0" Style="{StaticResource ButtonDefaultStyle}"/>
+                                <Button x:Name="AddButton" Click="AddButton_Click" Height="25" Content="Add" Foreground="WhiteSmoke" FontSize="18" VerticalAlignment="Bottom" HorizontalContentAlignment="Left" Padding="10,0" Style="{StaticResource ButtonDefaultStyle}"/>
                             </StackPanel>
                         </Border>
                     </ControlTemplate>
@@ -75,13 +75,13 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <Style x:Name="aa" x:Key="ListBoxItemDefaultStyle" TargetType="ListBoxItem">
+        <Style x:Key="ListBoxItemDefaultStyle" TargetType="ListBoxItem">
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Background" Value="Black"/>
             <Setter Property="Margin" Value="5,2"/>
             <Setter Property="VerticalAlignment" Value="Top"/>
             <Setter Property="VerticalContentAlignment" Value="Top"/>
-            <EventSetter Event="PreviewMouseUp" Handler="ListBoxItem_PreviewMouseUp"/>
+            <EventSetter Event="PreviewMouseLeftButtonUp" Handler="ListBoxItem_PreviewMouseUp"/>
             <Setter Property="Background">
                 <Setter.Value>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
@@ -122,8 +122,9 @@
             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
             <Setter Property="VerticalContentAlignment" Value="Top"/>
             <Setter Property="VerticalAlignment" Value="Top"/>
-            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
             <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Width" Value="350"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ListBoxItem">
@@ -196,7 +197,9 @@
             </Grid.RowDefinitions>
             <Label x:Name="Label" Content="{Binding UserName}" Foreground="WhiteSmoke" FontSize="20" FontWeight="Bold" VerticalAlignment="Top"/>
             <!--Contents-->
-            <ListBox Grid.Row="1" ItemsSource="{Binding Lists}" Style="{StaticResource ListBoxListStyle}" ItemContainerStyle="{StaticResource ListBoxListItemStyle}" Background="{x:Null}" BorderThickness="0" VerticalAlignment="Top" HorizontalContentAlignment="Stretch">
+            <ListBox Grid.Row="1" ItemsSource="{Binding Lists}" Style="{StaticResource ListBoxListStyle}"
+                     ItemContainerStyle="{StaticResource ListBoxListItemStyle}" Background="{x:Null}"
+                     BorderThickness="0" VerticalAlignment="Top" HorizontalContentAlignment="Stretch">
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <UniformGrid Rows="1" VerticalAlignment="Top"/>
