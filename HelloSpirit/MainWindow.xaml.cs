@@ -29,12 +29,12 @@ namespace HelloSpirit
     public partial class MainWindow : Window
     {
         private static SpiritWindow SpiritWindow { get; } = new SpiritWindow();
+        private static ConfirmationWindow confirmation = new ConfirmationWindow();
         private static MainWindowViewModel MainViewModel { get; set; }
 
         public MainWindow()
         {
             InitializeComponent();
-            Grass.GetGrass(GrassView);
             CloseButton.Click += (a, e) => Close();
             TitleBar.MouseDown += (a, e) => DragMove();
             this.Closing += (a, e) => WindowClose();
@@ -42,44 +42,11 @@ namespace HelloSpirit
 
             var data = File.ReadAllBytes(@"./nine.json");
             MainViewModel = MessagePackSerializer.Deserialize<MainWindowViewModel>(data);
-
             MainViewModel.Lists.ObserveElementPropertyChanged().Subscribe(_ => WriteData());
             MainViewModel.Lists.CollectionChanged += (a,e) => WriteData();
-
-            /*
-            var cl = new CheckList("JSONデータ保存", false);
-            var cl2 = new CheckList("SpiritWindow", true);
-            var cl3 = new CheckList("AddSpiritWindow", false);
-            var cl4 = new CheckList("ListBox", true);
-
-            var clc = new ObservableCollection<CheckList>()
-            {
-                cl,cl2,cl3,cl4
-            };
-
-            var sp = new Spirit()
-            {
-                Title = "HelloSpirit",
-                Description = "タスク管理アプリ",
-                CheckLists = clc
-            };
-
-            var spvm = new SpiritListViewModel()
-            {
-                ListTitle = "C#:個人開発タスク",
-                List = new ObservableCollection<Spirit>() { sp }
-            };
-
-            var mwvm = new MainWindowViewModel()
-            {
-                Lists = new ObservableCollection<SpiritListViewModel>() { spvm }
-            };
-
-            var js = MessagePackSerializer.Serialize(mwvm);
-            File.WriteAllBytes("./nine.json", js);
-            */
-
+            ListAddButton.Click += (a, e) => MainViewModel.Lists.Add(new SpiritListViewModel() {ListTitle = "new List" });
             this.DataContext = MainViewModel;
+            Grass.GetGrass(GrassView, MainViewModel.GitHubName);
         }
 
         public void CloseButton_Clicked()
@@ -97,6 +64,7 @@ namespace HelloSpirit
         private void WindowClose()
         {
             SpiritWindow.Close();
+            confirmation.Close();
         }
 
         public static void WriteData()
@@ -108,12 +76,12 @@ namespace HelloSpirit
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
             var x = (sender as Button).DataContext as SpiritListViewModel;
-            var spirit = new Spirit();
+            var spirit = new Spirit() { Title = "new Spirit." };
             x.List.Add(spirit);
             SpiritWindow.Show(spirit, x.List);
         }
 
-        public static T FindAncestor<T>(DependencyObject from)
+        private static T FindAncestor<T>(DependencyObject from)
           where T : class
         {
             if (from == null)
@@ -128,6 +96,17 @@ namespace HelloSpirit
             }
 
             return FindAncestor<T>(VisualTreeHelper.GetParent(from));
+        }
+
+
+
+        private void ListDelete(object sender, RoutedEventArgs e)
+        {
+            confirmation.ShowDialog();
+
+            if (!confirmation.Accept) return;
+            var data = (sender as Button).DataContext as SpiritListViewModel;
+            MainViewModel.Lists.Remove(data);
         }
     }
 }

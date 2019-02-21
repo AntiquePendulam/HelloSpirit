@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Collections.ObjectModel;
 using System.Windows.Shapes;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace HelloSpirit
 {
@@ -26,6 +28,11 @@ namespace HelloSpirit
         public SpiritWindow()
         {
             InitializeComponent();
+            AddCheckList.Click += (a, e) =>
+            {
+                if ((this.DataContext as Spirit).CheckLists == null) (this.DataContext as Spirit).CheckLists = new ObservableCollection<CheckList>();
+                (this.DataContext as Spirit).CheckLists.Add(new CheckList());
+            };
             DeleteButton.Click += (a, e) =>
             {
                 Spirits.Remove(this.DataContext as Spirit);
@@ -39,21 +46,20 @@ namespace HelloSpirit
             this.Spirits = spirits;
             this.Show();
         }
+
+
         public void CloseButton_Clicked()
         {
             MainWindow.WriteData();
             this.Hide();
         }
 
-        private void AddCheckList_Click(object sender, RoutedEventArgs e)
-        {
-            if ((this.DataContext as Spirit).CheckLists == null) (this.DataContext as Spirit).CheckLists = new ObservableCollection<CheckList>() {};
-            (this.DataContext as Spirit).CheckLists.Add(new CheckList());
-        }
-
         private void DeleteItem(object sender, RoutedEventArgs e)
         {
             (this.DataContext as Spirit).CheckLists.Remove( ( (sender as MenuItem).DataContext as CheckList) );
         }
+
+
+
     }
 }

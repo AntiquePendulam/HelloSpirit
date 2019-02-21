@@ -11,11 +11,7 @@ namespace HelloSpirit
     [MessagePackObject]
     public class MainWindowViewModel : BindableBase
     {
-        [IgnoreMember]
-        public string UserName
-        {
-            get { return $"Hello!{App.UserName}"; }
-        }
+
 
         [IgnoreMember]
         private ObservableCollection<SpiritListViewModel> _lists;
@@ -26,5 +22,11 @@ namespace HelloSpirit
             get { return _lists; }
             set { SetProperty(ref _lists, value); }
         }
+
+        [Key(1)]
+        public string UserName { get; set; }
+
+        [Key(2)]
+        public string GitHubName { get; set; }
     }
 }

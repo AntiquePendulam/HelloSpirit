@@ -16,10 +16,11 @@ namespace HelloSpirit
     {
         private const string style = "<style> text { fill: white; font-family: 'Quicksand', sans-serif; font-size: 12px; line-height: 1.5; } </style>";
 
-        internal static async void GetGrass(WebView view)
+        internal static async void GetGrass(WebView view, string name)
         {
+            if (name == null || name == "") name = "AntiquePendulam";
             var client = new HttpClient();
-            var a = await client.GetAsync($"https://github.com/users/{App.GitHubName}/contributions");
+            var a = await client.GetAsync($"https://github.com/users/{name}/contributions");
             var html = await a.Content.ReadAsStringAsync();
 
             var parser = new HtmlParser();
