@@ -19,7 +19,11 @@ namespace HelloSpirit
         [Key(0)]
         public ObservableCollection<SpiritListViewModel> Lists
         {
-            get { return _lists; }
+            get
+            {
+                if (_lists == null) _lists = new ObservableCollection<SpiritListViewModel>();
+                return _lists;
+            }
             set { SetProperty(ref _lists, value); }
         }
 

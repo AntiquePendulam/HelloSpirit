@@ -30,7 +30,7 @@ namespace HelloSpirit
     {
         private static SpiritWindow SpiritWindow { get; } = new SpiritWindow();
         private static ConfirmationWindow confirmation = new ConfirmationWindow();
-        private static MainWindowViewModel MainViewModel { get; set; }
+        public static MainWindowViewModel MainViewModel { get; set; }
 
         public MainWindow()
         {
@@ -38,13 +38,15 @@ namespace HelloSpirit
             CloseButton.Click += (a, e) => Close();
             TitleBar.MouseDown += (a, e) => DragMove();
             this.Closing += (a, e) => WindowClose();
+            ListAddButton.Click += (a, e) => MainViewModel.Lists.Add(new SpiritListViewModel() { ListTitle = "new List" });
 
-
+            /*
             var data = File.ReadAllBytes(@"./nine.json");
             MainViewModel = MessagePackSerializer.Deserialize<MainWindowViewModel>(data);
             MainViewModel.Lists.ObserveElementPropertyChanged().Subscribe(_ => WriteData());
             MainViewModel.Lists.CollectionChanged += (a,e) => WriteData();
-            ListAddButton.Click += (a, e) => MainViewModel.Lists.Add(new SpiritListViewModel() {ListTitle = "new List" });
+            */
+            Messanger.Read();
             this.DataContext = MainViewModel;
             Grass.GetGrass(GrassView, MainViewModel.GitHubName);
         }
@@ -66,12 +68,12 @@ namespace HelloSpirit
             SpiritWindow.Close();
             confirmation.Close();
         }
-
+        /*
         public static void WriteData()
         {
             var js = MessagePackSerializer.Serialize(MainViewModel);
             File.WriteAllBytes("./nine.json", js);
-        }
+        }*/
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {

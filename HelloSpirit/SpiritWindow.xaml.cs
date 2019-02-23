@@ -50,7 +50,7 @@ namespace HelloSpirit
 
         public void CloseButton_Clicked()
         {
-            MainWindow.WriteData();
+            Messanger.Write();
             this.Hide();
         }
 
