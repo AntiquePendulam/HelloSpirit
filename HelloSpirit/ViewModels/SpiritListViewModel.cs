@@ -28,7 +28,11 @@ namespace HelloSpirit
         [Key(1)]
         public ObservableCollection<Spirit> List
         {
-            get { return this._list; }
+            get
+            {
+                if (_list == null) _list = new ObservableCollection<Spirit>();
+                return _list;
+            }
             set { this.SetProperty(ref _list, value); }
         }
     }

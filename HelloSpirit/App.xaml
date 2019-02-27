@@ -47,6 +47,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        
         <Style x:Key="WindowNonTemplateStyle" TargetType="Window">
             <Setter Property="SizeToContent" Value="Height"/>
             <Setter Property="ResizeMode" Value="NoResize"/>

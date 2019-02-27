@@ -40,7 +40,11 @@ namespace HelloSpirit
         [Key(2)]
         public DateTime? LimitDate
         {
-            get { return this._limitdate; }
+            get
+            {
+                if (_limitdate == null) _limitdate = new DateTime();
+                return _limitdate;
+            }
             set { this.SetProperty(ref this._limitdate, value); }
         }
 
@@ -100,6 +104,7 @@ namespace HelloSpirit
         private void NumStrRefresh()
         {
             NumStr = $"{FinishedItem}/{MaxNum}";
+            if (NumStr == "/") NumStr = "";
         }
         #endregion
     }

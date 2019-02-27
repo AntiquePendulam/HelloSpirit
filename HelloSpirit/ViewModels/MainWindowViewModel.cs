@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
+using HelloSpirit.ViewModels;
 using MessagePack;
 
 namespace HelloSpirit
@@ -11,11 +12,7 @@ namespace HelloSpirit
     [MessagePackObject]
     public class MainWindowViewModel : BindableBase
     {
-        [IgnoreMember]
-        public string UserName
-        {
-            get { return $"Hello!{App.UserName}"; }
-        }
+
 
         [IgnoreMember]
         private ObservableCollection<SpiritListViewModel> _lists;
@@ -23,8 +20,29 @@ namespace HelloSpirit
         [Key(0)]
         public ObservableCollection<SpiritListViewModel> Lists
         {
-            get { return _lists; }
+            get
+            {
+                if (_lists == null) _lists = new ObservableCollection<SpiritListViewModel>();
+                return _lists;
+            }
             set { SetProperty(ref _lists, value); }
+        }
+
+        [IgnoreMember]
+        private SettingViewModel _setting;
+
+        [Key(1)]
+        public SettingViewModel Setting
+        {
+            get
+            {
+                if (_setting == null) _setting = new SettingViewModel() { UserName = "AntiqueR", GitHubName = "AntiquePendulam" };
+                return _setting;
+            }
+            set
+            {
+                SetProperty(ref _setting, value);
+            }
         }
     }
 }

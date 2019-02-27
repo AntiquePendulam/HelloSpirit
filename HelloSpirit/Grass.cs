@@ -16,18 +16,30 @@ namespace HelloSpirit
     {
         private const string style = "<style> text { fill: white; font-family: 'Quicksand', sans-serif; font-size: 12px; line-height: 1.5; } </style>";
 
-        internal static async void GetGrass(WebView view)
+        public static WebView TargetWebView {private get; set; }
+
+        internal static async void GetGrass(string name)
         {
+            if (TargetWebView == null) return;
+            if (name == null || name == "") name = "AntiquePendulam";
             var client = new HttpClient();
-            var a = await client.GetAsync($"https://github.com/users/{App.GitHubName}/contributions");
+            var a = await client.GetAsync($"https://github.com/users/{name}/contributions");
             var html = await a.Content.ReadAsStringAsync();
 
             var parser = new HtmlParser();
             var sw = new StringWriter();
             var formatter = new PrettyMarkupFormatter();
-            var content = parser.ParseDocument(html).GetElementsByTagName("svg").First().OuterHtml;
-            var htmlStr = $"<html> <link href=\"https://fonts.googleapis.com/css?family=Quicksand\" rel=\"stylesheet\"> {style} <body bgcolor=\"black\"> {content} </body> </html>";
-            view.NavigateToString(htmlStr);
+
+            try
+            {
+                var content = parser.ParseDocument(html).GetElementsByTagName("svg").First().OuterHtml;
+                var htmlStr = $"<html> <link href=\"https://fonts.googleapis.com/css?family=Quicksand\" rel=\"stylesheet\"> {style} <body bgcolor=\"black\"> {content} </body> </html>";
+                TargetWebView.NavigateToString(htmlStr);
+            }
+            catch(Exception ex)
+            {
+                TargetWebView.NavigateToString("<html> <h1>Couldn't Find Your Contributions.<br>Check Your Setting.</h1> </html>");
+            }
         }
     }
 }
