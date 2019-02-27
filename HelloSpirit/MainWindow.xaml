@@ -213,7 +213,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Label x:Name="Label" Content="{Binding UserName}" Foreground="WhiteSmoke" FontSize="20" FontWeight="Bold" VerticalAlignment="Top"/>
+            <Label x:Name="Label" Content="{Binding Setting.UserName}" ContentStringFormat="Hello, {0}." Foreground="WhiteSmoke" FontSize="20" FontWeight="Bold" VerticalAlignment="Top"/>
             <!--Contents-->
             <ScrollViewer Padding="0,0,0,30" Grid.Row="1" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Disabled">
                 <StackPanel Orientation="Horizontal">
@@ -257,7 +257,7 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <Label Content="Your contributions" FontSize="20" Foreground="Gainsboro"/>
+                <Label Content="{Binding Setting.GitHubName}" ContentStringFormat="Your contributions : {0}" FontSize="20" Foreground="Gainsboro"/>
                 <ct:WebView Grid.Row="1" x:Name="GrassView"/>
             </Grid>
         </Border>

@@ -19,6 +19,7 @@ using System.Reactive;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using MessagePack;
+using HelloSpirit.ViewModels;
 using System.IO;
 
 namespace HelloSpirit
@@ -30,6 +31,7 @@ namespace HelloSpirit
     {
         private static SpiritWindow SpiritWindow { get; } = new SpiritWindow();
         private static ConfirmationWindow confirmation = new ConfirmationWindow();
+        private static SettingWindow SettingWindow { get; } = new SettingWindow();
         public static MainWindowViewModel MainViewModel { get; set; }
 
         public MainWindow()
@@ -47,8 +49,11 @@ namespace HelloSpirit
             MainViewModel.Lists.CollectionChanged += (a,e) => WriteData();
             */
             Messanger.Read();
+            SettingWindow.DataContext = MainViewModel.Setting;
             this.DataContext = MainViewModel;
-            Grass.GetGrass(GrassView, MainViewModel.GitHubName);
+            Grass.TargetWebView = GrassView;
+            Grass.GetGrass(MainViewModel.Setting.GitHubName);
+            SettingButton.Click += (a, e) => SettingWindow.Show();
         }
 
         public void CloseButton_Clicked()

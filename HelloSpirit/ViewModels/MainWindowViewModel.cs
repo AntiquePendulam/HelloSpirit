@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
+using HelloSpirit.ViewModels;
 using MessagePack;
 
 namespace HelloSpirit
@@ -27,10 +28,21 @@ namespace HelloSpirit
             set { SetProperty(ref _lists, value); }
         }
 
-        [Key(1)]
-        public string UserName { get; set; }
+        [IgnoreMember]
+        private SettingViewModel _setting;
 
-        [Key(2)]
-        public string GitHubName { get; set; }
+        [Key(1)]
+        public SettingViewModel Setting
+        {
+            get
+            {
+                if (_setting == null) _setting = new SettingViewModel() { UserName = "AntiqueR", GitHubName = "AntiquePendulam" };
+                return _setting;
+            }
+            set
+            {
+                SetProperty(ref _setting, value);
+            }
+        }
     }
 }
