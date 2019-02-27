@@ -72,6 +72,7 @@ namespace HelloSpirit
         {
             SpiritWindow.Close();
             confirmation.Close();
+            SettingWindow.Close();
         }
         /*
         public static void WriteData()
