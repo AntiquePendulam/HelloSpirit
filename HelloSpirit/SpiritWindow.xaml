@@ -8,7 +8,7 @@
         xmlns:local="clr-namespace:HelloSpirit"
         mc:Ignorable="d"
         x:Name="SpiritWin"
-        Title="SpiritWindow  " Height="450" Width="500" Background="Black" Style="{StaticResource WindowDefaultStyle}">
+        Title="SpiritWindow  " Height="450" Width="500" Background="Black" Style="{StaticResource WindowDefaultStyle}" Topmost="True">
     <Window.Resources>
         <Style x:Key="SpiritTextBoxDefaultStyle" TargetType="TextBox">
             <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
@@ -17,17 +17,20 @@
             <Setter Property="BorderThickness" Value="0"/>
         </Style>
         <Style x:Key="SpiritTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Background" Value="Black"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="2"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="TextBox">
-                        <StackPanel Margin="3,0" Height="30">
-                            <Button Padding="2,0" Foreground="WhiteSmoke" HorizontalContentAlignment="Left" Content="{TemplateBinding Text}" FontSize="{TemplateBinding FontSize}" x:Name="TxtBt" >
+                        <StackPanel Margin="3,0" Height="40">
+                            <Button Padding="{TemplateBinding Padding}" Content="{TemplateBinding Text}" Background="{TemplateBinding Background}" Foreground="{TemplateBinding Foreground}" HorizontalContentAlignment="Left" FontSize="{TemplateBinding FontSize}" x:Name="TxtBt" >
                                 <Button.Style>
                                     <Style TargetType="Button" BasedOn="{StaticResource ButtonDefaultStyle}">
                                         <Setter Property="Template">
                                             <Setter.Value>
                                                 <ControlTemplate TargetType="Button">
-                                                    <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                                                    <Border x:Name="border" Padding="{TemplateBinding Padding}" CornerRadius="5" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
                                                         <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                                                     </Border>
                                                     <ControlTemplate.Triggers>
@@ -56,7 +59,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </Button>
-                            <TextBox Padding="2,0" x:Name="BtnTxt" Background="Black" Foreground="White" SelectionBrush="LightGray"
+                            <TextBox Padding="{TemplateBinding Padding}" x:Name="BtnTxt" Background="Black" Foreground="White" SelectionBrush="LightGray"
                                      BorderThickness="1" FontSize="{TemplateBinding FontSize}"
                                      Text="{Binding Text,RelativeSource={RelativeSource TemplatedParent},UpdateSourceTrigger=PropertyChanged}" Focusable="True">
                                 <TextBox.Style>
@@ -65,7 +68,7 @@
                                         <Setter Property="Template">
                                             <Setter.Value>
                                                 <ControlTemplate TargetType="TextBox">
-                                                    <Border BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="5" BorderBrush="{TemplateBinding BorderBrush}">
+                                                    <Border Padding="{TemplateBinding Padding}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="5" BorderBrush="{TemplateBinding BorderBrush}">
                                                         <ScrollViewer x:Name="PART_ContentHost"/>
                                                     </Border>
                                                 </ControlTemplate>
@@ -86,6 +89,19 @@
         </Style>
         <Style x:Key="CheckListBoxItemStyle" TargetType="ListBoxItem">
             <Setter Property="Background" Value="DimGray"/>
+            <Setter Property="ContextMenu">
+                <Setter.Value>
+                    <ContextMenu>
+                        <MenuItem Header="Delete">
+                            <MenuItem.Style>
+                                <Style TargetType="MenuItem">
+                                    <EventSetter Event="Click" Handler="DeleteItem"/>
+                                </Style>
+                            </MenuItem.Style>
+                        </MenuItem>
+                    </ContextMenu>
+                </Setter.Value>
+            </Setter>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ListBoxItem">
@@ -101,7 +117,8 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
+        
+        <!--CheckBox and TextBox List-->
         <Style x:Key="CheckListBoxStyle" TargetType="ListBox">
             <Setter Property="Background" Value="{x:Null}"/>
             <Setter Property="BorderThickness" Value="0"/>
@@ -115,21 +132,43 @@
                                         <ScaleTransform ScaleX="2" ScaleY="2"/>
                                     </CheckBox.LayoutTransform>
                                 </CheckBox>
-                                <TextBox Text="{Binding Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="18" HorizontalAlignment="Left" Width="Auto" Style="{StaticResource SpiritTextBoxDefaultStyle}" VerticalContentAlignment="Center"/>
+                                <TextBox Text="{Binding Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                         FontSize="18" HorizontalAlignment="Left" Width="Auto"
+                                         Style="{StaticResource SpiritTextBoxDefaultStyle}" VerticalContentAlignment="Center"
+                                         MinWidth="20"/>
                             </StackPanel>
                         </Border>
                     </DataTemplate>
                 </Setter.Value>
             </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBox">
+                        <ItemsPresenter VerticalAlignment="Top"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
     </Window.Resources>
     <Grid>
-        <StackPanel Margin="5,0" Focusable="True" Background="{Binding Background, ElementName=SpiritWin}">
+        <StackPanel Margin="5,5" Focusable="True" Background="{Binding Background, ElementName=SpiritWin}">
             <TextBox Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SpiritTextBoxStyle}" FontSize="18" />
-            <TextBox Margin="0,5" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SpiritTextBoxStyle}" FontSize="15"/>
-            <Label Content="{Binding LimitDate, StringFormat='{}{0:yyyy/MM/dd}'}" Foreground="WhiteSmoke"/>
-            <ListBox ItemsSource="{Binding CheckLists}" Style="{StaticResource CheckListBoxStyle}" ItemContainerStyle="{StaticResource CheckListBoxItemStyle}"/>
+            <TextBox Margin="0,5" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" Background="Gray" FontSize="15" Style="{StaticResource SpiritTextBoxStyle}"/>
+            <Button x:Name="AddCheckList" Foreground="White" Height="25" Width="60" HorizontalAlignment="Right" Content="Add" Style="{StaticResource ButtonDefaultStyle}"/>
+            <ListBox x:Name="ox" ItemsSource="{Binding CheckLists}" Style="{StaticResource CheckListBoxStyle}" ItemContainerStyle="{StaticResource CheckListBoxItemStyle}" />
             <Label Content="{Binding NumStr}" Foreground="White"/>
+            <Button x:Name="DeleteButton" Foreground="White" FontSize="13" Height="25" Width="60" Content="Delete" HorizontalAlignment="Right">
+                <Button.Style>
+                    <Style TargetType="Button" BasedOn="{StaticResource ButtonDefaultStyle}">
+                        <Setter Property="Background" Value="#FF2E2E2E"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="Red"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
         </StackPanel>
     </Grid>
 </Window>

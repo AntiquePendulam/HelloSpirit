@@ -13,8 +13,6 @@ namespace HelloSpirit
     /// </summary>
     public partial class App : Application
     {
-        public static string UserName = "AntiqueR";
-        public static string GitHubName = "AntiquePendulam";
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {

@@ -15,17 +15,17 @@ using System.Windows.Shapes;
 namespace HelloSpirit
 {
     /// <summary>
-    /// AddSpirit.xaml の相互作用ロジック
+    /// ConfirmationWindow.xaml の相互作用ロジック
     /// </summary>
-    public partial class AddSpirit : Window
+    public partial class ConfirmationWindow : Window
     {
-        public AddSpirit()
+        public bool Accept { get; private set; } = false;
+
+        public ConfirmationWindow()
         {
             InitializeComponent();
-        }
-        public void CloseButton_Clicked()
-        {
-            this.Hide();
+            OK.Click += (a, e) => { Accept = true; this.Hide(); };
+            Cancel.Click += (a, e) => { Accept = false; this.Hide(); };
         }
     }
 }
