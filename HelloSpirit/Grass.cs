@@ -9,18 +9,22 @@ using System.IO;
 using AngleSharp.Html;
 using System.Diagnostics;
 using Microsoft.Toolkit.Wpf.UI.Controls;
+using System.Windows;
 
 namespace HelloSpirit
 {
     internal static class Grass
     {
         private const string style = "<style> text { fill: white; font-family: 'Quicksand', sans-serif; font-size: 12px; line-height: 1.5; } </style>";
+        private const string errorHtml = "<html> <h1>Couldn't Find Your Contributions.<br>Check Your Setting.</h1> </html>";
 
         public static WebView TargetWebView {private get; set; }
 
+        private static string nameBuffer = "";
+
         internal static async void GetGrass(string name)
         {
-            if (TargetWebView == null) return;
+            if (TargetWebView == null || Equals(nameBuffer, name)) return;
             if (name == null || name == "") name = "AntiquePendulam";
             var client = new HttpClient();
             var a = await client.GetAsync($"https://github.com/users/{name}/contributions");
@@ -32,14 +36,15 @@ namespace HelloSpirit
 
             try
             {
-                var content = parser.ParseDocument(html).GetElementsByTagName("svg").First().OuterHtml;
-                var htmlStr = $"<html> <link href=\"https://fonts.googleapis.com/css?family=Quicksand\" rel=\"stylesheet\"> {style} <body bgcolor=\"black\"> {content} </body> </html>";
+                var content = parser.ParseDocument(html).GetElementsByTagName("svg")?.First().OuterHtml;
+                string htmlStr;
+                if (content == null) htmlStr = errorHtml;
+                else htmlStr = $"<html> <link href=\"https://fonts.googleapis.com/css?family=Quicksand\" rel=\"stylesheet\"> {style} <body bgcolor=\"black\"> {content} </body> </html>";
                 TargetWebView.NavigateToString(htmlStr);
             }
-            catch(Exception ex)
-            {
-                TargetWebView.NavigateToString("<html> <h1>Couldn't Find Your Contributions.<br>Check Your Setting.</h1> </html>");
-            }
+            catch { }
+
+            nameBuffer = name;
         }
     }
 }

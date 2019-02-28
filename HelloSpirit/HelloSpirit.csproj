@@ -138,7 +138,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BindableBase.cs" />
-    <Compile Include="CheckList.cs" />
+    <Compile Include="ViewModels\CheckListViewModel.cs" />
     <Compile Include="ConfirmationWindow.xaml.cs">
       <DependentUpon>ConfirmationWindow.xaml</DependentUpon>
     </Compile>
@@ -150,7 +150,7 @@
       <DependentUpon>SpiritWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
-    <Compile Include="Spirit.cs" />
+    <Compile Include="ViewModels\SpiritViewModel.cs" />
     <Compile Include="ViewModels\SettingViewModel.cs" />
     <Compile Include="ViewModels\SpiritListViewModel.cs" />
     <Page Include="ConfirmationWindow.xaml">

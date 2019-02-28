@@ -7,7 +7,7 @@ using System.Collections.ObjectModel;
 using HelloSpirit.ViewModels;
 using MessagePack;
 
-namespace HelloSpirit
+namespace HelloSpirit.ViewModels
 {
     [MessagePackObject]
     public class MainWindowViewModel : BindableBase

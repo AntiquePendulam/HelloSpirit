@@ -5,18 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 using MessagePack;
 
-namespace HelloSpirit
+namespace HelloSpirit.ViewModels
 {
     [MessagePackObject]
-    public class CheckList : BindableBase
+    public class CheckListViewModel : BindableBase
     {
-        public CheckList()
+        public CheckListViewModel()
         {
             this.Title = "";
             this.IsFinished = false;
         }
 
-        public CheckList(string title, bool isFinished)
+        public CheckListViewModel(string title, bool isFinished)
         {
             this.Title = title;
             this.IsFinished = isFinished;

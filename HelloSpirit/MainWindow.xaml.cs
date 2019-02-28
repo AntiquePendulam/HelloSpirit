@@ -63,7 +63,7 @@ namespace HelloSpirit
 
         private void ListBoxItem_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
-            var data = (sender as ListBoxItem).DataContext as Spirit;
+            var data = (sender as ListBoxItem).DataContext as SpiritViewModel;
             var listbox = FindAncestor<ListBox>( (sender as ListBoxItem) );
             SpiritWindow.Show(data, (listbox.DataContext as SpiritListViewModel).List);
         }
@@ -84,7 +84,7 @@ namespace HelloSpirit
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
             var x = (sender as Button).DataContext as SpiritListViewModel;
-            var spirit = new Spirit() { Title = "new Spirit." };
+            var spirit = new SpiritViewModel() { Title = "new Spirit." };
             x.List.Add(spirit);
             SpiritWindow.Show(spirit, x.List);
         }

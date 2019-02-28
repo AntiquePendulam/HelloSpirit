@@ -7,7 +7,7 @@ using System.ComponentModel;
 using System.Collections.ObjectModel;
 using MessagePack;
 
-namespace HelloSpirit
+namespace HelloSpirit.ViewModels
 {
     [MessagePackObject]
     public class SpiritListViewModel : BindableBase
@@ -23,14 +23,14 @@ namespace HelloSpirit
         }
 
         [IgnoreMember]
-        private ObservableCollection<Spirit> _list;
+        private ObservableCollection<SpiritViewModel> _list;
 
         [Key(1)]
-        public ObservableCollection<Spirit> List
+        public ObservableCollection<SpiritViewModel> List
         {
             get
             {
-                if (_list == null) _list = new ObservableCollection<Spirit>();
+                if (_list == null) _list = new ObservableCollection<SpiritViewModel>();
                 return _list;
             }
             set { this.SetProperty(ref _list, value); }

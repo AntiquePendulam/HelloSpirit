@@ -11,10 +11,10 @@ using System.Windows;
 using System.Reactive.Linq;
 using MessagePack;
 
-namespace HelloSpirit
+namespace HelloSpirit.ViewModels
 {
     [MessagePackObject]
-    public class Spirit : BindableBase
+    public class SpiritViewModel : BindableBase
     {
 
         private string _title;
@@ -48,9 +48,9 @@ namespace HelloSpirit
             set { this.SetProperty(ref this._limitdate, value); }
         }
 
-        private ObservableCollection<CheckList> _checkList;
+        private ObservableCollection<CheckListViewModel> _checkList;
         [Key(3)]
-        public ObservableCollection<CheckList> CheckLists
+        public ObservableCollection<CheckListViewModel> CheckLists
         {
             get { return _checkList; }
             set

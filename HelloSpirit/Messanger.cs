@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using MessagePack;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
+using HelloSpirit.ViewModels;
 
 namespace HelloSpirit
 {

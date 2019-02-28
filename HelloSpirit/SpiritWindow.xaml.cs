@@ -14,6 +14,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Shapes;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using HelloSpirit.ViewModels;
 
 namespace HelloSpirit
 {
@@ -23,24 +24,24 @@ namespace HelloSpirit
     public partial class SpiritWindow : Window
     {
 
-        private ObservableCollection<Spirit> Spirits;
+        private ObservableCollection<SpiritViewModel> Spirits;
 
         public SpiritWindow()
         {
             InitializeComponent();
             AddCheckList.Click += (a, e) =>
             {
-                if ((this.DataContext as Spirit).CheckLists == null) (this.DataContext as Spirit).CheckLists = new ObservableCollection<CheckList>();
-                (this.DataContext as Spirit).CheckLists.Add(new CheckList());
+                if ((this.DataContext as SpiritViewModel).CheckLists == null) (this.DataContext as SpiritViewModel).CheckLists = new ObservableCollection<CheckListViewModel>();
+                (this.DataContext as SpiritViewModel).CheckLists.Add(new CheckListViewModel());
             };
             DeleteButton.Click += (a, e) =>
             {
-                Spirits.Remove(this.DataContext as Spirit);
+                Spirits.Remove(this.DataContext as SpiritViewModel);
                 CloseButton_Clicked();
             };
             MouseLeftButtonUp += (a, e) => Keyboard.ClearFocus();
         }
-        public void Show(Spirit data, ObservableCollection<Spirit> spirits)
+        public void Show(SpiritViewModel data, ObservableCollection<SpiritViewModel> spirits)
         {
             this.DataContext = data;
             this.Spirits = spirits;
@@ -56,7 +57,7 @@ namespace HelloSpirit
 
         private void DeleteItem(object sender, RoutedEventArgs e)
         {
-            (this.DataContext as Spirit).CheckLists.Remove( ( (sender as MenuItem).DataContext as CheckList) );
+            (this.DataContext as SpiritViewModel).CheckLists.Remove( ( (sender as MenuItem).DataContext as CheckListViewModel) );
         }
 
 

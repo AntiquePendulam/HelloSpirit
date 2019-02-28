@@ -7,10 +7,20 @@
         xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
         xmlns:ct="clr-namespace:Microsoft.Toolkit.Wpf.UI.Controls;assembly=Microsoft.Toolkit.Wpf.UI.Controls.WebView"
         xmlns:local="clr-namespace:HelloSpirit"
+        xmlns:localvm="clr-namespace:HelloSpirit.ViewModels"
         xmlns:dd="urn:gong-wpf-dragdrop"
         mc:Ignorable="d"
         Name="MainWIn"
-        Title="HelloSpirit - Say Hello to your Spirits." MinHeight="350" MinWidth="800" MaxWidth="1400" SizeToContent="WidthAndHeight" VerticalContentAlignment="Stretch" Style="{StaticResource WindowNonTemplateStyle}">
+        Title="HelloSpirit - Say Hello to your Spirits." MinHeight="350" MinWidth="800" MaxWidth="1400" SizeToContent="WidthAndHeight" VerticalContentAlignment="Stretch">
+    <Window.Style>
+        <Style TargetType="Window" BasedOn="{StaticResource WindowNonTemplateStyle}">
+            <Style.Triggers>
+                <Trigger Property="IsActive"  Value="False">
+                    <Setter Property="Background" Value="Gray"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Style>
     <Window.Resources>
         <DataTemplate x:Key="DragAdorner">
             <Border Background="Silver" BorderBrush="Gray" BorderThickness="1" CornerRadius="2" SnapsToDevicePixels="True">
@@ -77,7 +87,7 @@
             <!--ListBox ItemTemplate-->
             <Setter Property="ItemTemplate">
                 <Setter.Value>
-                    <DataTemplate DataType="{x:Type local:Spirit}">
+                    <DataTemplate DataType="{x:Type localvm:SpiritViewModel}">
                         <StackPanel VerticalAlignment="Top">
                             <Label Content="{Binding Title}" FontSize="18" FontWeight="Bold" Foreground="Black" Width="Auto" MinWidth="20" Background="#02FFA500" HorizontalAlignment="Left"/>
                             <Label Content="{Binding NumStr}" FontSize="15" Foreground="Black" Background="{x:Null}" HorizontalAlignment="Left"/>
@@ -126,7 +136,7 @@
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="ItemTemplate">
                 <Setter.Value>
-                    <DataTemplate DataType="{x:Type local:SpiritListViewModel}">
+                    <DataTemplate DataType="{x:Type localvm:SpiritListViewModel}">
                         <ListBox ItemsSource="{Binding List}" DataContext="{Binding}" Style="{StaticResource ListBoxDefaultStyle}" ItemContainerStyle="{StaticResource ListBoxItemDefaultStyle}"/>
                     </DataTemplate>
                 </Setter.Value>

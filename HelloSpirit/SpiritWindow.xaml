@@ -6,6 +6,7 @@
         xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HelloSpirit"
+        xmlns:localvm="clr-namespace:HelloSpirit.ViewModels"
         mc:Ignorable="d"
         x:Name="SpiritWin"
         Title="SpiritWindow  " Height="450" Width="500" Background="Black" Style="{StaticResource WindowDefaultStyle}" Topmost="True">
@@ -124,7 +125,7 @@
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="ItemTemplate">
                 <Setter.Value>
-                    <DataTemplate DataType="{x:Type local:CheckList}">
+                    <DataTemplate DataType="{x:Type localvm:CheckListViewModel}">
                         <Border>
                             <StackPanel Orientation="Horizontal" Margin="0,2">
                                 <CheckBox BorderThickness="0" IsChecked="{Binding IsFinished, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center">
