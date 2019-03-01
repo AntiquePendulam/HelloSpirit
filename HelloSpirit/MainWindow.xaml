@@ -11,16 +11,7 @@
         xmlns:dd="urn:gong-wpf-dragdrop"
         mc:Ignorable="d"
         Name="MainWIn"
-        Title="HelloSpirit - Say Hello to your Spirits." MinHeight="350" MinWidth="800" MaxWidth="1400" SizeToContent="WidthAndHeight" VerticalContentAlignment="Stretch">
-    <Window.Style>
-        <Style TargetType="Window" BasedOn="{StaticResource WindowNonTemplateStyle}">
-            <Style.Triggers>
-                <Trigger Property="IsActive"  Value="False">
-                    <Setter Property="Background" Value="Gray"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-    </Window.Style>
+        Title="HelloSpirit - Say Hello to your Spirits." MinHeight="350" MinWidth="800" MaxWidth="1400" SizeToContent="WidthAndHeight" VerticalContentAlignment="Stretch" Style="{StaticResource WindowNonTemplateStyle}">
     <Window.Resources>
         <DataTemplate x:Key="DragAdorner">
             <Border Background="Silver" BorderBrush="Gray" BorderThickness="1" CornerRadius="2" SnapsToDevicePixels="True">
