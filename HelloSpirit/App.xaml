@@ -29,6 +29,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        
         <Style x:Key="TextBoxDefaultStyle" TargetType="TextBox">
             <Setter Property="Template">
                 <Setter.Value>
@@ -54,71 +55,73 @@
             <Setter Property="WindowState" Value="Normal"/>
             <Setter Property="WindowStyle" Value="None"/>
             <Setter Property="AllowsTransparency" Value="True"/>
-            <Setter Property="Background" Value="Black"/>
+            <Setter Property="Background" Value="{x:Static local:SpiritThemeColor.WindowBackground}"/>
             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
         </Style>
         <Style x:Key="WindowDefaultStyle" TargetType="Window" BasedOn="{StaticResource WindowNonTemplateStyle}">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Window">
-                        <Grid Background="{TemplateBinding Background}" VerticalAlignment="Top">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="30"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <Border BorderThickness="0,0,0,1" VerticalAlignment="Top" Margin="0,1,0,0" Height="30">
-                                <Grid x:Name="TitleBar" Background="Black">
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="MouseDown">
-                                            <ei:CallMethodAction TargetObject="{Binding RelativeSource={RelativeSource TemplatedParent}}" MethodName="DragMove"/>
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                    <Grid.Resources>
-                                        <Style TargetType="{x:Type Label}">
-                                            <Setter Property="Foreground" Value="LightGray"/>
-                                        </Style>
-                                    </Grid.Resources>
+                        <Border BorderThickness="1" BorderBrush="{x:Static local:SpiritThemeColor.WindowBorderColor}">
+                            <Grid Background="{TemplateBinding Background}" VerticalAlignment="Top">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Border BorderThickness="0,0,0,1" VerticalAlignment="Top" Margin="0,1,0,0" Height="30">
+                                    <Grid x:Name="TitleBar" Background="{x:Static local:SpiritThemeColor.WindowTitleBackground}">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseDown">
+                                                <ei:CallMethodAction TargetObject="{Binding RelativeSource={RelativeSource TemplatedParent}}" MethodName="DragMove"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                        <Grid.Resources>
+                                            <Style TargetType="{x:Type Label}">
+                                                <Setter Property="Foreground" Value="{x:Static local:SpiritThemeColor.TitleFontColor}"/>
+                                            </Style>
+                                        </Grid.Resources>
 
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition Width="80"/>
-                                    </Grid.ColumnDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="80"/>
+                                        </Grid.ColumnDefinitions>
 
-                                    <!--Column 0 Title Text-->
-                                    <Label Width="Auto" Content="{TemplateBinding Title}" FontSize="15" FontStyle="Italic" HorizontalAlignment="Left"/>
+                                        <!--Column 0 Title Text-->
+                                        <Label Width="Auto" Content="{TemplateBinding Title}" FontSize="15" FontStyle="Italic" HorizontalAlignment="Left"/>
 
-                                    <!--Column 2 Minimum & Close button-->
-                                    <UniformGrid Grid.Column="3" Rows="1">
-                                        <Button x:Name="MinimumButton" Content="-" Style="{StaticResource ButtonDefaultStyle}">
-                                            <i:Interaction.Triggers>
-                                                <i:EventTrigger EventName="Click">
-                                                    <ei:ChangePropertyAction TargetObject="{Binding RelativeSource={RelativeSource TemplatedParent}}" PropertyName="WindowState" Value="Minimized"/>
-                                                </i:EventTrigger>
-                                            </i:Interaction.Triggers>
-                                        </Button>
+                                        <!--Column 2 Minimum & Close button-->
+                                        <UniformGrid Grid.Column="3" Rows="1">
+                                            <Button x:Name="MinimumButton" Content="-" Style="{StaticResource ButtonDefaultStyle}">
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="Click">
+                                                        <ei:ChangePropertyAction TargetObject="{Binding RelativeSource={RelativeSource TemplatedParent}}" PropertyName="WindowState" Value="Minimized"/>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </Button>
 
-                                        <Button x:Name="CloseButton" Content="X">
-                                            <Button.Style>
-                                                <Style TargetType="Button" BasedOn="{StaticResource ButtonDefaultStyle}">
-                                                    <Style.Triggers>
-                                                        <Trigger Property="IsMouseOver" Value="true">
-                                                            <Setter Property="Background" Value="Red"/>
-                                                        </Trigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Button.Style>
-                                            <i:Interaction.Triggers>
-                                                <i:EventTrigger EventName="Click">
-                                                    <ei:CallMethodAction TargetObject="{Binding RelativeSource={RelativeSource TemplatedParent}}" MethodName="CloseButton_Clicked"/>
-                                                </i:EventTrigger>
-                                            </i:Interaction.Triggers>
-                                        </Button>
-                                    </UniformGrid>
-                                </Grid>
-                            </Border>
-                            <ContentPresenter Grid.Row="1"/>
-                        </Grid>
+                                            <Button x:Name="CloseButton" Content="X">
+                                                <Button.Style>
+                                                    <Style TargetType="Button" BasedOn="{StaticResource ButtonDefaultStyle}">
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="true">
+                                                                <Setter Property="Background" Value="Red"/>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Button.Style>
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="Click">
+                                                        <ei:CallMethodAction TargetObject="{Binding RelativeSource={RelativeSource TemplatedParent}}" MethodName="CloseButton_Clicked"/>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </Button>
+                                        </UniformGrid>
+                                    </Grid>
+                                </Border>
+                                <ContentPresenter Grid.Row="1"/>
+                            </Grid>
+                        </Border>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>

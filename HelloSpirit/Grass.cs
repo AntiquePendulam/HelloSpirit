@@ -22,6 +22,8 @@ namespace HelloSpirit
 
         private static string nameBuffer = "";
 
+        private static readonly string bg_color = SpiritThemeColor.WindowBackground.Color.ToString().Remove(1,2);
+
         internal static async void GetGrass(string name)
         {
             if (TargetWebView == null || Equals(nameBuffer, name)) return;
@@ -39,7 +41,7 @@ namespace HelloSpirit
                 var content = parser.ParseDocument(html).GetElementsByTagName("svg")?.First().OuterHtml;
                 string htmlStr;
                 if (content == null) htmlStr = errorHtml;
-                else htmlStr = $"<html> <link href=\"https://fonts.googleapis.com/css?family=Quicksand\" rel=\"stylesheet\"> {style} <body bgcolor=\"black\"> {content} </body> </html>";
+                else htmlStr = $"<html> <link href=\"https://fonts.googleapis.com/css?family=Quicksand\" rel=\"stylesheet\"> {style} <body bgcolor=\"{bg_color}\"> {content} </body> </html>";
                 TargetWebView.NavigateToString(htmlStr);
             }
             catch { }
