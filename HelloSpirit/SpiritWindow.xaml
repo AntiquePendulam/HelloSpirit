@@ -9,17 +9,17 @@
         xmlns:localvm="clr-namespace:HelloSpirit.ViewModels"
         mc:Ignorable="d"
         x:Name="SpiritWin"
-        Title="SpiritWindow  " Height="450" Width="500" Background="Black" Style="{StaticResource WindowDefaultStyle}" Topmost="True">
+        Title="SpiritWindow  " Height="450" Width="500" Background="{x:Static local:SpiritThemeColor.WindowBackground}" Style="{StaticResource WindowDefaultStyle}" Topmost="True">
     <Window.Resources>
         <Style x:Key="SpiritTextBoxDefaultStyle" TargetType="TextBox">
-            <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
+            <Setter Property="Background" Value="#02000000"/>
+            <Setter Property="Foreground" Value="{x:Static local:SpiritThemeColor.CheckListForeground}"/>
             <Setter Property="FontFamily" Value="/HelloSpirit;component/Fonts/#M+ 2c"/>
-            <Setter Property="Foreground" Value="WhiteSmoke"/>
             <Setter Property="BorderThickness" Value="0"/>
         </Style>
         <Style x:Key="SpiritTextBoxStyle" TargetType="TextBox">
-            <Setter Property="Background" Value="Black"/>
-            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="{x:Static local:SpiritThemeColor.WindowBackground}"/>
+            <Setter Property="Foreground" Value="{x:Static local:SpiritThemeColor.SpiritTextBoxForeground}"/>
             <Setter Property="Padding" Value="2"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -36,7 +36,7 @@
                                                     </Border>
                                                     <ControlTemplate.Triggers>
                                                         <Trigger Property="IsMouseOver" Value="true">
-                                                            <Setter Property="Background" Value="Black"/>
+                                                            <Setter Property="Background" Value="{x:Static local:SpiritThemeColor.CloseButtonMouseOverBackground}"/>
                                                         </Trigger>
                                                     </ControlTemplate.Triggers>
                                                 </ControlTemplate>
@@ -89,7 +89,7 @@
             </Setter>
         </Style>
         <Style x:Key="CheckListBoxItemStyle" TargetType="ListBoxItem">
-            <Setter Property="Background" Value="DimGray"/>
+            <Setter Property="Background" Value="{x:Static local:SpiritThemeColor.CheckListBackground}"/>
             <Setter Property="ContextMenu">
                 <Setter.Value>
                     <ContextMenu>
@@ -111,7 +111,7 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="DarkGray"/>
+                                <Setter Property="Background" Value="{x:Static local:SpiritThemeColor.CheckListMouseOverBackground}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -154,17 +154,28 @@
     <Grid>
         <StackPanel Margin="5,5" Focusable="True" Background="{Binding Background, ElementName=SpiritWin}">
             <TextBox Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SpiritTextBoxStyle}" FontSize="18" />
-            <TextBox Margin="0,5" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" Background="Gray" FontSize="15" Style="{StaticResource SpiritTextBoxStyle}"/>
-            <Button x:Name="AddCheckList" Foreground="White" Height="25" Width="60" HorizontalAlignment="Right" Content="Add" Style="{StaticResource ButtonDefaultStyle}"/>
-            <ListBox x:Name="ox" ItemsSource="{Binding CheckLists}" Style="{StaticResource CheckListBoxStyle}" ItemContainerStyle="{StaticResource CheckListBoxItemStyle}" />
-            <Label Content="{Binding NumStr}" Foreground="White"/>
-            <Button x:Name="DeleteButton" Foreground="White" FontSize="13" Height="25" Width="60" Content="Delete" HorizontalAlignment="Right">
+            <TextBox Margin="0,5" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" Background="{x:Static local:SpiritThemeColor.SpiritDescriptionNormalBackground}" FontSize="15" Style="{StaticResource SpiritTextBoxStyle}"/>
+            <Button x:Name="AddCheckList" Foreground="{x:Static local:SpiritThemeColor.CheckListAddButtonForeground}" Height="25" Width="60" HorizontalAlignment="Right" Content="Add">
                 <Button.Style>
                     <Style TargetType="Button" BasedOn="{StaticResource ButtonDefaultStyle}">
-                        <Setter Property="Background" Value="#FF2E2E2E"/>
+                        <Setter Property="Background" Value="{x:Static local:SpiritThemeColor.CheckListAddButtonBackground}"/>
                         <Style.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="Red"/>
+                                <Setter Property="Background" Value="{x:Static local:SpiritThemeColor.CheckListAddButtonMouseOverBackground}"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <ListBox x:Name="ox" ItemsSource="{Binding CheckLists}" Style="{StaticResource CheckListBoxStyle}" ItemContainerStyle="{StaticResource CheckListBoxItemStyle}" />
+            <Label Content="{Binding NumStr}" Foreground="White"/>
+            <Button x:Name="DeleteButton" Foreground="{x:Static local:SpiritThemeColor.DeleteButtonForeground}" FontSize="13" Height="25" Width="60" Content="Delete" HorizontalAlignment="Right">
+                <Button.Style>
+                    <Style TargetType="Button" BasedOn="{StaticResource ButtonDefaultStyle}">
+                        <Setter Property="Background" Value="{x:Static local:SpiritThemeColor.DeleteButtonBackground}"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="{x:Static local:SpiritThemeColor.DeleteButtonMouseOverBackground}"/>
                             </Trigger>
                         </Style.Triggers>
                     </Style>

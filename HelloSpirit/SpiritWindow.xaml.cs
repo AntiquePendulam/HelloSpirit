@@ -59,8 +59,5 @@ namespace HelloSpirit
         {
             (this.DataContext as SpiritViewModel).CheckLists.Remove( ( (sender as MenuItem).DataContext as CheckListViewModel) );
         }
-
-
-
     }
 }
