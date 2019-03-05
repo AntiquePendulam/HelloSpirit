@@ -16,7 +16,7 @@ namespace HelloSpirit
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-
+            Messanger.Read();
         }
     }
 }

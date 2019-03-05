@@ -259,6 +259,7 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
+                
                 <Label x:Name="Label" Content="{Binding Setting.UserName}" ContentStringFormat="Hello, {0}." Foreground="{x:Static local:SpiritThemeColor.HelloTextColor}" FontSize="20" FontWeight="Bold" VerticalAlignment="Top"/>
                 <!--Contents-->
                 <ScrollViewer Padding="0,0,0,30" Grid.Row="1" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Disabled">

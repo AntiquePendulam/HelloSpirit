@@ -19,3 +19,7 @@ https://github.com/runceel/ReactiveProperty/blob/master/LICENSE.txt
 * Microsoft.Toolkit.Wpf.UI.Controls.WebView (Windows Community Toolkit)
 The MIT License (MIT) Copyright (c) .NET Foundation and Contributors
 https://github.com/windows-toolkit/Microsoft.Toolkit.Win32/blob/master/license.md
+
+* Json.NET
+The MIT License (MIT) Copyright (c) 2007 James Newton-King
+https://github.com/JamesNK/Newtonsoft.Json/blob/master/LICENSE.md

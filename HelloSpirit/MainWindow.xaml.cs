@@ -29,15 +29,19 @@ namespace HelloSpirit
     /// </summary>
     public partial class MainWindow : Window
     {
-        private static SpiritWindow SpiritWindow { get; } = new SpiritWindow();
-        private static ConfirmationWindow confirmation = new ConfirmationWindow();
-        private static SettingWindow SettingWindow { get; } = new SettingWindow();
+        private static SpiritWindow SpiritWindow { get; set; }
+        private static ConfirmationWindow Confirmation { get; set; }
+        private static SettingWindow SettingWindow { get; set; }
         public static MainWindowViewModel MainViewModel { get; set; }
 
         public MainWindow()
         {
-            Messanger.Read();
             InitializeComponent();
+
+            SpiritWindow = new SpiritWindow();
+            Confirmation = new ConfirmationWindow();
+            SettingWindow = new SettingWindow();
+
             CloseButton.Click += (a, e) => Close();
             TitleBar.MouseDown += (a, e) => DragMove();
             this.Closing += (a, e) => WindowClose();
@@ -65,7 +69,7 @@ namespace HelloSpirit
         private void WindowClose()
         {
             SpiritWindow.Close();
-            confirmation.Close();
+            Confirmation.Close();
             SettingWindow.Close();
         }
         /*
@@ -104,9 +108,9 @@ namespace HelloSpirit
 
         private void ListDelete(object sender, RoutedEventArgs e)
         {
-            confirmation.ShowDialog();
+            Confirmation.ShowDialog();
 
-            if (!confirmation.Accept) return;
+            if (!Confirmation.Accept) return;
             var data = (sender as Button).DataContext as SpiritListViewModel;
             MainViewModel.Lists.Remove(data);
         }
