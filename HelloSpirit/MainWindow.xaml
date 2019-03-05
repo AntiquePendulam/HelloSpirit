@@ -208,7 +208,7 @@
                         <Button x:Name="SettingButton">
                             <Button.Style>
                                 <Style TargetType="Button" BasedOn="{StaticResource ButtonDefaultStyle}">
-                                    <Setter Property="Background" Value="{x:Static local:SpiritThemeColor.SettingButtonBackground}"/>
+                                    <Setter Property="Background" Value="{Binding Source={x:Static local:SpiritThemeColor.SettingButtonBackground}}"/>
                                     <Style.Triggers>
                                         <Trigger Property="IsMouseOver" Value="True">
                                             <Setter Property="Background" Value="{x:Static local:SpiritThemeColor.SettingButtonMouseOverBackground}"/>

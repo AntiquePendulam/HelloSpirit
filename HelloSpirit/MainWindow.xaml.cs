@@ -36,19 +36,13 @@ namespace HelloSpirit
 
         public MainWindow()
         {
+            Messanger.Read();
             InitializeComponent();
             CloseButton.Click += (a, e) => Close();
             TitleBar.MouseDown += (a, e) => DragMove();
             this.Closing += (a, e) => WindowClose();
             ListAddButton.Click += (a, e) => MainViewModel.Lists.Add(new SpiritListViewModel() { ListTitle = "new List" });
 
-            /*
-            var data = File.ReadAllBytes(@"./nine.json");
-            MainViewModel = MessagePackSerializer.Deserialize<MainWindowViewModel>(data);
-            MainViewModel.Lists.ObserveElementPropertyChanged().Subscribe(_ => WriteData());
-            MainViewModel.Lists.CollectionChanged += (a,e) => WriteData();
-            */
-            Messanger.Read();
             SettingWindow.DataContext = MainViewModel.Setting;
             this.DataContext = MainViewModel;
             Grass.TargetWebView = GrassView;

@@ -9,6 +9,7 @@ using MessagePack;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using HelloSpirit.ViewModels;
+using Newtonsoft.Json;
 
 namespace HelloSpirit
 {
@@ -16,6 +17,7 @@ namespace HelloSpirit
     {
         public static string PATH = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\ProjectATR\HelloSpirit";
         public static readonly string FILEPATH = PATH + @"\data.json";
+        public static readonly string COLOR_FILEPATH = PATH + @"\colorsetting.json";
 
         private static readonly ObservableCollection<SpiritListViewModel> defaultList = new ObservableCollection<SpiritListViewModel>()
         {
@@ -25,19 +27,30 @@ namespace HelloSpirit
         };
         private static readonly MainWindowViewModel defaultViewModel = new MainWindowViewModel() { Lists = defaultList };
 
+        private static readonly SpiritThemeColor Colors = new SpiritThemeColor();
+
         public static void Read()
         {
-            if (!File.Exists(FILEPATH))
-            {
-                MainWindow.MainViewModel = defaultViewModel;
-            }
-            else
+            if (File.Exists(FILEPATH))
             {
                 var json = File.ReadAllBytes(FILEPATH);
                 MainWindow.MainViewModel = MessagePackSerializer.Deserialize<MainWindowViewModel>(json);
 
                 if (MainWindow.MainViewModel == null) MainWindow.MainViewModel = defaultViewModel;
             }
+            else MainWindow.MainViewModel = defaultViewModel;
+
+            if (File.Exists(COLOR_FILEPATH))
+            {
+                var colorJson = File.ReadAllText(COLOR_FILEPATH);
+                JsonConvert.DeserializeObject<SpiritThemeColor>(colorJson);
+            }
+            else
+            {
+                var themeColors = JsonConvert.SerializeObject(Colors, Formatting.Indented);
+                File.WriteAllText(COLOR_FILEPATH, themeColors);
+            }
+
             MainWindow.MainViewModel.Lists.ObserveElementPropertyChanged().Subscribe(_ => Write());
             MainWindow.MainViewModel.Lists.CollectionChanged += (a, e) => Write();
         }
