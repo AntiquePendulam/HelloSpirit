@@ -16,18 +16,23 @@ namespace HelloSpirit
         public static SolidColorBrush TitleFontColor { get; set; } = Brushes.WhiteSmoke;
         public static SolidColorBrush WindowTitleBackground { get; set; } = Brushes.Black;
 
+        public static SolidColorBrush MinButtonBackground { get; set; } = Brushes.Black;
         public static SolidColorBrush MinButtonForeground { get; set; } = Brushes.WhiteSmoke;
         public static SolidColorBrush MinButtonMouseOverBackground { get; set; } = Brushes.DarkGray;
 
+        public static SolidColorBrush CloseButtonBackground { get; set; } = Brushes.Black;
         public static SolidColorBrush CloseButtonForeground { get; set; } = Brushes.WhiteSmoke;
         public static SolidColorBrush CloseButtonMouseOverBackground { get; set; } = Brushes.Red;
 
         public static SolidColorBrush ButtonDefaultBackground { get; set; }
         public static SolidColorBrush ButtonDefaultForeground { get; set; }
-        public static SolidColorBrush CloseDeleteButtonMouseOverBackground { get; set; }
         #endregion
 
         #region MainWindow
+        public static SolidColorBrush SettingButtonBackground { get; set; } = Brushes.Black;
+        public static SolidColorBrush SettingButtonMouseOverBackground { get; set; } = Brushes.Gray;
+
+
         public static SolidColorBrush HelloTextColor { get; set; } = Brushes.WhiteSmoke;
 
         public static SolidColorBrush ListBackground { get; set; } = Brushes.Black;
@@ -59,22 +64,15 @@ namespace HelloSpirit
         public static SolidColorBrush SpiritTitleForeground { get; set; } = Brushes.WhiteSmoke;
         public static SolidColorBrush SpiritTitleBorderColor { get; set; } = Brushes.LightGray;
 
-        public static SolidColorBrush SpiritDescriptionNormalBackground { get; set; } = Brushes.Gray;
-        public static SolidColorBrush SpiritDescriptionNormalForeground { get; set; } = Brushes.WhiteSmoke;
-        public static SolidColorBrush SpiritDescriptionActiveBackground { get; set; } = Brushes.Gray;
-        public static SolidColorBrush SpiritDescriptionActiveForeground { get; set; } = Brushes.WhiteSmoke;
-        public static SolidColorBrush SpiritDescriptionBorderColor { get; set; } = Brushes.LightGray;
+        public static SolidColorBrush SpiritDescriptionNormalBackground { get; set; } = Brushes.DimGray;
 
         public static SolidColorBrush CheckListAddButtonBackground { get; set; } = Brushes.Black;
         public static SolidColorBrush CheckListAddButtonForeground { get; set; } = Brushes.WhiteSmoke;
         public static SolidColorBrush CheckListAddButtonMouseOverBackground { get; set; } = Brushes.DimGray;
 
-        public static SolidColorBrush CheckListBackground { get; set; } = Brushes.Gray;
+        public static SolidColorBrush CheckListBackground { get; set; } = Brushes.DimGray;
         public static SolidColorBrush CheckListForeground { get; set; } = Brushes.WhiteSmoke;
-        public static SolidColorBrush CheckListMouseOverBackground { get; set; } = Brushes.LightGray;
-
-        public static SolidColorBrush CheckBoxBackground { get; set; } = Brushes.LightGray;
-        public static SolidColorBrush CheckBoxForeground { get; set; } = Brushes.Red;
+        public static SolidColorBrush CheckListMouseOverBackground { get; set; } = Brushes.Gray;
 
         public static SolidColorBrush NumberFontColor { get; set; } = Brushes.WhiteSmoke;
 

@@ -88,11 +88,21 @@
                                         </Grid.ColumnDefinitions>
 
                                         <!--Column 0 Title Text-->
-                                        <Label Width="Auto" Content="{TemplateBinding Title}" FontSize="15" FontStyle="Italic" HorizontalAlignment="Left"/>
+                                        <Label Width="Auto" Content="{TemplateBinding Title}" Foreground="{x:Static local:SpiritThemeColor.TitleFontColor}" FontSize="15" FontStyle="Italic" HorizontalAlignment="Left"/>
 
                                         <!--Column 2 Minimum & Close button-->
                                         <UniformGrid Grid.Column="3" Rows="1">
-                                            <Button x:Name="MinimumButton" Content="-" Style="{StaticResource ButtonDefaultStyle}">
+                                            <Button x:Name="MinimumButton" Content="-">
+                                                <Button.Style>
+                                                    <Style TargetType="Button" BasedOn="{StaticResource ButtonDefaultStyle}">
+                                                        <Setter Property="Background" Value="{x:Static local:SpiritThemeColor.MinButtonBackground}"/>
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Background" Value="{x:Static local:SpiritThemeColor.MinButtonMouseOverBackground}"/>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Button.Style>
                                                 <i:Interaction.Triggers>
                                                     <i:EventTrigger EventName="Click">
                                                         <ei:ChangePropertyAction TargetObject="{Binding RelativeSource={RelativeSource TemplatedParent}}" PropertyName="WindowState" Value="Minimized"/>
@@ -103,9 +113,10 @@
                                             <Button x:Name="CloseButton" Content="X">
                                                 <Button.Style>
                                                     <Style TargetType="Button" BasedOn="{StaticResource ButtonDefaultStyle}">
+                                                        <Setter Property="Background" Value="{x:Static local:SpiritThemeColor.CloseButtonBackground}"/>
                                                         <Style.Triggers>
                                                             <Trigger Property="IsMouseOver" Value="true">
-                                                                <Setter Property="Background" Value="Red"/>
+                                                                <Setter Property="Background" Value="{x:Static local:SpiritThemeColor.CloseButtonMouseOverBackground}"/>
                                                             </Trigger>
                                                         </Style.Triggers>
                                                     </Style>

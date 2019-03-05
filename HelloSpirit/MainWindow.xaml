@@ -26,6 +26,8 @@
         <Style TargetType="Label">
             <Setter Property="FontFamily" Value="/HelloTask;component/Fonts/#M+ 2c"/>
         </Style>
+        
+        <!--Spirit用Listのスタイル定義-->
         <Style x:Key="ListBoxDefaultStyle" TargetType="ListBox">
             <!--#region Setter-->
             <Setter Property="Margin" Value="2,2,2,4"/>
@@ -53,7 +55,18 @@
                                     <TextBox Name="ListTitle" Text="{Binding ListTitle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                          FontFamily="{TemplateBinding FontFamily}" Margin="5,2" FontSize="20" Style="{StaticResource TextBoxDefaultStyle}"
                                          FontWeight="Bold" VerticalAlignment="Top" Background="{x:Static local:SpiritThemeColor.ListBackground}" Foreground="White" SelectionBrush="Gray"/>
-                                    <Button Click="ListDelete" Content="X" Foreground="{x:Static local:SpiritThemeColor.ListDeleteButtonDefaultForeground}" Grid.Column="1" Margin="5" Style="{StaticResource ButtonDefaultStyle}"/>
+                                    <Button Click="ListDelete" Content="X" Foreground="{x:Static local:SpiritThemeColor.ListDeleteButtonDefaultForeground}" Grid.Column="1" Margin="5">
+                                        <Button.Style>
+                                            <Style TargetType="Button" BasedOn="{StaticResource ButtonDefaultStyle}">
+                                                <Setter Property="Background" Value="{x:Static local:SpiritThemeColor.ListDeleteButtonDefaultBackground}"/>
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Background" Value="{x:Static local:SpiritThemeColor.ListDeleteButtonMouseOverBackground}"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button>
                                 </Grid>
                                 <ItemsPresenter VerticalAlignment="Top"/>
                                 <Rectangle Height="30" Fill="{x:Static local:SpiritThemeColor.ListBackground}" >
@@ -68,7 +81,18 @@
                                         </Style>
                                     </Rectangle.Style>
                                 </Rectangle>
-                                <Button x:Name="AddButton" Click="AddButton_Click" Height="25" Content="Add" Foreground="{x:Static local:SpiritThemeColor.SpiritAddButtonForeground}" FontSize="18" VerticalAlignment="Bottom" HorizontalContentAlignment="Left" Padding="10,0" Style="{StaticResource ButtonDefaultStyle}"/>
+                                <Button x:Name="AddButton" Click="AddButton_Click" Height="25" Content="Add" Foreground="{x:Static local:SpiritThemeColor.SpiritAddButtonForeground}" FontSize="18" VerticalAlignment="Bottom" HorizontalContentAlignment="Left" Padding="10,0">
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource ButtonDefaultStyle}">
+                                            <Setter Property="Background" Value="{x:Static local:SpiritThemeColor.SpiritAddButtonBackground}"/>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="{x:Static local:SpiritThemeColor.SpiritAddButtonMouseOverBackground}"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
                             </StackPanel>
                         </Border>
                     </ControlTemplate>
@@ -122,6 +146,7 @@
             </Setter>
         </Style>
 
+        <!--ListBox用Listのスタイル定義-->
         <Style x:Key="ListBoxListStyle" TargetType="ListBox">
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="ItemTemplate">
@@ -178,13 +203,33 @@
                     <!--Column 0 Title Text-->
                     <Label Content="{Binding Title, RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}" FontSize="15" FontStyle="Italic"/>
 
-                    <!--Column 2 Minimum & Close button-->
+                    <!--Column 2 Setting & Minimum & Close button-->
                     <UniformGrid Grid.Column="3" Rows="1">
-                        <Button x:Name="SettingButton" Style="{StaticResource ButtonDefaultStyle}">
+                        <Button x:Name="SettingButton">
+                            <Button.Style>
+                                <Style TargetType="Button" BasedOn="{StaticResource ButtonDefaultStyle}">
+                                    <Setter Property="Background" Value="{x:Static local:SpiritThemeColor.SettingButtonBackground}"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="{x:Static local:SpiritThemeColor.SettingButtonMouseOverBackground}"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
                             <Image Source="Icons/Gear.png" Width="16" Height="16"/>
                         </Button>
 
-                        <Button x:Name="MinimumButton" Content="-" Style="{StaticResource ButtonDefaultStyle}">
+                        <Button x:Name="MinimumButton" Content="-">
+                            <Button.Style>
+                                <Style TargetType="Button" BasedOn="{StaticResource ButtonDefaultStyle}">
+                                    <Setter Property="Background" Value="{x:Static local:SpiritThemeColor.MinButtonBackground}"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="{x:Static local:SpiritThemeColor.MinButtonMouseOverBackground}"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <ei:ChangePropertyAction TargetName="MainWIn" PropertyName="WindowState" Value="Minimized"/>
@@ -195,6 +240,7 @@
                         <Button x:Name="CloseButton" Content="X">
                             <Button.Style>
                                 <Style TargetType="Button" BasedOn="{StaticResource ButtonDefaultStyle}">
+                                    <Setter Property="Background" Value="{x:Static local:SpiritThemeColor.CloseButtonBackground}"/>
                                     <Style.Triggers>
                                         <Trigger Property="IsMouseOver" Value="true">
                                             <Setter Property="Background" Value="{x:Static local:SpiritThemeColor.CloseButtonMouseOverBackground}"/>
@@ -218,17 +264,18 @@
                 <ScrollViewer Padding="0,0,0,30" Grid.Row="1" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Disabled">
                     <StackPanel Orientation="Horizontal">
                         <ListBox ItemsSource="{Binding Lists}" Style="{StaticResource ListBoxListStyle}"
-                     ItemContainerStyle="{StaticResource ListBoxListItemStyle}" Background="{x:Null}"
-                     BorderThickness="0" VerticalAlignment="Top" HorizontalContentAlignment="Stretch">
+                                ItemContainerStyle="{StaticResource ListBoxListItemStyle}" Background="{x:Null}"
+                                BorderThickness="0" VerticalAlignment="Top" HorizontalContentAlignment="Stretch">
                             <ListBox.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <UniformGrid Rows="1" VerticalAlignment="Top"/>
                                 </ItemsPanelTemplate>
                             </ListBox.ItemsPanel>
                         </ListBox>
-                        <Button x:Name="ListAddButton" Content="+" Width="50" FontSize="30" FontWeight="Black">
+                        <Button x:Name="ListAddButton" Foreground="{x:Static local:SpiritThemeColor.ListPlusButtonForeground}" Content="+" Width="50" FontSize="30" FontWeight="Black">
                             <Button.Style>
                                 <Style TargetType="Button" BasedOn="{StaticResource ButtonDefaultStyle}">
+                                    <Setter Property="Background" Value="{x:Static local:SpiritThemeColor.WindowBackground}"/>
                                     <Setter Property="Template">
                                         <Setter.Value>
                                             <ControlTemplate TargetType="Button">
