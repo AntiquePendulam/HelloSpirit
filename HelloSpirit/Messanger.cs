@@ -45,11 +45,7 @@ namespace HelloSpirit
                 var colorJson = File.ReadAllText(COLOR_FILEPATH);
                 JsonConvert.DeserializeObject<SpiritThemeColor>(colorJson);
             }
-            else
-            {
-                var themeColors = JsonConvert.SerializeObject(Colors, Formatting.Indented);
-                File.WriteAllText(COLOR_FILEPATH, themeColors);
-            }
+            else ThemeWrite();
 
             MainWindow.MainViewModel.Lists.ObserveElementPropertyChanged().Subscribe(_ => Write());
             MainWindow.MainViewModel.Lists.CollectionChanged += (a, e) => Write();
@@ -60,6 +56,12 @@ namespace HelloSpirit
             var bytes = MessagePackSerializer.Serialize(MainWindow.MainViewModel);
             if (!Directory.Exists(PATH)) Directory.CreateDirectory(PATH);
             File.WriteAllBytes(FILEPATH, bytes);
+        }
+
+        public static void ThemeWrite()
+        {
+            var themeColors = JsonConvert.SerializeObject(Colors, Formatting.Indented);
+            File.WriteAllText(COLOR_FILEPATH, themeColors);
         }
     }
 }

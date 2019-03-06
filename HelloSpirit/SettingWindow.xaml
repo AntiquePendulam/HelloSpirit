@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HelloSpirit"
         mc:Ignorable="d"
-        Title="Setting" Background="Black" SizeToContent="WidthAndHeight" Style="{StaticResource WindowDefaultStyle}">
+        Title="Setting" SizeToContent="WidthAndHeight" Style="{StaticResource WindowDefaultStyle}">
     <Grid >
-        <StackPanel Margin="5,10" Width="500" Height="100">
+        <StackPanel Margin="5,10" Width="500" Height="150">
             <StackPanel.Resources>
                 <Style TargetType="TextBox">
                     <Setter Property="HorizontalAlignment" Value="Left"/>
@@ -36,6 +36,21 @@
                 <Label Content="GitHub Name"/>
                 <TextBox Text="{Binding GitHubName, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
+            <Button x:Name="ThemeButton" Height="30" Margin="0,20" Foreground="{x:Static local:SpiritThemeColor.CheckListAddButtonForeground}" Content="現在のテーマ設定を再発行" FontSize="16" FontFamily="/HelloSpirit;component/Fonts/#M+ 2c">
+                <Button.Style>
+                    <Style TargetType="Button" BasedOn="{StaticResource ButtonDefaultStyle}">
+                        <Setter Property="Background" Value="{x:Static local:SpiritThemeColor.CheckListAddButtonBackground}"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="{x:Static local:SpiritThemeColor.CheckListAddButtonMouseOverBackground}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="LightGray"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
         </StackPanel>
     </Grid>
 </Window>

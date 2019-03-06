@@ -24,6 +24,7 @@ namespace HelloSpirit
         {
             InitializeComponent();
             MouseLeftButtonUp += (a, e) => Keyboard.ClearFocus();
+            ThemeButton.Click += (a, e) => Messanger.ThemeWrite();
         }
 
         public void CloseButton_Clicked()

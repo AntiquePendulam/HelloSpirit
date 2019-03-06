@@ -74,6 +74,14 @@ namespace HelloSpirit
         [JsonProperty]
         public static SolidColorBrush ListPlusButtonMouseOverBackground { get; set; } = Brushes.DimGray;
 
+        //タスクグラデーション
+        [JsonProperty]
+        public static Color SpiritColor1 { get; set; } = Colors.Yellow;
+        [JsonProperty]
+        public static Color SpiritColor2 { get; set; } = Colors.Orange;
+        [JsonProperty]
+        public static Color SpiritColor3 { get; set; } = Colors.Red;
+
         //タスク追加ボタン
         [JsonProperty]
         public static SolidColorBrush SpiritAddButtonBackground { get; set; } = Brushes.Black;
