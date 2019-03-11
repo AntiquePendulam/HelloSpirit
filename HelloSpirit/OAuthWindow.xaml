@@ -1,0 +1,45 @@
+﻿<Window x:Class="HelloSpirit.OAuthWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HelloSpirit"
+        mc:Ignorable="d"
+        Title="OAuthWindow" Height="450" Width="800" Style="{StaticResource WindowNonTemplateStyle}">
+    <Grid>
+        <StackPanel>
+            <Label Content="Webブラウザでログイン後、表示されるコードを入力して下さい。"/>
+            <StackPanel>
+                <StackPanel.Resources>
+                    <Style TargetType="TextBox">
+                        <Setter Property="HorizontalAlignment" Value="Left"/>
+                        <Setter Property="Width" Value="350"/>
+                        <Setter Property="Height" Value="35"/>
+                        <Setter Property="Background" Value="DarkGray"/>
+                        <Setter Property="Foreground" Value="WhiteSmoke"/>
+                        <Setter Property="FontFamily" Value="/HelloSpirit;component/Fonts/#M+ 2c"/>
+                        <Setter Property="FontSize" Value="22"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        <Setter Property="SelectionBrush" Value="Black"/>
+                    </Style>
+                </StackPanel.Resources>
+                <TextBox x:Name="CodeTextBox"/>
+                <Button x:Name="Auth" Height="30" Margin="0,20" Foreground="{x:Static local:SpiritThemeColor.CheckListAddButtonForeground}" Content="認証" FontSize="16" FontFamily="/HelloSpirit;component/Fonts/#M+ 2c">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource ButtonDefaultStyle}">
+                            <Setter Property="Background" Value="{x:Static local:SpiritThemeColor.CheckListAddButtonBackground}"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="{x:Static local:SpiritThemeColor.CheckListAddButtonMouseOverBackground}"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter Property="Background" Value="LightGray"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

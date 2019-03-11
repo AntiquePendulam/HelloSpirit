@@ -20,11 +20,15 @@ namespace HelloSpirit
     /// </summary>
     public partial class SettingWindow : Window
     {
+        private static OAuthWindow AuthWindow = new OAuthWindow();
+
         public SettingWindow()
         {
             InitializeComponent();
             MouseLeftButtonUp += (a, e) => Keyboard.ClearFocus();
             ThemeButton.Click += (a, e) => Messanger.ThemeWrite();
+            TwitterAuthButton.Click += (a, e) => AuthWindow.ShowDialog();
+            this.Closing += (a, e) => AuthWindow.Close();
         }
 
         public void CloseButton_Clicked()
