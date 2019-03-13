@@ -5,26 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HelloSpirit"
         mc:Ignorable="d"
-        Title="OAuthWindow" Height="450" Width="800" Style="{StaticResource WindowNonTemplateStyle}">
+        Title="OAuthWindow" Topmost="True" SizeToContent="WidthAndHeight" Style="{StaticResource WindowNonTemplateStyle}">
     <Grid>
-        <StackPanel>
-            <Label Content="Webブラウザでログイン後、表示されるコードを入力して下さい。"/>
-            <StackPanel>
-                <StackPanel.Resources>
-                    <Style TargetType="TextBox">
-                        <Setter Property="HorizontalAlignment" Value="Left"/>
-                        <Setter Property="Width" Value="350"/>
-                        <Setter Property="Height" Value="35"/>
-                        <Setter Property="Background" Value="DarkGray"/>
-                        <Setter Property="Foreground" Value="WhiteSmoke"/>
-                        <Setter Property="FontFamily" Value="/HelloSpirit;component/Fonts/#M+ 2c"/>
-                        <Setter Property="FontSize" Value="22"/>
-                        <Setter Property="VerticalContentAlignment" Value="Center"/>
-                        <Setter Property="SelectionBrush" Value="Black"/>
-                    </Style>
-                </StackPanel.Resources>
-                <TextBox x:Name="CodeTextBox"/>
-                <Button x:Name="Auth" Height="30" Margin="0,20" Foreground="{x:Static local:SpiritThemeColor.CheckListAddButtonForeground}" Content="認証" FontSize="16" FontFamily="/HelloSpirit;component/Fonts/#M+ 2c">
+        <StackPanel HorizontalAlignment="Center" Margin="10">
+            <Label FontFamily="/HelloSpirit;component/Fonts/#M+ 2c" FontSize="20" Content="Webブラウザでログイン後、表示されるコードを入力して下さい。" Foreground="WhiteSmoke"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBox x:Name="CodeTextBox" HorizontalAlignment="Center" Width="380" Height="35" Background="DarkGray" Foreground="WhiteSmoke" FontFamily="/HelloSpirit;component/Fonts/#M+ 2c" FontSize="22" VerticalContentAlignment="Center" SelectionBrush="Black"/>
+                <Button x:Name="Auth" Height="30" Foreground="{x:Static local:SpiritThemeColor.CheckListAddButtonForeground}" Content="認証" FontSize="16" FontFamily="/HelloSpirit;component/Fonts/#M+ 2c" Margin="5,0,0,0" Width="60">
                     <Button.Style>
                         <Style TargetType="Button" BasedOn="{StaticResource ButtonDefaultStyle}">
                             <Setter Property="Background" Value="{x:Static local:SpiritThemeColor.CheckListAddButtonBackground}"/>
