@@ -90,8 +90,12 @@ namespace HelloSpirit
             var key = HttpClient.DefaultRequestHeaders.SingleOrDefault(x => x.Key == "X-ZUMO-AUTH").Value?.SingleOrDefault();
             if (key == null || key == "") return null;
             var res = await HttpClient.GetAsync("api/Spirit");
-            MessageBox.Show(res.StatusCode.ToString());
-            if (res.StatusCode == HttpStatusCode.OK) return MessagePackSerializer.Deserialize<MainWindowViewModel>(await res.Content.ReadAsByteArrayAsync());
+            if (res.StatusCode == HttpStatusCode.OK)
+            {
+                var binStr = Convert.FromBase64String(await res.Content.ReadAsStringAsync());
+                var bin =  MessagePackSerializer.Deserialize<MainWindowViewModel>(binStr);
+                return bin;
+            }
             else return null;
         }
 

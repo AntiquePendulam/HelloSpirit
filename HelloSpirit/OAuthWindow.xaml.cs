@@ -9,7 +9,6 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Reactive.Linq;
@@ -63,10 +62,7 @@ namespace HelloSpirit
                             Messanger.HttpClient.DefaultRequestHeaders.Clear();
                         }
                     //}
-                    //catch(Exception ex)
-                    //{
-                    //    Messanger.HttpClient.DefaultRequestHeaders.Clear();
-                    //}
+                    //catch { Messanger.HttpClient.DefaultRequestHeaders.Clear(); }
                     this.Hide();
                 });
         }
