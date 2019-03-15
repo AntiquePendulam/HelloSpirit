@@ -44,5 +44,17 @@ namespace HelloSpirit.ViewModels
                 SetProperty(ref _setting, value);
             }
         }
+
+        public void UpdateViewModel(MainWindowViewModel model)
+        {
+            UpdateLists(model.Lists);
+            this.Setting = model.Setting;
+        }
+
+        public void UpdateLists(ICollection<SpiritListViewModel> spirits)
+        {
+            Lists.Clear();
+            foreach (var sp in spirits) Lists.Add(sp);
+        }
     }
 }

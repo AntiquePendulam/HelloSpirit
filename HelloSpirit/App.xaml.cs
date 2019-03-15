@@ -16,7 +16,6 @@ namespace HelloSpirit
     /// </summary>
     public partial class App : Application
     {
-        public static readonly string KEY_FILEPATH = Messanger.PATH + @"\keys.json";
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
