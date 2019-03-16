@@ -56,9 +56,6 @@ namespace HelloSpirit
                 Messanger.HttpClient.DefaultRequestHeaders.Clear();
                 Messanger.HttpClient.DefaultRequestHeaders.Add("X-ZUMO-AUTH", authToken);
 
-                var wi = MessagePackSerializer.Serialize(MainWindow.MainViewModel);
-                await Messanger.PostDataAsync(wi);
-
                 var (model, IsSuccess) = await Messanger.GetDataAsync();
                 if (IsSuccess && model != null)
                 {
