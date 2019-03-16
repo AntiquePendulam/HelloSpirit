@@ -31,7 +31,7 @@ namespace HelloSpirit
     {
         private static SpiritWindow SpiritWindow { get; set; }
         private static ConfirmationWindow Confirmation { get; set; }
-        private static SettingWindow SettingWindow { get; set; }
+        public static SettingWindow SettingWindow { get; private set; }
         public static MainWindowViewModel MainViewModel { get; set; }
 
         public MainWindow()
@@ -40,14 +40,13 @@ namespace HelloSpirit
 
             SpiritWindow = new SpiritWindow();
             Confirmation = new ConfirmationWindow();
-            SettingWindow = new SettingWindow();
 
             CloseButton.Click += (a, e) => Close();
             TitleBar.MouseDown += (a, e) => DragMove();
             this.Closing += (a, e) => WindowClose();
             ListAddButton.Click += (a, e) => MainViewModel.Lists.Add(new SpiritListViewModel() { ListTitle = "new List" });
 
-            SettingWindow.DataContext = MainViewModel.Setting;
+            SettingWindow = new SettingWindow(MainViewModel.Setting);
             this.DataContext = MainViewModel;
             Grass.TargetWebView = GrassView;
             Grass.GetGrass(MainViewModel.Setting.GitHubName);
@@ -72,12 +71,6 @@ namespace HelloSpirit
             Confirmation.Close();
             SettingWindow.Close();
         }
-        /*
-        public static void WriteData()
-        {
-            var js = MessagePackSerializer.Serialize(MainViewModel);
-            File.WriteAllBytes("./nine.json", js);
-        }*/
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {

@@ -8,7 +8,7 @@
         Title="OAuthWindow" Topmost="True" SizeToContent="WidthAndHeight" Style="{StaticResource WindowNonTemplateStyle}">
     <Grid>
         <StackPanel HorizontalAlignment="Center" Margin="10">
-            <Label FontFamily="/HelloSpirit;component/Fonts/#M+ 2c" FontSize="20" Content="Webブラウザでログイン後、表示されるコードを入力して下さい。" Foreground="WhiteSmoke"/>
+            <Label x:Name="Label" FontFamily="/HelloSpirit;component/Fonts/#M+ 2c" FontSize="20" Content="Webブラウザでログイン後、表示されるコードを入力して下さい。" Foreground="WhiteSmoke"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <TextBox x:Name="CodeTextBox" HorizontalAlignment="Center" Width="380" Height="35" Background="DarkGray" Foreground="WhiteSmoke" FontFamily="/HelloSpirit;component/Fonts/#M+ 2c" FontSize="22" VerticalContentAlignment="Center" SelectionBrush="Black"/>
                 <Button x:Name="Auth" Height="30" Foreground="{x:Static local:SpiritThemeColor.CheckListAddButtonForeground}" Content="認証" FontSize="16" FontFamily="/HelloSpirit;component/Fonts/#M+ 2c" Margin="5,0,0,0" Width="60">

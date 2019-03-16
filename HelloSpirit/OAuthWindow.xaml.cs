@@ -37,36 +37,58 @@ namespace HelloSpirit
                 Process.Start(Session.AuthorizeUri.ToString());
             };
 
+            Observable.FromEventPattern<RoutedEventArgs>(Auth, "Click")
+                .Where(_ => CodeTextBox.Text.Length == 7)
+                .Subscribe(async _ => await SetAuthAsync());
+
             Observable.FromEventPattern<KeyEventArgs>(CodeTextBox, "KeyDown")
                 .Where(x => x.EventArgs.Key == Key.Enter && CodeTextBox.Text.Length == 7)
-                .Subscribe(async _ =>
-                {
-                    //try
-                    //{
-                        var tokens = await Session?.GetTokensAsync(CodeTextBox.Text);
-                        var authToken = await ConnectAzureAsync(tokens);
-                        Messanger.HttpClient.DefaultRequestHeaders.Clear();
-                        Messanger.HttpClient.DefaultRequestHeaders.Add("X-ZUMO-AUTH", authToken);
-                        var getData = await Messanger.GetDataAsync();
-                        if (getData != null)
-                        {
-                            MainWindow.MainViewModel.UpdateViewModel(getData);
-                            Messanger.Wrote += async bytes => await Messanger.PostDataAsync(bytes);
-                            using (var fs = new FileStream(Messanger.KEY_FILEPATH, FileMode.Create, FileAccess.Write))
-                            {
-                                await MessagePackSerializer.SerializeAsync(fs, authToken);
-                            }
-                        }
-                        else
-                        {
-                            Messanger.HttpClient.DefaultRequestHeaders.Clear();
-                        }
-                    //}
-                    //catch { Messanger.HttpClient.DefaultRequestHeaders.Clear(); }
-                    this.Hide();
-                });
+                .Subscribe(async _ => await SetAuthAsync());
         }
 
+        private async Task SetAuthAsync()
+        {
+            try
+            {
+                var tokens = await Session?.GetTokensAsync(CodeTextBox.Text);
+                var authToken = await ConnectAzureAsync(tokens);
+
+                Messanger.HttpClient.DefaultRequestHeaders.Clear();
+                Messanger.HttpClient.DefaultRequestHeaders.Add("X-ZUMO-AUTH", authToken);
+
+                var wi = MessagePackSerializer.Serialize(MainWindow.MainViewModel);
+                await Messanger.PostDataAsync(wi);
+
+                var (model, IsSuccess) = await Messanger.GetDataAsync();
+                if (IsSuccess && model != null)
+                {
+                    MainWindow.MainViewModel.UpdateViewModel(model);
+                    Messanger.Wrote += async bytes => await Messanger.PostDataAsync(bytes);
+
+                    using (var fs = new FileStream(Messanger.KEY_FILEPATH, FileMode.Create, FileAccess.Write))
+                    {
+                        await MessagePackSerializer.SerializeAsync(fs, authToken);
+                    }
+                }
+                else if(IsSuccess)
+                {
+                    var m = MessagePackSerializer.Serialize(MainWindow.MainViewModel);
+                    await Messanger.PostDataAsync(m);
+                }
+                else Messanger.HttpClient.DefaultRequestHeaders.Clear();
+            }
+            catch
+            {
+                this.Label.Content = "認証失敗";
+                CodeTextBox.IsEnabled = true;
+                return;
+            }
+            CodeTextBox.IsEnabled = true;
+            this.Label.Content = "認証成功";
+            await Task.Delay(1500);
+            this.Label.Content = "Webブラウザでログイン後、表示されるコードを入力して下さい。";
+            this.Hide();
+        }
 
         private async Task<string> ConnectAzureAsync(Tokens tokens)
         {

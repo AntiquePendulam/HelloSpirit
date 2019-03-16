@@ -85,18 +85,20 @@ namespace HelloSpirit
             File.WriteAllText(COLOR_FILEPATH, themeColors);
         }
 
-        public static async Task<MainWindowViewModel> GetDataAsync()
+        public static async Task<(MainWindowViewModel model,bool IsSuccess)> GetDataAsync()
         {
             var key = HttpClient.DefaultRequestHeaders.SingleOrDefault(x => x.Key == "X-ZUMO-AUTH").Value?.SingleOrDefault();
-            if (key == null || key == "") return null;
+            if (key == null || key == "") return (null, false);
             var res = await HttpClient.GetAsync("api/Spirit");
             if (res.StatusCode == HttpStatusCode.OK)
             {
-                var binStr = Convert.FromBase64String(await res.Content.ReadAsStringAsync());
-                var bin =  MessagePackSerializer.Deserialize<MainWindowViewModel>(binStr);
-                return bin;
+                var bin =  MessagePackSerializer.Deserialize<MainWindowViewModel>(await res.Content.ReadAsByteArrayAsync());
+                return (bin, true);
             }
-            else return null;
+            else
+            {
+                return (null, false);
+            }
         }
 
         public static async Task PostDataAsync(byte[] data)
@@ -106,10 +108,10 @@ namespace HelloSpirit
             try
             {
                 var response = await HttpClient.PostAsync("api/Spirit", content);
-
-                if (!response.Content.ReadAsByteArrayAsync().Equals(data))
+                if (response.StatusCode != HttpStatusCode.OK)
                 {
-                    MessageBox.Show("サーバーと続できませんでした。Twitterの再認証を行ってみてください。");
+                    MessageBox.Show(response.StatusCode.ToString() + "  :  " + await response.Content.ReadAsStringAsync());
+                    //MessageBox.Show("サーバーと接続できませんでした。Twitterの再認証を行ってみてください。");
                     Wrote = null;
                 }
             }
