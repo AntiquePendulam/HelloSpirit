@@ -48,6 +48,8 @@ namespace HelloSpirit
 
         private async Task SetAuthAsync()
         {
+            this.Label.Content = "認証中...";
+            CodeTextBox.IsEnabled = false;
             try
             {
                 var tokens = await Session?.GetTokensAsync(CodeTextBox.Text);
@@ -85,6 +87,7 @@ namespace HelloSpirit
             await Task.Delay(1500);
             this.Label.Content = "Webブラウザでログイン後、表示されるコードを入力して下さい。";
             this.Hide();
+            MainWindow.SettingWindow.TwitterAuthButton.IsEnabled = false;
         }
 
         private async Task<string> ConnectAzureAsync(Tokens tokens)

@@ -5,7 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
+using System.Reactive;
+using System.Reactive.Linq;
+using Reactive.Bindings;
+using Reactive.Bindings.Extensions;
 using MessagePack;
+using System.Windows;
 
 namespace HelloSpirit.ViewModels
 {

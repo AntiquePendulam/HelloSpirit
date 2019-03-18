@@ -6,10 +6,14 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using MessagePack;
+using System.Reactive.Linq;
+using System.Reactive;
+using System.Collections.Specialized;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using HelloSpirit.ViewModels;
 using System.Net;
+using System.Diagnostics;
 using System.Net.Http;
 using Newtonsoft.Json;
 using System.Windows;
@@ -38,6 +42,8 @@ namespace HelloSpirit
         public static event Action<byte[]> Wrote = null;
         public static event Action Reading = null;
 
+        public static bool IsAuth { get; private set; } = false;
+
         public static void Read()
         {
             if (File.Exists(FILEPATH))
@@ -61,11 +67,13 @@ namespace HelloSpirit
                 var Key = File.ReadAllBytes(KEY_FILEPATH);
                 var strKey = MessagePackSerializer.Deserialize<string>(Key);
                 HttpClient.DefaultRequestHeaders.Add("X-ZUMO-AUTH", strKey);
-                Wrote += async bytes => await PostDataAsync(bytes);
                 Reading += async () => await GetDataAsync();
+                IsAuth = true;
             }
 
             Reading?.Invoke();
+
+            Wrote += async bytes => await PostDataAsync(bytes);
 
             MainWindow.MainViewModel.Lists.ObserveElementPropertyChanged().Subscribe(_ => Write());
             MainWindow.MainViewModel.Lists.CollectionChanged += (a, e) => Write();
@@ -87,6 +95,11 @@ namespace HelloSpirit
 
         public static async Task<(MainWindowViewModel model,bool IsSuccess)> GetDataAsync()
         {
+            using (var fs = new StreamWriter("./Log.log", true, Encoding.UTF8))
+            {
+                await fs.WriteLineAsync($"{DateTime.Now} : GetDataAsync.");
+            }
+
             var key = HttpClient.DefaultRequestHeaders.SingleOrDefault(x => x.Key == "X-ZUMO-AUTH").Value?.SingleOrDefault();
             if (key == null || key == "") return (null, false);
             var res = await HttpClient.GetAsync("api/Spirit");
@@ -103,6 +116,11 @@ namespace HelloSpirit
 
         public static async Task PostDataAsync(byte[] data)
         {
+            using (var fs = new StreamWriter("./Log.log", true, Encoding.UTF8))
+            {
+                await fs.WriteLineAsync($"{DateTime.Now} : PostDataAsync.");
+            }
+
             if (HttpClient.DefaultRequestHeaders.SingleOrDefault(x => x.Key == "X-ZUMO-AUTH").Value == null) return;
             var content = new ByteArrayContent(data);
             try
@@ -110,7 +128,6 @@ namespace HelloSpirit
                 var response = await HttpClient.PostAsync("api/Spirit", content);
                 if (response.StatusCode != HttpStatusCode.OK)
                 {
-                    MessageBox.Show(response.StatusCode.ToString() + "  :  " + await response.Content.ReadAsStringAsync());
                     //MessageBox.Show("サーバーと接続できませんでした。Twitterの再認証を行ってみてください。");
                     Wrote = null;
                 }

@@ -152,7 +152,7 @@
             <Setter Property="ItemTemplate">
                 <Setter.Value>
                     <DataTemplate DataType="{x:Type localvm:SpiritListViewModel}">
-                        <ListBox ItemsSource="{Binding List}" DataContext="{Binding}" Style="{StaticResource ListBoxDefaultStyle}" ItemContainerStyle="{StaticResource ListBoxItemDefaultStyle}"/>
+                        <ListBox x:Name="SpiritListBox" ItemsSource="{Binding List}" DataContext="{Binding}" Style="{StaticResource ListBoxDefaultStyle}" ItemContainerStyle="{StaticResource ListBoxItemDefaultStyle}"/>
                     </DataTemplate>
                 </Setter.Value>
             </Setter>
@@ -264,7 +264,7 @@
                 <!--Contents-->
                 <ScrollViewer Padding="0,0,0,30" Grid.Row="1" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Disabled">
                     <StackPanel Orientation="Horizontal">
-                        <ListBox ItemsSource="{Binding Lists}" Style="{StaticResource ListBoxListStyle}"
+                        <ListBox x:Name="ListBoxList" ItemsSource="{Binding Lists}" Style="{StaticResource ListBoxListStyle}"
                                 ItemContainerStyle="{StaticResource ListBoxListItemStyle}" Background="{x:Null}"
                                 BorderThickness="0" VerticalAlignment="Top" HorizontalContentAlignment="Stretch">
                             <ListBox.ItemsPanel>
