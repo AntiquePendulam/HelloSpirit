@@ -1,0 +1,32 @@
+﻿<Window x:Class="HelloSpirit.OAuthWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HelloSpirit"
+        mc:Ignorable="d"
+        Title="OAuthWindow" Topmost="True" SizeToContent="WidthAndHeight" Style="{StaticResource WindowNonTemplateStyle}">
+    <Grid>
+        <StackPanel HorizontalAlignment="Center" Margin="10">
+            <Label x:Name="Label" FontFamily="/HelloSpirit;component/Fonts/#M+ 2c" FontSize="20" Content="Webブラウザでログイン後、表示されるコードを入力して下さい。" Foreground="WhiteSmoke"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBox x:Name="CodeTextBox" HorizontalAlignment="Center" Width="380" Height="35" Background="DarkGray" Foreground="WhiteSmoke" FontFamily="/HelloSpirit;component/Fonts/#M+ 2c" FontSize="22" VerticalContentAlignment="Center" SelectionBrush="Black"/>
+                <Button x:Name="Auth" Height="30" Foreground="{x:Static local:SpiritThemeColor.CheckListAddButtonForeground}" Content="認証" FontSize="16" FontFamily="/HelloSpirit;component/Fonts/#M+ 2c" Margin="5,0,0,0" Width="60">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource ButtonDefaultStyle}">
+                            <Setter Property="Background" Value="{x:Static local:SpiritThemeColor.CheckListAddButtonBackground}"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="{x:Static local:SpiritThemeColor.CheckListAddButtonMouseOverBackground}"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter Property="Background" Value="LightGray"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>
