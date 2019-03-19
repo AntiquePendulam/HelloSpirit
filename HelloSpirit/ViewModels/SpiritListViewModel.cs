@@ -5,13 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
+using GongSolutions.Wpf.DragDrop;
 using MessagePack;
+using System.Windows;
 
 namespace HelloSpirit.ViewModels
 {
     [MessagePackObject]
-    public class SpiritListViewModel : BindableBase
+    public class SpiritListViewModel : BindableBase, IDropTarget
     {
+        private static DefaultDropHandler DropHandler { get; } = new DefaultDropHandler();
+        public static event Action SpiritListDropEvent = null;
+
         [IgnoreMember]
         private string _listTitle;
 
@@ -34,6 +39,18 @@ namespace HelloSpirit.ViewModels
                 return _list;
             }
             set { this.SetProperty(ref _list, value); }
+        }
+
+        public void DragOver(IDropInfo dropInfo)
+        {
+            DropHandler.DragOver(dropInfo);
+        }
+
+        public void Drop(IDropInfo dropInfo)
+        {
+            DropHandler.Drop(dropInfo);
+            Messanger.Write();
+            SpiritListDropEvent?.Invoke();
         }
     }
 }

@@ -16,6 +16,19 @@
             <Setter Property="Foreground" Value="{x:Static local:SpiritThemeColor.CheckListForeground}"/>
             <Setter Property="FontFamily" Value="/HelloSpirit;component/Fonts/#M+ 2c"/>
             <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="ContextMenu">
+                <Setter.Value>
+                    <ContextMenu>
+                        <MenuItem Header="Delete">
+                            <MenuItem.Style>
+                                <Style TargetType="MenuItem">
+                                    <EventSetter Event="Click" Handler="DeleteItem"/>
+                                </Style>
+                            </MenuItem.Style>
+                        </MenuItem>
+                    </ContextMenu>
+                </Setter.Value>
+            </Setter>
         </Style>
         <Style x:Key="SpiritTextBoxStyle" TargetType="TextBox">
             <Setter Property="Background" Value="{x:Static local:SpiritThemeColor.WindowBackground}"/>
