@@ -49,8 +49,11 @@ namespace HelloSpirit
             ListAddButton.Click += (a, e) => MainViewModel.Lists.Add(new SpiritListViewModel() { ListTitle = "new List" });
 
             SettingWindow = new SettingWindow(MainViewModel.Setting);
-            SettingWindow.TwitterAuthButton.IsEnabled = !Messanger.IsAuth;
-            SettingWindow.TwitterAuthButton.Content = "認証済み";
+            if (Messanger.IsAuth)
+            {
+                SettingWindow.IsEnabled = false;
+                SettingWindow.TwitterAuthButton.Content = "認証済み";
+            }
             this.DataContext = MainViewModel;
             Grass.TargetWebView = GrassView;
             Grass.GetGrass(MainViewModel.Setting.GitHubName);

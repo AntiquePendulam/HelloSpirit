@@ -35,6 +35,7 @@
             <Setter Property="Background" Value="{x:Static local:SpiritThemeColor.ListBackground}"/>
             <Setter Property="dd:DragDrop.IsDragSource" Value="True"/>
             <Setter Property="dd:DragDrop.IsDropTarget" Value="True"/>
+            <Setter Property="dd:DragDrop.DropHandler" Value="{Binding}"/>
             <Setter Property="dd:DragDrop.DragAdornerTemplate" Value="{StaticResource DragAdorner}"/>
             <Setter Property="dd:DragDrop.DropTargetAdornerBrush" Value="Red"/>
             <Setter Property="SelectionMode" Value="Extended"/>

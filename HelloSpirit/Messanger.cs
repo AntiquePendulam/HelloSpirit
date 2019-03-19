@@ -27,6 +27,8 @@ namespace HelloSpirit
         public static readonly string COLOR_FILEPATH = PATH + @"\colorsetting.json";
         public static readonly string KEY_FILEPATH = PATH + @"\key.json";
 
+        private static readonly string LOG_FILE = $@"./{DateTime.Today.ToString("yyyy-MM-dd")}_log.log";
+
         private static readonly ObservableCollection<SpiritListViewModel> defaultList = new ObservableCollection<SpiritListViewModel>()
         {
             new SpiritListViewModel(){ListTitle = "ToDo"},
@@ -95,7 +97,7 @@ namespace HelloSpirit
 
         public static async Task<(MainWindowViewModel model,bool IsSuccess)> GetDataAsync()
         {
-            using (var fs = new StreamWriter("./Log.log", true, Encoding.UTF8))
+            using (var fs = new StreamWriter(LOG_FILE, true, Encoding.UTF8))
             {
                 await fs.WriteLineAsync($"{DateTime.Now} : GetDataAsync.");
             }
@@ -106,17 +108,25 @@ namespace HelloSpirit
             if (res.StatusCode == HttpStatusCode.OK)
             {
                 var bin =  MessagePackSerializer.Deserialize<MainWindowViewModel>(await res.Content.ReadAsByteArrayAsync());
+                using (var fs = new StreamWriter(LOG_FILE, true, Encoding.UTF8))
+                {
+                    await fs.WriteLineAsync($"{DateTime.Now} : GetDataAsync:Successc.");
+                }
                 return (bin, true);
             }
             else
             {
+                using (var fs = new StreamWriter(LOG_FILE, true, Encoding.UTF8))
+                {
+                    await fs.WriteLineAsync($"{DateTime.Now} : GetDataAsync : Failed.");
+                }
                 return (null, false);
             }
         }
 
         public static async Task PostDataAsync(byte[] data)
         {
-            using (var fs = new StreamWriter("./Log.log", true, Encoding.UTF8))
+            using (var fs = new StreamWriter(LOG_FILE, true, Encoding.UTF8))
             {
                 await fs.WriteLineAsync($"{DateTime.Now} : PostDataAsync.");
             }
@@ -128,13 +138,20 @@ namespace HelloSpirit
                 var response = await HttpClient.PostAsync("api/Spirit", content);
                 if (response.StatusCode != HttpStatusCode.OK)
                 {
-                    //MessageBox.Show("サーバーと接続できませんでした。Twitterの再認証を行ってみてください。");
+                    using (var fs = new StreamWriter(LOG_FILE, true, Encoding.UTF8))
+                    {
+                        await fs.WriteLineAsync($"{DateTime.Now} : PostDataAsync : Failed. HttpStatus isn't OK");
+                    }
                     Wrote = null;
                 }
             }
             catch
             {
                 MessageBox.Show("サーバー同期中にエラーが発生しました。Twitterの再認証を行ってみてください。");
+                using (var fs = new StreamWriter(LOG_FILE, true, Encoding.UTF8))
+                {
+                    await fs.WriteLineAsync($"{DateTime.Now} : PostDataAsync : Failed. Exception");
+                }
                 Wrote = null;
             }
         }
