@@ -114,11 +114,19 @@ namespace HelloSpirit
                 }
                 return (bin, true);
             }
+            else if(res.StatusCode == HttpStatusCode.NotFound)
+            {
+                using (var fs = new StreamWriter(LOG_FILE, true, Encoding.UTF8))
+                {
+                    await fs.WriteLineAsync($"{DateTime.Now} : GetDataAsync:Data Not Found.");
+                }
+                return (null, true);
+            }
             else
             {
                 using (var fs = new StreamWriter(LOG_FILE, true, Encoding.UTF8))
                 {
-                    await fs.WriteLineAsync($"{DateTime.Now} : GetDataAsync : Failed.");
+                    await fs.WriteLineAsync($"{DateTime.Now} : GetDataAsync : Failed. {await res.Content.ReadAsStringAsync()}");
                 }
                 return (null, false);
             }
@@ -131,7 +139,16 @@ namespace HelloSpirit
                 await fs.WriteLineAsync($"{DateTime.Now} : PostDataAsync.");
             }
 
-            if (HttpClient.DefaultRequestHeaders.SingleOrDefault(x => x.Key == "X-ZUMO-AUTH").Value == null) return;
+            var key = HttpClient.DefaultRequestHeaders.SingleOrDefault(x => x.Key == "X-ZUMO-AUTH").Value?.SingleOrDefault();
+            if (key == null || key == "")
+            {
+                using (var fs = new StreamWriter(LOG_FILE, true, Encoding.UTF8))
+                {
+                    await fs.WriteLineAsync($"{DateTime.Now} : PostDataAsync : Failed. Header : {key}");
+                }
+                return;
+            }
+                
             var content = new ByteArrayContent(data);
             try
             {
@@ -144,8 +161,17 @@ namespace HelloSpirit
                     }
                     Wrote = null;
                 }
+                else
+                {
+                    var array = await response.Content.ReadAsByteArrayAsync();
+                    //var arStr = array.Select(x => x.ToString()).Aggregate((a, b) => $"{a} {b}");
+                    using (var fs = new StreamWriter(LOG_FILE, true, Encoding.UTF8))
+                    {
+                        await fs.WriteLineAsync($"{DateTime.Now} : PostDataAsync : Success! : {array.Length}");
+                    }
+                }
             }
-            catch
+            catch   
             {
                 MessageBox.Show("サーバー同期中にエラーが発生しました。Twitterの再認証を行ってみてください。");
                 using (var fs = new StreamWriter(LOG_FILE, true, Encoding.UTF8))

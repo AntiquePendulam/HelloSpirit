@@ -54,7 +54,6 @@ namespace HelloSpirit
             {
                 var tokens = await Session?.GetTokensAsync(CodeTextBox.Text);
                 var authToken = await ConnectAzureAsync(tokens);
-
                 Messanger.HttpClient.DefaultRequestHeaders.Clear();
                 Messanger.HttpClient.DefaultRequestHeaders.Add("X-ZUMO-AUTH", authToken);
 
@@ -73,6 +72,10 @@ namespace HelloSpirit
                 {
                     var m = MessagePackSerializer.Serialize(MainWindow.MainViewModel);
                     await Messanger.PostDataAsync(m);
+                    using (var fs = new FileStream(Messanger.KEY_FILEPATH, FileMode.Create, FileAccess.Write))
+                    {
+                        await MessagePackSerializer.SerializeAsync(fs, authToken);
+                    }
                 }
                 else Messanger.HttpClient.DefaultRequestHeaders.Clear();
             }
