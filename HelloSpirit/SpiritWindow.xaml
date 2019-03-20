@@ -37,7 +37,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="TextBox">
-                        <StackPanel Margin="3,0" Height="40">
+                        <StackPanel Margin="3,0" Height="Auto">
                             <Button Padding="{TemplateBinding Padding}" Content="{TemplateBinding Text}" Background="{TemplateBinding Background}" Foreground="{TemplateBinding Foreground}" HorizontalContentAlignment="Left" FontSize="{TemplateBinding FontSize}" x:Name="TxtBt" >
                                 <Button.Style>
                                     <Style TargetType="Button" BasedOn="{StaticResource ButtonDefaultStyle}">
@@ -74,7 +74,7 @@
                                 </i:Interaction.Triggers>
                             </Button>
                             <TextBox Padding="{TemplateBinding Padding}" x:Name="BtnTxt" Background="Black" Foreground="White" SelectionBrush="LightGray"
-                                     BorderThickness="1" FontSize="{TemplateBinding FontSize}"
+                                     BorderThickness="1" FontSize="{TemplateBinding FontSize}" AcceptsReturn="True"
                                      Text="{Binding Text,RelativeSource={RelativeSource TemplatedParent},UpdateSourceTrigger=PropertyChanged}" Focusable="True">
                                 <TextBox.Style>
                                     <Style TargetType="TextBox">
@@ -140,17 +140,19 @@
                 <Setter.Value>
                     <DataTemplate DataType="{x:Type localvm:CheckListViewModel}">
                         <Border>
-                            <StackPanel Orientation="Horizontal" Margin="0,2">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
                                 <CheckBox BorderThickness="0" IsChecked="{Binding IsFinished, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center">
                                     <CheckBox.LayoutTransform>
                                         <ScaleTransform ScaleX="2" ScaleY="2"/>
                                     </CheckBox.LayoutTransform>
                                 </CheckBox>
-                                <TextBox Text="{Binding Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                         FontSize="18" HorizontalAlignment="Left" Width="Auto"
-                                         Style="{StaticResource SpiritTextBoxDefaultStyle}" VerticalContentAlignment="Center"
-                                         MinWidth="20"/>
-                            </StackPanel>
+                                <TextBox Grid.Column="1" Text="{Binding Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                         FontSize="18" Style="{StaticResource SpiritTextBoxDefaultStyle}"/>
+                            </Grid>
                         </Border>
                     </DataTemplate>
                 </Setter.Value>
@@ -167,7 +169,7 @@
     <Grid>
         <StackPanel Margin="5,5" Focusable="True" Background="{Binding Background, ElementName=SpiritWin}">
             <TextBox Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SpiritTextBoxStyle}" FontSize="18" />
-            <TextBox Margin="0,5" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" Background="{x:Static local:SpiritThemeColor.SpiritDescriptionNormalBackground}" FontSize="15" Style="{StaticResource SpiritTextBoxStyle}"/>
+            <TextBox Margin="0,5" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" Background="{x:Static local:SpiritThemeColor.SpiritDescriptionNormalBackground}" FontSize="15" Style="{StaticResource SpiritTextBoxStyle}"/>
             <Button x:Name="AddCheckList" Foreground="{x:Static local:SpiritThemeColor.CheckListAddButtonForeground}" Height="25" Width="60" HorizontalAlignment="Right" Content="Add">
                 <Button.Style>
                     <Style TargetType="Button" BasedOn="{StaticResource ButtonDefaultStyle}">
