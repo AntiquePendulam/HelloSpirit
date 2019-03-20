@@ -104,7 +104,7 @@ namespace HelloSpirit.ViewModels
         private void NumStrRefresh()
         {
             NumStr = $"{FinishedItem}/{MaxNum}";
-            if (NumStr == "/") NumStr = "";
+            if (Equals(NumStr, "/") || MaxNum == 0) NumStr = "";
         }
         #endregion
     }

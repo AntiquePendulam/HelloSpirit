@@ -19,6 +19,7 @@ namespace HelloSpirit
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
+            if (!Directory.Exists(Messanger.PATH)) Directory.CreateDirectory(Messanger.PATH);
             Messanger.Read();
         }
     }
