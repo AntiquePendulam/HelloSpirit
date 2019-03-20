@@ -51,7 +51,7 @@ namespace HelloSpirit
             SettingWindow = new SettingWindow(MainViewModel.Setting);
             if (Messanger.IsAuth)
             {
-                SettingWindow.IsEnabled = false;
+                SettingWindow.TwitterAuthButton.IsEnabled = false;
                 SettingWindow.TwitterAuthButton.Content = "認証済み";
             }
             this.DataContext = MainViewModel;
