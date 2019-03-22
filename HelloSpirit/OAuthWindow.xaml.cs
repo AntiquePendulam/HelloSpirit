@@ -1,22 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using CoreTweet;
+using MessagePack;
+using Newtonsoft.Json;
+using System;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Reactive.Linq;
-using CoreTweet;
-using Newtonsoft.Json;
-using MessagePack;
-using System.Net.Http;
-using System.IO;
 
 namespace HelloSpirit
 {

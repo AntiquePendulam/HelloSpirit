@@ -1,28 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using HelloSpirit.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Collections.ObjectModel;
-using Reactive.Bindings.Extensions;
-using System.Reactive;
-using System.Reactive.Concurrency;
-using System.Reactive.Linq;
-using MessagePack;
-using HelloSpirit.ViewModels;
-using System.IO;
-using GongSolutions.Wpf.DragDrop.Utilities;
-using GongSolutions.Wpf.DragDrop;
 
 namespace HelloSpirit
 {
