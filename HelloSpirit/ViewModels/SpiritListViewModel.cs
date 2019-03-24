@@ -10,6 +10,7 @@ namespace HelloSpirit.ViewModels
     {
         private static DefaultDropHandler DropHandler { get; } = new DefaultDropHandler();
         public static event Action SpiritListDropEvent = null;
+        public static event Action SpiritListDragEvent = null;
 
         [IgnoreMember]
         private string _listTitle;
@@ -38,6 +39,7 @@ namespace HelloSpirit.ViewModels
         public void DragOver(IDropInfo dropInfo)
         {
             DropHandler.DragOver(dropInfo);
+            SpiritListDragEvent.Invoke();
         }
 
         public void Drop(IDropInfo dropInfo)

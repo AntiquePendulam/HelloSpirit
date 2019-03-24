@@ -1,4 +1,5 @@
 ﻿using HelloSpirit.ViewModels;
+using System.Reactive.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -27,8 +28,21 @@ namespace HelloSpirit
             TitleBar.MouseDown += (a, e) => DragMove();
             this.Closing += (a, e) => WindowClose();
             ListAddButton.Click += (a, e) => MainViewModel.Lists.Add(new SpiritListViewModel() { ListTitle = "new List" });
-
             SettingWindow = new SettingWindow(MainViewModel.Setting);
+
+            var mouseUp = Observable.FromEventPattern<MouseEventArgs>(this, nameof(MouseUp));
+            var mouseMove = Observable.FromEventPattern<MouseEventArgs>(this, nameof(MouseMove));
+            double _Lwidth = Width * 0.1;
+            double _Rwidth = Width - _Lwidth;
+
+            Observable.FromEvent
+            (
+                x => SpiritListViewModel.SpiritListDragEvent += x,
+                x => SpiritListViewModel.SpiritListDragEvent -= x
+            ).SelectMany(mouseMove)
+            .TakeUntil(mouseUp).Repeat()
+            .Select(x => x.EventArgs.GetPosition)
+            .Subscribe(e => MessageBox.Show(""));
             if (Messanger.IsAuth)
             {
                 SettingWindow.TwitterAuthButton.IsEnabled = false;
