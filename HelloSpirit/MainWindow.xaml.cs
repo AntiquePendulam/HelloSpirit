@@ -1,8 +1,11 @@
 ﻿using HelloSpirit.ViewModels;
+using System.Reactive.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Threading;
+using System;
 
 namespace HelloSpirit
 {
@@ -27,8 +30,8 @@ namespace HelloSpirit
             TitleBar.MouseDown += (a, e) => DragMove();
             this.Closing += (a, e) => WindowClose();
             ListAddButton.Click += (a, e) => MainViewModel.Lists.Add(new SpiritListViewModel() { ListTitle = "new List" });
-
             SettingWindow = new SettingWindow(MainViewModel.Setting);
+
             if (Messanger.IsAuth)
             {
                 SettingWindow.TwitterAuthButton.IsEnabled = false;
@@ -93,6 +96,11 @@ namespace HelloSpirit
             if (!Confirmation.Accept) return;
             var data = (sender as Button).DataContext as SpiritListViewModel;
             MainViewModel.Lists.Remove(data);
+        }
+
+        private void Rectangle_MouseEnter(object sender, MouseEventArgs e)
+        {
+            MessageBox.Show("");
         }
     }
 }

@@ -9,6 +9,7 @@ namespace HelloSpirit.ViewModels
     public class SpiritListViewModel : BindableBase, IDropTarget
     {
         private static DefaultDropHandler DropHandler { get; } = new DefaultDropHandler();
+        private static DefaultDragHandler DragHandler { get; } = new DefaultDragHandler();
         public static event Action SpiritListDropEvent = null;
 
         [IgnoreMember]

@@ -11,7 +11,7 @@
         xmlns:dd="urn:gong-wpf-dragdrop"
         mc:Ignorable="d"
         Name="MainWIn"
-        Title="HelloSpirit - Say Hello to your Spirits." Background="{x:Static local:SpiritThemeColor.WindowBackground}" MinHeight="350" MinWidth="800" MaxWidth="1400" SizeToContent="WidthAndHeight" VerticalContentAlignment="Stretch" Style="{StaticResource WindowNonTemplateStyle}">
+        Title="HelloSpirit - Say Hello to your Spirits." Background="{x:Static local:SpiritThemeColor.WindowBackground}" MinHeight="350" MinWidth="800" SizeToContent="WidthAndHeight" VerticalContentAlignment="Stretch" Style="{StaticResource WindowNonTemplateStyle}">
     <Window.Resources>
         <DataTemplate x:Key="DragAdorner">
             <Border Background="Silver" BorderBrush="Gray" BorderThickness="1" CornerRadius="2" SnapsToDevicePixels="True">
@@ -26,7 +26,7 @@
         <Style TargetType="Label">
             <Setter Property="FontFamily" Value="/HelloTask;component/Fonts/#M+ 2c"/>
         </Style>
-        
+
         <!--Spirit用Listのスタイル定義-->
         <Style x:Key="ListBoxDefaultStyle" TargetType="ListBox">
             <!--#region Setter-->
@@ -41,7 +41,7 @@
             <Setter Property="SelectionMode" Value="Extended"/>
             <Setter Property="ItemsSource" Value="{Binding List}"/>
             <!--#endregion-->
-            
+
             <!--ListBox Template-->
             <Setter Property="Template">
                 <Setter.Value>
@@ -99,15 +99,19 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-            
+
             <!--ListBox ItemTemplate-->
             <Setter Property="ItemTemplate">
                 <Setter.Value>
                     <DataTemplate DataType="{x:Type localvm:SpiritViewModel}">
-                        <StackPanel VerticalAlignment="Top">
-                            <Label Content="{Binding Title}" FontSize="18" FontWeight="Bold" Foreground="Black" Width="Auto" MinWidth="20" Background="#02FFA500" HorizontalAlignment="Left"/>
-                            <Label Content="{Binding NumStr}" FontSize="15" Foreground="Black" Background="{x:Null}" HorizontalAlignment="Left"/>
-                        </StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="70"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Content="{Binding Title}" FontSize="18" FontWeight="Bold" Foreground="Black" Width="Auto" MinWidth="20" Background="#02FFA500" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <Label Grid.Column="1" Content="{Binding NumStr}" FontSize="15" Foreground="Black" Background="{x:Null}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        </Grid>
                     </DataTemplate>
                 </Setter.Value>
             </Setter>
@@ -120,7 +124,7 @@
             <Setter Property="VerticalContentAlignment" Value="Top"/>
             <EventSetter Event="PreviewMouseLeftButtonUp" Handler="ListBoxItem_PreviewMouseUp"/>
             <!--#endregion-->
-            
+
             <Setter Property="Background">
                 <Setter.Value>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
@@ -134,7 +138,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ListBoxItem">
-                        <Border x:Name="SpiritItem" CornerRadius="2" Background="{TemplateBinding Background}">
+                        <Border x:Name="SpiritItem" Height="40" CornerRadius="2" Background="{TemplateBinding Background}">
                             <ContentPresenter />
                         </Border>
                         <ControlTemplate.Triggers>
@@ -164,7 +168,7 @@
             <Setter Property="VerticalAlignment" Value="Top"/>
             <Setter Property="HorizontalAlignment" Value="Left"/>
             <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Width" Value="350"/>
+            <Setter Property="Width" Value="310"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ListBoxItem">
@@ -260,7 +264,7 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                
+
                 <Label x:Name="Label" Content="{Binding Setting.UserName}" ContentStringFormat="Hello, {0}." Foreground="{x:Static local:SpiritThemeColor.HelloTextColor}" FontSize="20" FontWeight="Bold" VerticalAlignment="Top"/>
                 <!--Contents-->
                 <ScrollViewer Padding="0,0,0,30" Grid.Row="1" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Disabled">
