@@ -6,12 +6,11 @@ using System.Collections.ObjectModel;
 namespace HelloSpirit.ViewModels
 {
     [MessagePackObject]
-    public class SpiritListViewModel : BindableBase, IDropTarget, IDragSource
+    public class SpiritListViewModel : BindableBase, IDropTarget
     {
         private static DefaultDropHandler DropHandler { get; } = new DefaultDropHandler();
         private static DefaultDragHandler DragHandler { get; } = new DefaultDragHandler();
         public static event Action SpiritListDropEvent = null;
-        public static event Action SpiritListDragEvent = null;
 
         [IgnoreMember]
         private string _listTitle;
@@ -40,7 +39,6 @@ namespace HelloSpirit.ViewModels
         public void DragOver(IDropInfo dropInfo)
         {
             DropHandler.DragOver(dropInfo);
-            SpiritListDragEvent?.Invoke();
         }
 
         public void Drop(IDropInfo dropInfo)
@@ -48,31 +46,6 @@ namespace HelloSpirit.ViewModels
             DropHandler.Drop(dropInfo);
             Messanger.Write();
             SpiritListDropEvent?.Invoke();
-        }
-
-        public void StartDrag(IDragInfo dragInfo)
-        {
-            DragHandler.StartDrag(dragInfo);
-        }
-
-        public bool CanStartDrag(IDragInfo dragInfo)
-        {
-            return DragHandler.CanStartDrag(dragInfo);
-        }
-
-        public void Dropped(IDropInfo dropInfo)
-        {
-            DragHandler.Dropped(dropInfo);
-        }
-
-        public void DragCancelled()
-        {
-            DragHandler.DragCancelled();
-        }
-
-        public bool TryCatchOccurredException(Exception exception)
-        {
-            return DragHandler.TryCatchOccurredException(exception);
         }
     }
 }

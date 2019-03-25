@@ -4,6 +4,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Threading;
+using System;
 
 namespace HelloSpirit
 {
@@ -30,19 +32,6 @@ namespace HelloSpirit
             ListAddButton.Click += (a, e) => MainViewModel.Lists.Add(new SpiritListViewModel() { ListTitle = "new List" });
             SettingWindow = new SettingWindow(MainViewModel.Setting);
 
-            var mouseUp = Observable.FromEventPattern<MouseEventArgs>(this, nameof(MouseUp));
-            var mouseMove = Observable.FromEventPattern<MouseEventArgs>(this, nameof(MouseMove));
-            double _Lwidth = Width * 0.1;
-            double _Rwidth = Width - _Lwidth;
-
-            Observable.FromEvent
-            (
-                x => SpiritListViewModel.SpiritListDragEvent += x,
-                x => SpiritListViewModel.SpiritListDragEvent -= x
-            ).SelectMany(mouseMove)
-            .TakeUntil(mouseUp).Repeat()
-            .Select(x => x.EventArgs.GetPosition)
-            .Subscribe(e => MessageBox.Show(""));
             if (Messanger.IsAuth)
             {
                 SettingWindow.TwitterAuthButton.IsEnabled = false;
@@ -107,6 +96,11 @@ namespace HelloSpirit
             if (!Confirmation.Accept) return;
             var data = (sender as Button).DataContext as SpiritListViewModel;
             MainViewModel.Lists.Remove(data);
+        }
+
+        private void Rectangle_MouseEnter(object sender, MouseEventArgs e)
+        {
+            MessageBox.Show("");
         }
     }
 }
