@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloSpirit", "HelloSpirit\HelloSpirit.csproj", "{7F4CA3DB-F8D0-4A09-B5DB-0576EA7863FB}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "HelloSpiritSetup", "HelloSpiritSetup\HelloSpiritSetup.vdproj", "{ADBE88B1-091F-4E47-A68E-1F9A529FF946}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,8 @@ Global
 		{7F4CA3DB-F8D0-4A09-B5DB-0576EA7863FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F4CA3DB-F8D0-4A09-B5DB-0576EA7863FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7F4CA3DB-F8D0-4A09-B5DB-0576EA7863FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADBE88B1-091F-4E47-A68E-1F9A529FF946}.Debug|Any CPU.ActiveCfg = Debug
+		{ADBE88B1-091F-4E47-A68E-1F9A529FF946}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
