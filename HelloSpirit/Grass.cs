@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Net.Http;
+﻿using AngleSharp.Html;
 using AngleSharp.Html.Parser;
-using System.IO;
-using AngleSharp.Html;
-using System.Diagnostics;
 using Microsoft.Toolkit.Wpf.UI.Controls;
-using System.Windows;
+using System.IO;
+using System.Linq;
+using System.Net.Http;
 
 namespace HelloSpirit
 {

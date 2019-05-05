@@ -1,21 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
-using System.Threading.Tasks;
-using System.Collections.ObjectModel;
+﻿using HelloSpirit.ViewModels;
 using MessagePack;
-using System.Reactive.Linq;
-using System.Reactive;
-using System.Collections.Specialized;
+using Newtonsoft.Json;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
-using HelloSpirit.ViewModels;
+using System;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
 using System.Net;
-using System.Diagnostics;
 using System.Net.Http;
-using Newtonsoft.Json;
+using System.Reactive.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace HelloSpirit
@@ -37,7 +33,7 @@ namespace HelloSpirit
         };
         private static readonly MainWindowViewModel defaultViewModel = new MainWindowViewModel() { Lists = defaultList };
 
-        public static HttpClient HttpClient { get; } = new HttpClient() { BaseAddress = new Uri(@"https://hellospiritapi.azurewebsites.net/") };
+        public static HttpClient HttpClient { get; } = new HttpClient() { BaseAddress = new Uri(@"https://hellospirit.azurewebsites.net/") };
 
         private static readonly SpiritThemeColor Colors = new SpiritThemeColor();
 
@@ -69,7 +65,11 @@ namespace HelloSpirit
                 var Key = File.ReadAllBytes(KEY_FILEPATH);
                 var strKey = MessagePackSerializer.Deserialize<string>(Key);
                 HttpClient.DefaultRequestHeaders.Add("X-ZUMO-AUTH", strKey);
-                Reading += async () => await GetDataAsync();
+                Reading += async () =>
+                {
+                    var (model, IsSuccess) = await GetDataAsync();
+                    if (IsSuccess) MainWindow.MainViewModel.UpdateViewModel(model);
+                };
                 IsAuth = true;
             }
 
@@ -103,7 +103,14 @@ namespace HelloSpirit
             }
 
             var key = HttpClient.DefaultRequestHeaders.SingleOrDefault(x => x.Key == "X-ZUMO-AUTH").Value?.SingleOrDefault();
-            if (key == null || key == "") return (null, false);
+            if (key == null || key == "")
+            {
+                using (var fs = new StreamWriter(LOG_FILE, true, Encoding.UTF8))
+                {
+                    await fs.WriteLineAsync($"{DateTime.Now} : GetDataAsync:Key is Null or Empty.");
+                }
+                return (null, false);
+            }
             var res = await HttpClient.GetAsync("api/Spirit");
             if (res.StatusCode == HttpStatusCode.OK)
             {

@@ -1,22 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using CoreTweet;
+using MessagePack;
+using Newtonsoft.Json;
+using System;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Reactive.Linq;
-using CoreTweet;
-using Newtonsoft.Json;
-using MessagePack;
-using System.Net.Http;
-using System.IO;
 
 namespace HelloSpirit
 {
@@ -50,6 +44,7 @@ namespace HelloSpirit
         {
             this.Label.Content = "認証中...";
             CodeTextBox.IsEnabled = false;
+            bool isSuc = false;
             try
             {
                 var tokens = await Session?.GetTokensAsync(CodeTextBox.Text);
@@ -58,6 +53,7 @@ namespace HelloSpirit
                 Messanger.HttpClient.DefaultRequestHeaders.Add("X-ZUMO-AUTH", authToken);
 
                 var (model, IsSuccess) = await Messanger.GetDataAsync();
+                isSuc = IsSuccess;
                 if (IsSuccess && model != null)
                 {
                     MainWindow.MainViewModel.UpdateViewModel(model);
@@ -86,11 +82,19 @@ namespace HelloSpirit
                 return;
             }
             CodeTextBox.IsEnabled = true;
-            this.Label.Content = "認証成功";
+            if (isSuc)
+            {
+                this.Label.Content = "認証成功";
+                MainWindow.SettingWindow.TwitterAuthButton.IsEnabled = false;
+                MainWindow.SettingWindow.TwitterAuthButton.Content = "認証済み";
+            }
+            else
+            {
+                this.Label.Content = "認証失敗";
+            }
             await Task.Delay(1500);
             this.Label.Content = "Webブラウザでログイン後、表示されるコードを入力して下さい。";
             this.Hide();
-            MainWindow.SettingWindow.TwitterAuthButton.IsEnabled = false;
         }
 
         private async Task<string> ConnectAzureAsync(Tokens tokens)

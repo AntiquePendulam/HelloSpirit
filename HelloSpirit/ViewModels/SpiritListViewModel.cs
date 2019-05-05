@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel;
-using System.Collections.ObjectModel;
-using GongSolutions.Wpf.DragDrop;
+﻿using GongSolutions.Wpf.DragDrop;
 using MessagePack;
-using System.Windows;
+using System;
+using System.Collections.ObjectModel;
 
 namespace HelloSpirit.ViewModels
 {
@@ -15,6 +9,7 @@ namespace HelloSpirit.ViewModels
     public class SpiritListViewModel : BindableBase, IDropTarget
     {
         private static DefaultDropHandler DropHandler { get; } = new DefaultDropHandler();
+        private static DefaultDragHandler DragHandler { get; } = new DefaultDragHandler();
         public static event Action SpiritListDropEvent = null;
 
         [IgnoreMember]

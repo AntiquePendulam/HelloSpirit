@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Collections.ObjectModel;
+﻿using MessagePack;
 using Reactive.Bindings.Extensions;
-using System.Reactive;
-using System.Reactive.Concurrency;
-using System.Windows;
+using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Reactive.Linq;
-using MessagePack;
 
 namespace HelloSpirit.ViewModels
 {

@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Setting" SizeToContent="WidthAndHeight" Style="{StaticResource WindowDefaultStyle}">
     <Grid >
-        <StackPanel Margin="5,10" Width="500" Height="200">
+        <StackPanel Margin="5,10" Width="500" Height="250">
             <StackPanel.Resources>
                 <Style TargetType="TextBox">
                     <Setter Property="HorizontalAlignment" Value="Left"/>
@@ -51,7 +51,25 @@
                     </Style>
                 </Button.Style>
             </Button>
-            <Button x:Name="TwitterAuthButton" Height="30" Foreground="{x:Static local:SpiritThemeColor.CheckListAddButtonForeground}" Content="Twitter認証" FontSize="16" FontFamily="/HelloSpirit;component/Fonts/#M+ 2c">
+            <Button x:Name="TwitterAuthButton" Height="30" Margin="0,0,0,20" Foreground="{x:Static local:SpiritThemeColor.CheckListAddButtonForeground}" Content="Twitter認証" FontSize="16" FontFamily="/HelloSpirit;component/Fonts/#M+ 2c">
+                <Button.Style>
+                    <Style TargetType="Button" BasedOn="{StaticResource ButtonDefaultStyle}">
+                        <Setter Property="Background" Value="{x:Static local:SpiritThemeColor.CheckListAddButtonBackground}"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="{x:Static local:SpiritThemeColor.CheckListAddButtonMouseOverBackground}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="LightGray"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Background" Value="Black"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button x:Name="PostData" Height="30" Foreground="{x:Static local:SpiritThemeColor.CheckListAddButtonForeground}" Content="データを再送信する(Beta)" FontSize="16" FontFamily="/HelloSpirit;component/Fonts/#M+ 2c">
                 <Button.Style>
                     <Style TargetType="Button" BasedOn="{StaticResource ButtonDefaultStyle}">
                         <Setter Property="Background" Value="{x:Static local:SpiritThemeColor.CheckListAddButtonBackground}"/>

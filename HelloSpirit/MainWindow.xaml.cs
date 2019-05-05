@@ -1,28 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using HelloSpirit.ViewModels;
+using System.Reactive.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Collections.ObjectModel;
-using Reactive.Bindings.Extensions;
-using System.Reactive;
-using System.Reactive.Concurrency;
-using System.Reactive.Linq;
-using MessagePack;
-using HelloSpirit.ViewModels;
-using System.IO;
-using GongSolutions.Wpf.DragDrop.Utilities;
-using GongSolutions.Wpf.DragDrop;
+using System.Threading;
+using System;
 
 namespace HelloSpirit
 {
@@ -47,8 +30,8 @@ namespace HelloSpirit
             TitleBar.MouseDown += (a, e) => DragMove();
             this.Closing += (a, e) => WindowClose();
             ListAddButton.Click += (a, e) => MainViewModel.Lists.Add(new SpiritListViewModel() { ListTitle = "new List" });
-
             SettingWindow = new SettingWindow(MainViewModel.Setting);
+
             if (Messanger.IsAuth)
             {
                 SettingWindow.TwitterAuthButton.IsEnabled = false;
@@ -113,6 +96,11 @@ namespace HelloSpirit
             if (!Confirmation.Accept) return;
             var data = (sender as Button).DataContext as SpiritListViewModel;
             MainViewModel.Lists.Remove(data);
+        }
+
+        private void Rectangle_MouseEnter(object sender, MouseEventArgs e)
+        {
+            MessageBox.Show("");
         }
     }
 }
